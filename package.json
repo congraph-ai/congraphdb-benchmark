@@ -1,0 +1,46 @@
+{
+  "name": "congraphdb-benchmark",
+  "version": "1.0.0",
+  "description": "Performance benchmark suite for CongraphDB vs industry-standard graph databases",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "benchmark": "npm run build && node dist/cli.js run",
+    "benchmark:small": "npm run build && node dist/cli.js run --scale small",
+    "benchmark:medium": "npm run build && node dist/cli.js run --scale medium",
+    "benchmark:large": "npm run build && node dist/cli.js run --scale large",
+    "clean": "rm -rf dist results/*.json results/*.csv",
+    "docs:generate": "node scripts/generate-results.js",
+    "docs:build": "npm run docs:generate && mkdocs build",
+    "docs:serve": "mkdocs serve",
+    "docs:deploy": "mkdocs gh-deploy"
+  },
+  "keywords": [
+    "benchmark",
+    "graph-database",
+    "congraphdb",
+    "performance"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@congraph-ai/congraphdb": "^0.1.4",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.7",
+    "graphology": "^0.25.4",
+    "graphology-metrics": "^2.2.0",
+    "levelgraph": "^4.0.0",
+    "memory-level": "^3.1.0",
+    "neo4j-driver": "^5.26.0"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^11.10.0",
+    "kuzu": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.5",
+    "typescript": "^5.7.3"
+  }
+}

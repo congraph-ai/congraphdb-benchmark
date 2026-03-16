@@ -1,0 +1,52 @@
+name: Update Benchmark Results
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      results_url:
+        description: 'URL to download benchmark results'
+        required: false
+        type: string
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Download results from benchmark run
+        if: github.event.inputs.results_url != ''
+        run: |
+          curl -L "${{ github.event.inputs.results_url }}" -o data/latest.json
+
+      - name: Copy results from benchmark workflow
+        if: github.event.inputs.results_url == ''
+        uses: actions/download-artifact@v3
+        with:
+          name: benchmark-results
+          path: data/
+
+      - name: Generate results pages
+        run: npm run generate-results
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/ docs/results/
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update benchmark results"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main

@@ -1,0 +1,41 @@
+name: Run Benchmarks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run small scale benchmarks
+        run: node dist/cli.js run --engines congraph,graphology,sqlite --scale small
+        continue-on-error: true
+
+      - name: Run medium scale benchmarks
+        run: node dist/cli.js run --engines congraph,graphology,sqlite --scale medium
+        continue-on-error: true
+
+      - name: Upload results
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchmark-results
+          path: results/*.json

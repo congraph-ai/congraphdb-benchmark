@@ -1,0 +1,116 @@
+site_name: CongraphDB Benchmark
+site_description: Performance benchmarks comparing CongraphDB against competing graph databases
+site_author: CongraphDB Contributors
+site_url: https://congraph-ai.github.io/congraphdb-benchmark/
+
+repo_name: congraph-ai/congraphdb-benchmark
+repo_url: https://github.com/congraph-ai/congraphdb-benchmark
+
+theme:
+  name: material
+  language: en
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+    - announce.dismiss
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/chart-line
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/congraph-ai/congraphdb
+    - icon: fontawesome/brands/npm
+      link: https://www.npmjs.com/package/@congraph-ai/congraphdb
+  analytics:
+    feedback:
+      title: Was this helpful?
+      ratings:
+        - icon: material/emoticon-happy-outline
+          name: This page was helpful
+          data: 1
+          note: Thanks for the feedback!
+        - icon: material/emoticon-sad-outline
+          name: This page could be improved
+          data: 0
+          note: Thanks for the feedback! Help us improve by <a href="https://github.com/congraph-ai/congraphdb-benchmark/issues" target="_blank">opening an issue</a>.
+
+extra_css:
+  - styles/extra.css
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js
+  - https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js
+  - js/benchmark-charts.js
+
+nav:
+  - Home:
+    - index.md
+  - Results:
+    - results/index.md
+    - Leaderboard: results/leaderboard.md
+    - Ingestion: results/ingestion.md
+    - Traversal: results/traversal.md
+    - PageRank: results/pagerank.md
+    - Memory: results/memory.md
+  - Engines:
+    - engines/index.md
+    - CongraphDB: engines/congraphdb.md
+    - Neo4j: engines/neo4j.md
+    - Kuzu: engines/kuzu.md
+    - SQLite: engines/sqlite.md
+    - Graphology: engines/graphology.md
+  - Methodology:
+    - methodology/index.md
+    - Dataset: methodology/dataset.md
+    - Environment: methodology/environment.md
+    - Fairness: methodology/fairness.md

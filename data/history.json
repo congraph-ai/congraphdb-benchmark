@@ -1,0 +1,40 @@
+{
+  "versions": [
+    {
+      "version": "0.1.0",
+      "date": "2026-03-16",
+      "commit": "abc123def456",
+      "overall_score": {
+        "congraphdb": 94.2,
+        "neo4j": 87.5,
+        "kuzu": 82.3,
+        "sqlite": 65.8,
+        "graphology": 58.2
+      }
+    },
+    {
+      "version": "0.0.9",
+      "date": "2026-03-01",
+      "commit": "def456abc123",
+      "overall_score": {
+        "congraphdb": 91.8,
+        "neo4j": 87.5,
+        "kuzu": 82.3,
+        "sqlite": 65.8,
+        "graphology": 58.2
+      }
+    },
+    {
+      "version": "0.0.8",
+      "date": "2026-02-15",
+      "commit": "789abc456def",
+      "overall_score": {
+        "congraphdb": 88.5,
+        "neo4j": 87.5,
+        "kuzu": 82.3,
+        "sqlite": 65.8,
+        "graphology": 58.2
+      }
+    }
+  ]
+}

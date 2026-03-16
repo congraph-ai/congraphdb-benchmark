@@ -1,0 +1,24 @@
+{
+  "name": "congraphdb-benchmark-ui",
+  "version": "1.0.0",
+  "description": "Interactive UI for CongraphDB benchmark results",
+  "scripts": {
+    "generate-results": "node scripts/generate-results.js",
+    "generate-charts": "node scripts/generate-charts.js",
+    "build": "npm run generate-results && npm run generate-charts",
+    "serve": "mkdocs serve",
+    "deploy": "mkdocs gh-deploy",
+    "lint": "eslint scripts/",
+    "test": "node scripts/test-schema.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.0",
+    "chartjs-plugin-annotation": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

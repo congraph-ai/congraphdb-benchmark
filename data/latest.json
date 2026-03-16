@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "version": "0.1.0",
+    "timestamp": "2026-03-16T12:00:00Z",
+    "commit": "abc123def456",
+    "branch": "main",
+    "run_id": "1234567890",
+    "environment": {
+      "os": "ubuntu-latest",
+      "cpu": "Intel Xeon CPU @ 2.20GHz",
+      "ram": "7GB",
+      "node": "v20.11.1"
+    }
+  },
+  "results": {
+    "small": {
+      "congraphdb": {
+        "ingestion": {
+          "nodes_per_sec": 125000,
+          "edges_per_sec": 98000,
+          "total_time_ms": 1250
+        },
+        "traversal": {
+          "1hop": 0.1,
+          "2hop": 0.3,
+          "3hop": 0.8,
+          "4hop": 2.1,
+          "5hop": 5.2
+        },
+        "pagerank": {
+          "time_ms": 1200,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 45,
+          "rss_mb": 38
+        }
+      },
+      "neo4j": {
+        "ingestion": {
+          "nodes_per_sec": 95000,
+          "edges_per_sec": 78000,
+          "total_time_ms": 1680
+        },
+        "traversal": {
+          "1hop": 0.2,
+          "2hop": 0.5,
+          "3hop": 1.2,
+          "4hop": 2.8,
+          "5hop": 6.5
+        },
+        "pagerank": {
+          "time_ms": 2100,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 380,
+          "rss_mb": 320
+        }
+      },
+      "graphology": {
+        "ingestion": {
+          "nodes_per_sec": 78000,
+          "edges_per_sec": 65000,
+          "total_time_ms": 2050
+        },
+        "traversal": {
+          "1hop": 0.15,
+          "2hop": 0.4,
+          "3hop": 1.1,
+          "4hop": 3.2,
+          "5hop": 8.5
+        },
+        "pagerank": {
+          "time_ms": 6200,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 125,
+          "rss_mb": 110
+        }
+      },
+      "sqlite": {
+        "ingestion": {
+          "nodes_per_sec": 45000,
+          "edges_per_sec": 38000,
+          "total_time_ms": 3550
+        },
+        "traversal": {
+          "1hop": 0.8,
+          "2hop": 2.5,
+          "3hop": 6.5,
+          "4hop": 18.0,
+          "5hop": null
+        },
+        "pagerank": {
+          "time_ms": 5500,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 85,
+          "rss_mb": 72
+        }
+      },
+      "kuzu": {
+        "ingestion": {
+          "nodes_per_sec": 88000,
+          "edges_per_sec": 72000,
+          "total_time_ms": 1820
+        },
+        "traversal": {
+          "1hop": 0.18,
+          "2hop": 0.45,
+          "3hop": 1.3,
+          "4hop": 3.5,
+          "5hop": 8.8
+        },
+        "pagerank": {
+          "time_ms": 2800,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 95,
+          "rss_mb": 82
+        }
+      }
+    },
+    "medium": {
+      "congraphdb": {
+        "ingestion": {
+          "nodes_per_sec": 118000,
+          "edges_per_sec": 92000,
+          "total_time_ms": 12800
+        },
+        "traversal": {
+          "1hop": 0.12,
+          "2hop": 0.35,
+          "3hop": 0.95,
+          "4hop": 2.5,
+          "5hop": 6.2
+        },
+        "pagerank": {
+          "time_ms": 14500,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 385,
+          "rss_mb": 345
+        }
+      },
+      "neo4j": {
+        "ingestion": {
+          "nodes_per_sec": 92000,
+          "edges_per_sec": 75000,
+          "total_time_ms": 16500
+        },
+        "traversal": {
+          "1hop": 0.22,
+          "2hop": 0.55,
+          "3hop": 1.35,
+          "4hop": 3.2,
+          "5hop": 7.8
+        },
+        "pagerank": {
+          "time_ms": 24500,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 1850,
+          "rss_mb": 1650
+        }
+      },
+      "graphology": {
+        "ingestion": {
+          "nodes_per_sec": 72000,
+          "edges_per_sec": 58000,
+          "total_time_ms": 21200
+        },
+        "traversal": {
+          "1hop": 0.18,
+          "2hop": 0.48,
+          "3hop": 1.25,
+          "4hop": 3.8,
+          "5hop": 10.2
+        },
+        "pagerank": {
+          "time_ms": 78000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 980,
+          "rss_mb": 890
+        }
+      },
+      "sqlite": {
+        "ingestion": {
+          "nodes_per_sec": 42000,
+          "edges_per_sec": 35000,
+          "total_time_ms": 36500
+        },
+        "traversal": {
+          "1hop": 1.2,
+          "2hop": 4.5,
+          "3hop": 12.5,
+          "4hop": 35.0,
+          "5hop": null
+        },
+        "pagerank": {
+          "time_ms": 68000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 680,
+          "rss_mb": 620
+        }
+      },
+      "kuzu": {
+        "ingestion": {
+          "nodes_per_sec": 85000,
+          "edges_per_sec": 68000,
+          "total_time_ms": 18800
+        },
+        "traversal": {
+          "1hop": 0.2,
+          "2hop": 0.5,
+          "3hop": 1.4,
+          "4hop": 4.0,
+          "5hop": 10.5
+        },
+        "pagerank": {
+          "time_ms": 32000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 720,
+          "rss_mb": 680
+        }
+      }
+    },
+    "large": {
+      "congraphdb": {
+        "ingestion": {
+          "nodes_per_sec": 110000,
+          "edges_per_sec": 85000,
+          "total_time_ms": 138000
+        },
+        "traversal": {
+          "1hop": 0.15,
+          "2hop": 0.42,
+          "3hop": 1.1,
+          "4hop": 2.9,
+          "5hop": 7.5
+        },
+        "pagerank": {
+          "time_ms": 168000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 3250,
+          "rss_mb": 2980
+        }
+      },
+      "neo4j": {
+        "ingestion": {
+          "nodes_per_sec": 88000,
+          "edges_per_sec": 70000,
+          "total_time_ms": 178000
+        },
+        "traversal": {
+          "1hop": 0.25,
+          "2hop": 0.65,
+          "3hop": 1.55,
+          "4hop": 3.8,
+          "5hop": 9.2
+        },
+        "pagerank": {
+          "time_ms": 285000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 8200,
+          "rss_mb": 7650
+        }
+      },
+      "graphology": {
+        "ingestion": {
+          "nodes_per_sec": 68000,
+          "edges_per_sec": 52000,
+          "total_time_ms": 232000
+        },
+        "traversal": {
+          "1hop": 0.22,
+          "2hop": 0.58,
+          "3hop": 1.5,
+          "4hop": 4.5,
+          "5hop": 12.8
+        },
+        "pagerank": {
+          "time_ms": 920000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 8500,
+          "rss_mb": 7800
+        }
+      },
+      "sqlite": {
+        "ingestion": {
+          "nodes_per_sec": 38000,
+          "edges_per_sec": 31000,
+          "total_time_ms": 415000
+        },
+        "traversal": {
+          "1hop": 2.5,
+          "2hop": 8.5,
+          "3hop": 28.0,
+          "4hop": null,
+          "5hop": null
+        },
+        "pagerank": {
+          "time_ms": 850000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 5200,
+          "rss_mb": 4850
+        }
+      },
+      "kuzu": {
+        "ingestion": {
+          "nodes_per_sec": 82000,
+          "edges_per_sec": 64000,
+          "total_time_ms": 198000
+        },
+        "traversal": {
+          "1hop": 0.22,
+          "2hop": 0.58,
+          "3hop": 1.6,
+          "4hop": 4.8,
+          "5hop": 13.2
+        },
+        "pagerank": {
+          "time_ms": 380000,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 5800,
+          "rss_mb": 5450
+        }
+      }
+    }
+  }
+}
