@@ -15,7 +15,7 @@
 | **Query Language** | Cypher |
 | **Website** | [congraphdb.io](https://congraphdb.io) |
 | **GitHub** | [github.com/congraph-ai/congraphdb](https://github.com/congraph-ai/congraphdb) |
-| **NPM** | [@congraph-ai/congraphdb](https://www.npmjs.com/package/@congraph-ai/congraphdb) |
+| **NPM** | [congraphdb](https://www.npmjs.com/package/congraphdb) |
 
 ---
 
@@ -49,7 +49,7 @@ CongraphDB's core is written in Rust, providing:
 ### 2. Embedded Architecture
 
 ```javascript
-import { Database } from '@congraph-ai/congraphdb';
+import { Database } from 'congraphdb';
 
 // In-memory, no server overhead
 const db = new Database(':memory:');
@@ -152,11 +152,11 @@ Average latency by hop count:
 ## Quick Start
 
 ```bash
-npm install @congraph-ai/congraphdb
+npm install congraphdb
 ```
 
 ```javascript
-import { Database } from '@congraph-ai/congraphdb';
+import { Database } from 'congraphdb';
 
 // Create database
 const db = new Database(':memory:');
@@ -267,7 +267,7 @@ CongraphDB uses a custom storage format optimized for:
 - [Documentation](https://congraph-ai.github.io/congraphdb-docs/)
 - [API Reference](https://congraph-ai.github.io/congraphdb-docs/api/)
 - [GitHub Repository](https://github.com/congraph-ai/congraphdb)
-- [NPM Package](https://www.npmjs.com/package/@congraph-ai/congraphdb)
+- [NPM Package](https://www.npmjs.com/package/congraphdb)
 - [Discord Community](https://discord.gg/congraphdb)
 
 ---

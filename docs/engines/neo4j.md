@@ -150,7 +150,7 @@ Available algorithms:
 
 ### CongraphDB
 ```bash
-npm install @congraph-ai/congraphdb
+npm install congraphdb
 # Ready in < 1 second
 ```
 

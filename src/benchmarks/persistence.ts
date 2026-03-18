@@ -1,4 +1,4 @@
-import { Database, Connection } from '@congraph-ai/congraphdb';
+import { Database, Connection } from 'congraphdb';
 import { EngineAdapter, Node, Edge, StorageType, PersistenceResult } from '../types.js';
 
 /**

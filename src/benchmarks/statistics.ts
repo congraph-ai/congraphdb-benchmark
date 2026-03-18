@@ -1,5 +1,5 @@
 import { EngineAdapter, Node, Edge, StatisticsResult } from '../types.js';
-import { Database, Connection } from '@congraph-ai/congraphdb';
+import { Database, Connection } from 'congraphdb';
 
 /**
  * Query Statistics Benchmark

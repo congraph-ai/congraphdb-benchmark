@@ -38,7 +38,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@congraph-ai/congraphdb": "^0.1.5",
+    "congraphdb": "file:../congraphdb",
     "commander": "^12.1.0",
     "dotenv": "^16.4.7",
     "graphology": "^0.25.4",
