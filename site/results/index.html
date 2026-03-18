@@ -1095,10 +1095,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#ingestion-performance" class="md-nav__link">
+  <a href="#small-dataset-10k-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Ingestion Performance
+        Small Dataset (10K nodes)
       
     </span>
   </a>
@@ -1106,10 +1106,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#traversal-performance" class="md-nav__link">
+  <a href="#medium-dataset-100k-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Traversal Performance
+        Medium Dataset (100K nodes)
       
     </span>
   </a>
@@ -1117,74 +1117,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#pagerank-performance" class="md-nav__link">
+  <a href="#large-dataset-1m-nodes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        PageRank Performance
+        Large Dataset (1M nodes)
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#memory-usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Memory Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#detailed-metrics" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Detailed Metrics
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Detailed Metrics">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#small-dataset-10k-nodes-50k-edges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Small Dataset (10K nodes / 50K edges)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#medium-dataset-100k-nodes-1m-edges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Medium Dataset (100K nodes / 1M edges)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#large-dataset-1m-nodes-10m-edges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Large Dataset (1M nodes / 10M edges)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1220,8 +1159,10 @@
 
 
 <h1 id="benchmark-results">Benchmark Results<a class="headerlink" href="#benchmark-results" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Last Run:</strong> March 18, 2026 | <strong>Commit:</strong> <code>5a7d330</code> | <strong>Version:</strong> 1.0.0</p>
+</blockquote>
 <p>Detailed performance metrics comparing CongraphDB against competing graph databases.</p>
-<hr />
 <h2 id="dataset-scale">Dataset Scale<a class="headerlink" href="#dataset-scale" title="Permanent link">&para;</a></h2>
 <p><select class="scale-selector" id="scaleSelector" onchange="updateCharts(this.value)">
 <br />
@@ -1229,278 +1170,149 @@
 <option value="medium">Medium Dataset (100K nodes / 1M edges)</option>
 <option value="large">Large Dataset (1M nodes / 10M edges)</option>
 <p></select></p>
-<hr />
-<h2 id="ingestion-performance">Ingestion Performance<a class="headerlink" href="#ingestion-performance" title="Permanent link">&para;</a></h2>
-<div class="benchmark-chart-container">
-  <canvas id="ingestionChart" height="300"></canvas>
-</div>
-
-<p><strong>Nodes per second</strong> - Higher is better</p>
-<hr />
-<h2 id="traversal-performance">Traversal Performance<a class="headerlink" href="#traversal-performance" title="Permanent link">&para;</a></h2>
-<div class="benchmark-chart-container">
-  <canvas id="traversalChart" height="300"></canvas>
-</div>
-
-<p><strong>Average latency in milliseconds</strong> - Lower is better</p>
-<hr />
-<h2 id="pagerank-performance">PageRank Performance<a class="headerlink" href="#pagerank-performance" title="Permanent link">&para;</a></h2>
-<div class="benchmark-chart-container">
-  <canvas id="pagerankChart" height="300"></canvas>
-</div>
-
-<p><strong>Time for 10 iterations in seconds</strong> - Lower is better</p>
-<hr />
-<h2 id="memory-usage">Memory Usage<a class="headerlink" href="#memory-usage" title="Permanent link">&para;</a></h2>
-<div class="benchmark-chart-container">
-  <canvas id="memoryChart" height="300"></canvas>
-</div>
-
-<p><strong>Peak memory in MB</strong> - Lower is better</p>
-<hr />
-<h2 id="detailed-metrics">Detailed Metrics<a class="headerlink" href="#detailed-metrics" title="Permanent link">&para;</a></h2>
-<h3 id="small-dataset-10k-nodes-50k-edges">Small Dataset (10K nodes / 50K edges)<a class="headerlink" href="#small-dataset-10k-nodes-50k-edges" title="Permanent link">&para;</a></h3>
+<h2 id="small-dataset-10k-nodes">Small Dataset (10K nodes)<a class="headerlink" href="#small-dataset-10k-nodes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Engine</th>
-<th>Nodes/s</th>
-<th>Edges/s</th>
-<th>1-hop</th>
-<th>2-hop</th>
-<th>3-hop</th>
-<th>4-hop</th>
-<th>5-hop</th>
-<th>PageRank</th>
-<th>Memory</th>
+<th style="text-align: right;">Nodes/s</th>
+<th style="text-align: right;">3-hop</th>
+<th style="text-align: right;">PageRank</th>
+<th style="text-align: right;">Memory</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>CongraphDB</td>
-<td>125,000</td>
-<td>98,000</td>
-<td>0.1ms</td>
-<td>0.3ms</td>
-<td>0.8ms</td>
-<td>2.1ms</td>
-<td>5.2ms</td>
-<td>1.2s</td>
-<td>45MB</td>
-</tr>
-<tr>
-<td>Neo4j</td>
-<td>95,000</td>
-<td>78,000</td>
-<td>0.2ms</td>
-<td>0.5ms</td>
-<td>1.2ms</td>
-<td>2.8ms</td>
-<td>6.5ms</td>
-<td>2.1s</td>
-<td>380MB</td>
-</tr>
-<tr>
-<td>Kuzu</td>
-<td>88,000</td>
-<td>72,000</td>
-<td>0.18ms</td>
-<td>0.45ms</td>
-<td>1.3ms</td>
-<td>3.5ms</td>
-<td>8.8ms</td>
-<td>2.8s</td>
-<td>95MB</td>
-</tr>
-<tr>
-<td>Graphology</td>
-<td>78,000</td>
-<td>65,000</td>
-<td>0.15ms</td>
-<td>0.4ms</td>
-<td>1.1ms</td>
-<td>3.2ms</td>
-<td>8.5ms</td>
-<td>6.2s</td>
-<td>125MB</td>
+<td style="text-align: right;">158,311</td>
+<td style="text-align: right;">0.07</td>
+<td style="text-align: right;">0.0s</td>
+<td style="text-align: right;">110MB</td>
 </tr>
 <tr>
 <td>SQLite</td>
-<td>45,000</td>
-<td>38,000</td>
-<td>0.8ms</td>
-<td>2.5ms</td>
-<td>6.5ms</td>
-<td>18.0ms</td>
-<td>N/A</td>
-<td>5.5s</td>
-<td>85MB</td>
+<td style="text-align: right;">17,683</td>
+<td style="text-align: right;">3.139</td>
+<td style="text-align: right;">1.6s</td>
+<td style="text-align: right;">119MB</td>
+</tr>
+<tr>
+<td>LevelGraph</td>
+<td style="text-align: right;">3,342</td>
+<td style="text-align: right;">1.016</td>
+<td style="text-align: right;">0.0s</td>
+<td style="text-align: right;">321MB</td>
+</tr>
+<tr>
+<td>Graphology</td>
+<td style="text-align: right;">18,502</td>
+<td style="text-align: right;">6.857</td>
+<td style="text-align: right;">0.1s</td>
+<td style="text-align: right;">339MB</td>
 </tr>
 </tbody>
 </table>
-<h3 id="medium-dataset-100k-nodes-1m-edges">Medium Dataset (100K nodes / 1M edges)<a class="headerlink" href="#medium-dataset-100k-nodes-1m-edges" title="Permanent link">&para;</a></h3>
+<h2 id="medium-dataset-100k-nodes">Medium Dataset (100K nodes)<a class="headerlink" href="#medium-dataset-100k-nodes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Engine</th>
-<th>Nodes/s</th>
-<th>Edges/s</th>
-<th>1-hop</th>
-<th>2-hop</th>
-<th>3-hop</th>
-<th>4-hop</th>
-<th>5-hop</th>
-<th>PageRank</th>
-<th>Memory</th>
+<th style="text-align: right;">Nodes/s</th>
+<th style="text-align: right;">3-hop</th>
+<th style="text-align: right;">PageRank</th>
+<th style="text-align: right;">Memory</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>CongraphDB</td>
-<td>118,000</td>
-<td>92,000</td>
-<td>0.12ms</td>
-<td>0.35ms</td>
-<td>0.95ms</td>
-<td>2.5ms</td>
-<td>6.2ms</td>
-<td>14.5s</td>
-<td>385MB</td>
+<td style="text-align: right;">118,000</td>
+<td style="text-align: right;">0.95</td>
+<td style="text-align: right;">14.5s</td>
+<td style="text-align: right;">385MB</td>
 </tr>
 <tr>
 <td>Neo4j</td>
-<td>92,000</td>
-<td>75,000</td>
-<td>0.22ms</td>
-<td>0.55ms</td>
-<td>1.35ms</td>
-<td>3.2ms</td>
-<td>7.8ms</td>
-<td>24.5s</td>
-<td>1,850MB</td>
-</tr>
-<tr>
-<td>Kuzu</td>
-<td>85,000</td>
-<td>68,000</td>
-<td>0.2ms</td>
-<td>0.5ms</td>
-<td>1.4ms</td>
-<td>4.0ms</td>
-<td>10.5ms</td>
-<td>32s</td>
-<td>720MB</td>
+<td style="text-align: right;">92,000</td>
+<td style="text-align: right;">1.35</td>
+<td style="text-align: right;">24.5s</td>
+<td style="text-align: right;">1850MB</td>
 </tr>
 <tr>
 <td>Graphology</td>
-<td>72,000</td>
-<td>58,000</td>
-<td>0.18ms</td>
-<td>0.48ms</td>
-<td>1.25ms</td>
-<td>3.8ms</td>
-<td>10.2ms</td>
-<td>78s</td>
-<td>980MB</td>
+<td style="text-align: right;">72,000</td>
+<td style="text-align: right;">1.25</td>
+<td style="text-align: right;">78.0s</td>
+<td style="text-align: right;">980MB</td>
 </tr>
 <tr>
 <td>SQLite</td>
-<td>42,000</td>
-<td>35,000</td>
-<td>1.2ms</td>
-<td>4.5ms</td>
-<td>12.5ms</td>
-<td>35ms</td>
-<td>N/A</td>
-<td>68s</td>
-<td>680MB</td>
+<td style="text-align: right;">42,000</td>
+<td style="text-align: right;">12.5</td>
+<td style="text-align: right;">68.0s</td>
+<td style="text-align: right;">680MB</td>
+</tr>
+<tr>
+<td>Kuzu</td>
+<td style="text-align: right;">85,000</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">32.0s</td>
+<td style="text-align: right;">720MB</td>
 </tr>
 </tbody>
 </table>
-<h3 id="large-dataset-1m-nodes-10m-edges">Large Dataset (1M nodes / 10M edges)<a class="headerlink" href="#large-dataset-1m-nodes-10m-edges" title="Permanent link">&para;</a></h3>
+<h2 id="large-dataset-1m-nodes">Large Dataset (1M nodes)<a class="headerlink" href="#large-dataset-1m-nodes" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
 <th>Engine</th>
-<th>Nodes/s</th>
-<th>Edges/s</th>
-<th>1-hop</th>
-<th>2-hop</th>
-<th>3-hop</th>
-<th>4-hop</th>
-<th>5-hop</th>
-<th>PageRank</th>
-<th>Memory</th>
+<th style="text-align: right;">Nodes/s</th>
+<th style="text-align: right;">3-hop</th>
+<th style="text-align: right;">PageRank</th>
+<th style="text-align: right;">Memory</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>CongraphDB</td>
-<td>110,000</td>
-<td>85,000</td>
-<td>0.15ms</td>
-<td>0.42ms</td>
-<td>1.1ms</td>
-<td>2.9ms</td>
-<td>7.5ms</td>
-<td>168s</td>
-<td>3,250MB</td>
+<td style="text-align: right;">110,000</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">168.0s</td>
+<td style="text-align: right;">3250MB</td>
 </tr>
 <tr>
 <td>Neo4j</td>
-<td>88,000</td>
-<td>70,000</td>
-<td>0.25ms</td>
-<td>0.65ms</td>
-<td>1.55ms</td>
-<td>3.8ms</td>
-<td>9.2ms</td>
-<td>285s</td>
-<td>8,200MB</td>
-</tr>
-<tr>
-<td>Kuzu</td>
-<td>82,000</td>
-<td>64,000</td>
-<td>0.22ms</td>
-<td>0.58ms</td>
-<td>1.6ms</td>
-<td>4.8ms</td>
-<td>13.2ms</td>
-<td>380s</td>
-<td>5,800MB</td>
+<td style="text-align: right;">88,000</td>
+<td style="text-align: right;">1.55</td>
+<td style="text-align: right;">285.0s</td>
+<td style="text-align: right;">8200MB</td>
 </tr>
 <tr>
 <td>Graphology</td>
-<td>68,000</td>
-<td>52,000</td>
-<td>0.22ms</td>
-<td>0.58ms</td>
-<td>1.5ms</td>
-<td>4.5ms</td>
-<td>12.8ms</td>
-<td>920s</td>
-<td>8,500MB</td>
+<td style="text-align: right;">68,000</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">920.0s</td>
+<td style="text-align: right;">8500MB</td>
 </tr>
 <tr>
 <td>SQLite</td>
-<td>38,000</td>
-<td>31,000</td>
-<td>2.5ms</td>
-<td>8.5ms</td>
-<td>28ms</td>
-<td>N/A</td>
-<td>N/A</td>
-<td>850s</td>
-<td>5,200MB</td>
+<td style="text-align: right;">38,000</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">850.0s</td>
+<td style="text-align: right;">5200MB</td>
+</tr>
+<tr>
+<td>Kuzu</td>
+<td style="text-align: right;">82,000</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">380.0s</td>
+<td style="text-align: right;">5800MB</td>
 </tr>
 </tbody>
 </table>
-<hr />
 <h2 id="export-data">Export Data<a class="headerlink" href="#export-data" title="Permanent link">&para;</a></h2>
 <p><button class="md-button" onclick="exportData('json')">Download JSON</button>
 <button class="md-button" onclick="exportData('csv')">Download CSV</button></p>
-<hr />
 <script>
 // Charts will be initialized by benchmark-charts.js
 </script>

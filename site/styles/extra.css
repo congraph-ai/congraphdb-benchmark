@@ -1,0 +1,393 @@
+/**
+ * CongraphDB Benchmark UI - Custom Styles
+ */
+
+/* Summary Cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.card {
+  background: var(--md-primary-fg-color--light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 0.875rem;
+  color: var(--md-primary-fg-color--light);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  margin-bottom: 0.25rem;
+}
+
+.card-rank {
+  font-size: 0.875rem;
+  color: var(--md-primary-fg-color--light);
+  opacity: 0.9;
+}
+
+/* Champion Card */
+.champion-card {
+  text-align: center;
+  padding: 3rem;
+  border-radius: 16px;
+  margin: 2rem 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.champion-card h1 {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.champion-score {
+  font-size: 4rem;
+  font-weight: 800;
+  margin: 1rem 0;
+}
+
+.champion-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+/* Category Winners */
+.category-winners {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.winner-card {
+  background: var(--md-default-bg-color);
+  border: 2px solid var(--md-primary-fg-color--light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.winner-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.winner-title {
+  font-size: 0.875rem;
+  color: var(--md-text-color--light);
+  margin-bottom: 0.25rem;
+}
+
+.winner-engine {
+  font-weight: 700;
+  color: var(--md-primary-fg-color);
+  margin-bottom: 0.25rem;
+}
+
+.winner-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--md-accent-fg-color);
+}
+
+/* Explore Grid */
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.explore-grid > div {
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--md-primary-fg-color--light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.explore-grid > div:hover {
+  border-color: var(--md-primary-fg-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.explore-grid a {
+  font-weight: 600;
+  color: var(--md-primary-fg-color);
+}
+
+/* Chart Containers */
+.benchmark-chart-container,
+.ingestion-chart-container,
+.traversal-chart-container,
+.pagerank-chart-container,
+.memory-chart-container,
+.radar-chart-container,
+.trend-chart-container,
+.leaderboard-overall,
+.memory-efficiency-chart,
+.memory-scaling-chart,
+.memory-phase-chart,
+.memory-leak-chart,
+.convergence-chart,
+.iteration-chart,
+.pagerank-scaling-chart,
+.ingestion-scaling-chart,
+.traversal-scaling-chart,
+.traversal-score-chart,
+.congraphdb-performance,
+.neo4j-performance,
+.kuzu-performance,
+.sqlite-performance,
+.graphology-performance,
+.engine-comparison-chart {
+  margin: 2rem 0;
+  padding: 1rem;
+  background: var(--md-default-bg-color);
+  border-radius: 8px;
+}
+
+/* Scale Selector */
+.scale-selector {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--md-primary-fg-color--light);
+  border-radius: 6px;
+  background: var(--md-default-bg-color);
+  color: var(--md-text-color);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.scale-selector:focus {
+  outline: none;
+  border-color: var(--md-primary-fg-color);
+}
+
+/* Performance Summary Boxes */
+.congraphdb-performance,
+.neo4j-performance,
+.kuzu-performance,
+.sqlite-performance,
+.graphology-performance {
+  background: linear-gradient(135deg, var(--md-primary-fg-color--light) 0%, var(--md-default-bg-color) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+}
+
+.congraphdb-performance {
+  border-left: 4px solid #10B981;
+}
+
+.neo4j-performance {
+  border-left: 4px solid #3B82F6;
+}
+
+.kuzu-performance {
+  border-left: 4px solid #F59E0B;
+}
+
+.sqlite-performance {
+  border-left: 4px solid #6B7280;
+}
+
+.graphology-performance {
+  border-left: 4px solid #8B5CF6;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--md-default-fg-color--light);
+}
+
+th {
+  background: var(--md-primary-fg-color--light);
+  font-weight: 600;
+}
+
+tr:hover {
+  background: var(--md-code-bg-color--light);
+}
+
+/* Buttons */
+.md-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.md-button:hover {
+  background: var(--md-accent-fg-color);
+  transform: translateY(-2px);
+}
+
+/* Charts */
+canvas {
+  max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .category-winners {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .explore-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .champion-card h1 {
+    font-size: 2rem;
+  }
+
+  .champion-score {
+    font-size: 3rem;
+  }
+}
+
+/* Dark mode adjustments */
+[data-md-color-scheme="slate"] {
+  --chart-grid-color: rgba(255, 255, 255, 0.1);
+  --chart-text-color: rgba(255, 255, 255, 0.9);
+}
+
+/* Light mode adjustments */
+[data-md-color-scheme="default"] {
+  --chart-grid-color: rgba(0, 0, 0, 0.1);
+  --chart-text-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card, .winner-card, .explore-grid > div {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Custom scrollbar for charts */
+.benchmark-chart-container::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.benchmark-chart-container::-webkit-scrollbar-track {
+  background: var(--md-default-bg-color);
+  border-radius: 4px;
+}
+
+.benchmark-chart-container::-webkit-scrollbar-thumb {
+  background: var(--md-primary-fg-color--light);
+  border-radius: 4px;
+}
+
+.benchmark-chart-container::-webkit-scrollbar-thumb:hover {
+  background: var(--md-primary-fg-color);
+}
+
+/* Print styles */
+@media print {
+  .summary-cards,
+  .category-winners,
+  .explore-grid {
+    display: block;
+  }
+
+  .card,
+  .winner-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
+
+/* Accessibility */
+.card:focus-visible,
+.winner-card:focus-visible,
+.explore-grid > div:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--md-primary-fg-color);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tooltip customization */
+.chartjs-tooltip {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}

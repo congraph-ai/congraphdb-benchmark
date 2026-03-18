@@ -1,8 +1,10 @@
 # Benchmark Results
 
-Detailed performance metrics comparing CongraphDB against competing graph databases.
 
----
+> **Last Run:** March 18, 2026 | **Commit:** `5a7d330` | **Version:** 1.0.0
+
+
+Detailed performance metrics comparing CongraphDB against competing graph databases.
 
 ## Dataset Scale
 
@@ -12,88 +14,42 @@ Detailed performance metrics comparing CongraphDB against competing graph databa
   <option value="large">Large Dataset (1M nodes / 10M edges)</option>
 </select>
 
----
+## Small Dataset (10K nodes)
 
-## Ingestion Performance
+| Engine | Nodes/s | 3-hop | PageRank | Memory |
+|--------|-------:|-------:|-------:|-------:|
+| CongraphDB | 158,311 | 0.07 | 0.0s | 110MB |
+| SQLite | 17,683 | 3.139 | 1.6s | 119MB |
+| LevelGraph | 3,342 | 1.016 | 0.0s | 321MB |
+| Graphology | 18,502 | 6.857 | 0.1s | 339MB |
 
-<div class="benchmark-chart-container">
-  <canvas id="ingestionChart" height="300"></canvas>
-</div>
 
-**Nodes per second** - Higher is better
+## Medium Dataset (100K nodes)
 
----
+| Engine | Nodes/s | 3-hop | PageRank | Memory |
+|--------|-------:|-------:|-------:|-------:|
+| CongraphDB | 118,000 | 0.95 | 14.5s | 385MB |
+| Neo4j | 92,000 | 1.35 | 24.5s | 1850MB |
+| Graphology | 72,000 | 1.25 | 78.0s | 980MB |
+| SQLite | 42,000 | 12.5 | 68.0s | 680MB |
+| Kuzu | 85,000 | 1.4 | 32.0s | 720MB |
 
-## Traversal Performance
 
-<div class="benchmark-chart-container">
-  <canvas id="traversalChart" height="300"></canvas>
-</div>
+## Large Dataset (1M nodes)
 
-**Average latency in milliseconds** - Lower is better
+| Engine | Nodes/s | 3-hop | PageRank | Memory |
+|--------|-------:|-------:|-------:|-------:|
+| CongraphDB | 110,000 | 1.1 | 168.0s | 3250MB |
+| Neo4j | 88,000 | 1.55 | 285.0s | 8200MB |
+| Graphology | 68,000 | 1.5 | 920.0s | 8500MB |
+| SQLite | 38,000 | 28 | 850.0s | 5200MB |
+| Kuzu | 82,000 | 1.6 | 380.0s | 5800MB |
 
----
-
-## PageRank Performance
-
-<div class="benchmark-chart-container">
-  <canvas id="pagerankChart" height="300"></canvas>
-</div>
-
-**Time for 10 iterations in seconds** - Lower is better
-
----
-
-## Memory Usage
-
-<div class="benchmark-chart-container">
-  <canvas id="memoryChart" height="300"></canvas>
-</div>
-
-**Peak memory in MB** - Lower is better
-
----
-
-## Detailed Metrics
-
-### Small Dataset (10K nodes / 50K edges)
-
-| Engine | Nodes/s | Edges/s | 1-hop | 2-hop | 3-hop | 4-hop | 5-hop | PageRank | Memory |
-|--------|--------|---------|-------|-------|-------|-------|-------|----------|--------|
-| CongraphDB | 125,000 | 98,000 | 0.1ms | 0.3ms | 0.8ms | 2.1ms | 5.2ms | 1.2s | 45MB |
-| Neo4j | 95,000 | 78,000 | 0.2ms | 0.5ms | 1.2ms | 2.8ms | 6.5ms | 2.1s | 380MB |
-| Kuzu | 88,000 | 72,000 | 0.18ms | 0.45ms | 1.3ms | 3.5ms | 8.8ms | 2.8s | 95MB |
-| Graphology | 78,000 | 65,000 | 0.15ms | 0.4ms | 1.1ms | 3.2ms | 8.5ms | 6.2s | 125MB |
-| SQLite | 45,000 | 38,000 | 0.8ms | 2.5ms | 6.5ms | 18.0ms | N/A | 5.5s | 85MB |
-
-### Medium Dataset (100K nodes / 1M edges)
-
-| Engine | Nodes/s | Edges/s | 1-hop | 2-hop | 3-hop | 4-hop | 5-hop | PageRank | Memory |
-|--------|--------|---------|-------|-------|-------|-------|-------|----------|--------|
-| CongraphDB | 118,000 | 92,000 | 0.12ms | 0.35ms | 0.95ms | 2.5ms | 6.2ms | 14.5s | 385MB |
-| Neo4j | 92,000 | 75,000 | 0.22ms | 0.55ms | 1.35ms | 3.2ms | 7.8ms | 24.5s | 1,850MB |
-| Kuzu | 85,000 | 68,000 | 0.2ms | 0.5ms | 1.4ms | 4.0ms | 10.5ms | 32s | 720MB |
-| Graphology | 72,000 | 58,000 | 0.18ms | 0.48ms | 1.25ms | 3.8ms | 10.2ms | 78s | 980MB |
-| SQLite | 42,000 | 35,000 | 1.2ms | 4.5ms | 12.5ms | 35ms | N/A | 68s | 680MB |
-
-### Large Dataset (1M nodes / 10M edges)
-
-| Engine | Nodes/s | Edges/s | 1-hop | 2-hop | 3-hop | 4-hop | 5-hop | PageRank | Memory |
-|--------|--------|---------|-------|-------|-------|-------|-------|----------|--------|
-| CongraphDB | 110,000 | 85,000 | 0.15ms | 0.42ms | 1.1ms | 2.9ms | 7.5ms | 168s | 3,250MB |
-| Neo4j | 88,000 | 70,000 | 0.25ms | 0.65ms | 1.55ms | 3.8ms | 9.2ms | 285s | 8,200MB |
-| Kuzu | 82,000 | 64,000 | 0.22ms | 0.58ms | 1.6ms | 4.8ms | 13.2ms | 380s | 5,800MB |
-| Graphology | 68,000 | 52,000 | 0.22ms | 0.58ms | 1.5ms | 4.5ms | 12.8ms | 920s | 8,500MB |
-| SQLite | 38,000 | 31,000 | 2.5ms | 8.5ms | 28ms | N/A | N/A | 850s | 5,200MB |
-
----
 
 ## Export Data
 
 <button class="md-button" onclick="exportData('json')">Download JSON</button>
 <button class="md-button" onclick="exportData('csv')">Download CSV</button>
-
----
 
 <script>
 // Charts will be initialized by benchmark-charts.js

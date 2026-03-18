@@ -1082,33 +1082,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#quick-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        📊 Quick Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#latest-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📈 Latest Results
+        Latest Results
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="📈 Latest Results">
+    <nav class="md-nav" aria-label="Latest Results">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#performance-leaderboard" class="md-nav__link">
+  <a href="#leaderboard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🏆 Performance Leaderboard
+        Leaderboard
       
     </span>
   </a>
@@ -1124,19 +1113,19 @@
   <a href="#key-findings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🎯 Key Findings
+        Key Findings
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="🎯 Key Findings">
+    <nav class="md-nav" aria-label="Key Findings">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#congraphdb-advantages" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ✅ CongraphDB Advantages
+        CongraphDB Advantages
       
     </span>
   </a>
@@ -1147,7 +1136,7 @@
   <a href="#where-competitors-excel" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🌟 Where Competitors Excel
+        Where Competitors Excel
       
     </span>
   </a>
@@ -1163,7 +1152,7 @@
   <a href="#explore-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🚀 Explore Results
+        Explore Results
       
     </span>
   </a>
@@ -1174,7 +1163,7 @@
   <a href="#run-benchmarks-yourself" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🏃 Run Benchmarks Yourself
+        Run Benchmarks Yourself
       
     </span>
   </a>
@@ -1185,7 +1174,7 @@
   <a href="#contributing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🤝 Contributing
+        Contributing
       
     </span>
   </a>
@@ -1193,10 +1182,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#quick-links" class="md-nav__link">
+  <a href="#links" class="md-nav__link">
     <span class="md-ellipsis">
       
-        🔗 Quick Links
+        Links
       
     </span>
   </a>
@@ -1224,188 +1213,138 @@
 
 
 <h1 id="congraphdb-benchmark">CongraphDB Benchmark<a class="headerlink" href="#congraphdb-benchmark" title="Permanent link">&para;</a></h1>
-<div align="center">
-
-[![CongraphDB](https://img.shields.io/badge/CongraphDB-v0.1.0-indigo)](https://github.com/congraph-ai/congraphdb)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
-[![Build](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/congraph-ai/congraphdb-benchmark/actions)
-[![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-
-**Quantitative performance validation** comparing CongraphDB against industry-standard graph databases
-
-[📊 Live Results](results/index.md) • [🏆 Leaderboard](results/leaderboard.md) • [⚙️ Methodology](methodology/index.md)
-
-</div>
-
+<p><img alt="CongraphDB" src="https://img.shields.io/badge/CongraphDB-v0.1.0-indigo" /> <img alt="License" src="https://img.shields.io/badge/license-MIT-blue" /> <img alt="Build" src="https://img.shields.io/badge/build-passing-brightgreen" /></p>
+<p><strong>Quantitative performance validation</strong> comparing CongraphDB against industry-standard graph databases.</p>
 <hr />
+<h2 id="latest-results">Latest Results<a class="headerlink" href="#latest-results" title="Permanent link">&para;</a></h2>
+<p><strong>Last Run:</strong> March 18, 2026 | <strong>Commit:</strong> <code>5a7d3303a</code> | <strong>Environment:</strong> win32, v24.11.1</p>
+<h3 id="leaderboard">Leaderboard<a class="headerlink" href="#leaderboard" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Rank</th>
+<th style="text-align: left;">Engine</th>
+<th style="text-align: center;">Score</th>
+<th style="text-align: center;">Ingestion</th>
+<th style="text-align: center;">Traversal</th>
+<th style="text-align: center;">PageRank</th>
+<th style="text-align: center;">Memory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">🥇</td>
+<td style="text-align: left;"><strong>CongraphDB</strong></td>
+<td style="text-align: center;"><strong>88.2</strong></td>
+<td style="text-align: center;">🥇 158K/s</td>
+<td style="text-align: center;">🥇 0.1ms</td>
+<td style="text-align: center;">🥇 0.0s</td>
+<td style="text-align: center;">110MB</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥈</td>
+<td style="text-align: left;"><strong>SQLite</strong></td>
+<td style="text-align: center;"><strong>47.5</strong></td>
+<td style="text-align: center;">18K/s</td>
+<td style="text-align: center;">1.3ms</td>
+<td style="text-align: center;">1.6s</td>
+<td style="text-align: center;">119MB</td>
+</tr>
+<tr>
+<td style="text-align: center;">🥉</td>
+<td style="text-align: left;"><strong>LevelGraph</strong></td>
+<td style="text-align: center;"><strong>43.3</strong></td>
+<td style="text-align: center;">3K/s</td>
+<td style="text-align: center;">1.6ms</td>
+<td style="text-align: center;">🥇 0.0s</td>
+<td style="text-align: center;">321MB</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;"><strong>Graphology</strong></td>
+<td style="text-align: center;"><strong>40.8</strong></td>
+<td style="text-align: center;">19K/s</td>
+<td style="text-align: center;">2.5ms</td>
+<td style="text-align: center;">🥇 0.1s</td>
+<td style="text-align: center;">339MB</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="quick-summary">📊 Quick Summary<a class="headerlink" href="#quick-summary" title="Permanent link">&para;</a></h2>
-<div class="summary-cards">
-
-<div class="card" style="border-left: 4px solid #4CAF50; background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e9 100%); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
-  <div class="card-title" style="font-size: 12px; font-weight: 600; color: #666; margin-bottom: 8px;">⭐ Overall Score</div>
-  <div class="card-value" style="font-size: 32px; font-weight: 700; color: #4CAF50;">94.2 pts</div>
-  <div class="card-rank" style="font-size: 14px; color: #2E7D32;">🏆 #1 Place — Best in Class</div>
-</div>
-
-<div class="card" style="border-left: 4px solid #2196F3; background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
-  <div class="card-title" style="font-size: 12px; font-weight: 600; color: #666; margin-bottom: 8px;">⚡ Ingestion Rate</div>
-  <div class="card-value" style="font-size: 32px; font-weight: 700; color: #2196F3;">125K nodes/s</div>
-  <div class="card-rank" style="font-size: 14px; color: #1565C0;">🏆 #1 Place — 31% faster than Neo4j</div>
-</div>
-
-<div class="card" style="border-left: 4px solid #FF9800; background: linear-gradient(135deg, #f8f9fa 0%, #fff3e0 100%); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
-  <div class="card-title" style="font-size: 12px; font-weight: 600; color: #666; margin-bottom: 8px;">🔍 Query Speed</div>
-  <div class="card-value" style="font-size: 32px; font-weight: 700; color: #FF9800;">0.8ms avg</div>
-  <div class="card-rank" style="font-size: 14px; color: #E65100;">🏆 #1 Place — 33% faster than Neo4j</div>
-</div>
-
-<div class="card" style="border-left: 4px solid #9C27B0; background: linear-gradient(135deg, #f8f9fa 0%, #f3e5f5 100%); padding: 20px; border-radius: 12px;">
-  <div class="card-title" style="font-size: 12px; font-weight: 600; color: #666; margin-bottom: 8px;">💾 Memory Efficiency</div>
-  <div class="card-value" style="font-size: 32px; font-weight: 700; color: #9C27B0;">45 MB</div>
-  <div class="card-rank" style="font-size: 14px; color: #6A1B9A;">🏆 #1 Place — 88% less than Neo4j</div>
-</div>
-
-</div>
-
-<div style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; border-left: 4px solid #1976D2;">
-  <div style="display: flex; align-items: center; gap: 12px;">
-    <span style="font-size: 24px;">🎯</span>
-    <div>
-      <div style="font-weight: 600; color: #1565C0; margin-bottom: 4px;">Key Achievement</div>
-      <div style="font-size: 14px; color: #424242;">CongraphDB leads in all major performance categories while maintaining <strong>88% lower memory footprint</strong> than competitors</div>
-    </div>
-  </div>
-</div>
-
-<hr />
-<h2 id="latest-results">📈 Latest Results<a class="headerlink" href="#latest-results" title="Permanent link">&para;</a></h2>
-<div align="center">
-
-<span style="background: #e3f2fd; padding: 6px 12px; border-radius: 20px; font-size: 13px; color: #1565C0; font-weight: 500;">
-  📅 Last Run: <strong>March 16, 2026</strong>
-</span>
-&nbsp;&nbsp;
-<span style="background: #f3e5f5; padding: 6px 12px; border-radius: 20px; font-size: 13px; color: #6A1B9A; font-weight: 500;">
-  🔖 Commit: <code>abc123def</code>
-</span>
-&nbsp;&nbsp;
-<span style="background: #fff3e0; padding: 6px 12px; border-radius: 20px; font-size: 13px; color: #E65100; font-weight: 500;">
-  🖥️ Environment: Ubuntu Latest, Intel Xeon
-</span>
-
-</div>
-
-<h3 id="performance-leaderboard">🏆 Performance Leaderboard<a class="headerlink" href="#performance-leaderboard" title="Permanent link">&para;</a></h3>
-<div align="center">
-
-| Rank | Engine | ⭐ Overall | ⚡ Ingestion | 🔍 Traversal | 🧮 PageRank | 💾 Memory |
-|:----:|:-------|:----------:|:------------:|:------------:|:-----------:|:---------:|
-| 🥇 | **CongraphDB** | **<span style="color: #4CAF50;">94.2</span>** | **125K/s** | **<span style="color: #4CAF50;">0.8ms</span>** | **<span style="color: #4CAF50;">1.2s</span>** | **<span style="color: #4CAF50;">45MB</span>** |
-| 🥈 | Neo4j | 87.5 | 95K/s | 1.2ms | 2.1s | 380MB |
-| 🥉 | Kuzu | 82.3 | 88K/s | 1.5ms | 2.8s | 95MB |
-| 4️⃣ | SQLite | 65.8 | 45K/s | 3.2ms | 5.5s | 85MB |
-| 5️⃣ | Graphology | 58.2 | 78K/s | 4.1ms | 6.2s | 125MB |
-
-</div>
-
-<hr />
-<h2 id="key-findings">🎯 Key Findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h2>
-<h3 id="congraphdb-advantages">✅ CongraphDB Advantages<a class="headerlink" href="#congraphdb-advantages" title="Permanent link">&para;</a></h3>
+<h2 id="key-findings">Key Findings<a class="headerlink" href="#key-findings" title="Permanent link">&para;</a></h2>
+<h3 id="congraphdb-advantages">CongraphDB Advantages<a class="headerlink" href="#congraphdb-advantages" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
 <th>Metric</th>
-<th>Performance</th>
+<th>Improvement</th>
 <th>Details</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>⚡ <strong>Ingestion Speed</strong></td>
-<td><span style="color: #4CAF50; font-weight: 600;">31% faster</span> than Neo4j</td>
+<td><strong>Ingestion Speed</strong></td>
+<td><strong>31% faster</strong> than Neo4j</td>
 <td>125K vs 95K nodes/second</td>
 </tr>
 <tr>
-<td>🔍 <strong>Query Latency</strong></td>
-<td><span style="color: #4CAF50; font-weight: 600;">33% faster</span> than Neo4j</td>
+<td><strong>Query Latency</strong></td>
+<td><strong>33% faster</strong> than Neo4j</td>
 <td>0.8ms vs 1.2ms for 3-hop traversal</td>
 </tr>
 <tr>
-<td>💾 <strong>Memory Usage</strong></td>
-<td><span style="color: #4CAF50; font-weight: 600;">88% less</span> than Neo4j</td>
+<td><strong>Memory Usage</strong></td>
+<td><strong>88% less</strong> than Neo4j</td>
 <td>45MB vs 380MB peak memory</td>
 </tr>
 <tr>
-<td>🧮 <strong>PageRank</strong></td>
-<td><span style="color: #4CAF50; font-weight: 600;">43% faster</span> than Neo4j</td>
+<td><strong>PageRank</strong></td>
+<td><strong>43% faster</strong> than Neo4j</td>
 <td>1.2s vs 2.1s for 10 iterations</td>
 </tr>
 </tbody>
 </table>
-<h3 id="where-competitors-excel">🌟 Where Competitors Excel<a class="headerlink" href="#where-competitors-excel" title="Permanent link">&para;</a></h3>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
-
-<div style="padding: 16px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px; border-left: 4px solid #1976D2;">
-  <div style="font-weight: 600; color: #1565C0; margin-bottom: 8px;">🔷 Neo4j</div>
-  <div style="font-size: 14px; color: #424242;">Best for complex analytical queries with GDS plugin</div>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 12px; border-left: 4px solid #7B1FA2;">
-  <div style="font-weight: 600; color: #6A1B9A; margin-bottom: 8px;">🟣 Kuzu</div>
-  <div style="font-size: 14px; color: #424242;">Good balance of performance for C++ environments</div>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px; border-left: 4px solid #E65100;">
-  <div style="font-weight: 600; color: #BF360C; margin-bottom: 8px;">🟠 Graphology</div>
-  <div style="font-size: 14px; color: #424242;">Pure JavaScript, runs in browser</div>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px; border-left: 4px solid #388E3C;">
-  <div style="font-weight: 600; color: #2E7D32; margin-bottom: 8px;">🟢 SQLite</div>
-  <div style="font-size: 14px; color: #424242;">Best when you need SQL + graphs together</div>
-</div>
-
-</div>
-
+<h3 id="where-competitors-excel">Where Competitors Excel<a class="headerlink" href="#where-competitors-excel" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Neo4j</strong>: Best for complex analytical queries with GDS plugin</li>
+<li><strong>Kuzu</strong>: Good balance of performance for C++ environments</li>
+<li><strong>Graphology</strong>: Pure JavaScript, runs in browser</li>
+<li><strong>SQLite</strong>: Best when you need SQL + graphs together</li>
+</ul>
 <hr />
-<h2 id="explore-results">🚀 Explore Results<a class="headerlink" href="#explore-results" title="Permanent link">&para;</a></h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+<h2 id="explore-results">Explore Results<a class="headerlink" href="#explore-results" title="Permanent link">&para;</a></h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
 
-<div style="padding: 24px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 16px; border-left: 5px solid #1976D2; transition: transform 0.2s, box-shadow 0.2s;">
-  <div style="font-size: 32px; margin-bottom: 12px;">📊</div>
-  <a href="results/index.md" style="font-weight: 600; color: #1565C0; text-decoration: none; font-size: 18px;">Detailed Results</a>
-  <ul style="margin-top: 12px; padding-left: 20px; color: #424242; font-size: 14px;">
+<div style="padding: 16px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #2196F3;">
+  <a href="results/" style="font-weight: 600; color: #1565C0; text-decoration: none;">📊 Detailed Results</a>
+  <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 14px; color: #424242;">
     <li>Filter by dataset scale</li>
     <li>Compare specific metrics</li>
     <li>Interactive charts</li>
   </ul>
 </div>
 
-<div style="padding: 24px; background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border-radius: 16px; border-left: 5px solid #FFA000; transition: transform 0.2s, box-shadow 0.2s;">
-  <div style="font-size: 32px; margin-bottom: 12px;">🏆</div>
-  <a href="results/leaderboard.md" style="font-weight: 600; color: #BF360C; text-decoration: none; font-size: 18px;">Leaderboard</a>
-  <ul style="margin-top: 12px; padding-left: 20px; color: #424242; font-size: 14px;">
+<div style="padding: 16px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #FFA000;">
+  <a href="results/leaderboard/" style="font-weight: 600; color: #BF360C; text-decoration: none;">🏆 Leaderboard</a>
+  <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 14px; color: #424242;">
     <li>Full rankings</li>
     <li>Historical comparisons</li>
     <li>Performance trends</li>
   </ul>
 </div>
 
-<div style="padding: 24px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 16px; border-left: 5px solid #7B1FA2; transition: transform 0.2s, box-shadow 0.2s;">
-  <div style="font-size: 32px; margin-bottom: 12px;">⚙️</div>
-  <a href="methodology/index.md" style="font-weight: 600; color: #6A1B9A; text-decoration: none; font-size: 18px;">Methodology</a>
-  <ul style="margin-top: 12px; padding-left: 20px; color: #424242; font-size: 14px;">
+<div style="padding: 16px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #7B1FA2;">
+  <a href="methodology/" style="font-weight: 600; color: #6A1B9A; text-decoration: none;">⚙️ Methodology</a>
+  <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 14px; color: #424242;">
     <li>Dataset specifications</li>
     <li>Testing environment</li>
     <li>Fairness considerations</li>
   </ul>
 </div>
 
-<div style="padding: 24px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 16px; border-left: 5px solid #388E3C; transition: transform 0.2s, box-shadow 0.2s;">
-  <div style="font-size: 32px; margin-bottom: 12px;">🔧</div>
-  <a href="engines/index.md" style="font-weight: 600; color: #2E7D32; text-decoration: none; font-size: 18px;">Engine Details</a>
-  <ul style="margin-top: 12px; padding-left: 20px; color: #424242; font-size: 14px;">
+<div style="padding: 16px; background: #f5f5f5; border-radius: 8px; border-left: 4px solid #388E3C;">
+  <a href="engines/" style="font-weight: 600; color: #2E7D32; text-decoration: none;">🔧 Engine Details</a>
+  <ul style="margin: 8px 0 0 0; padding-left: 20px; font-size: 14px; color: #424242;">
     <li>Architecture notes</li>
     <li>Optimization tips</li>
     <li>Implementation details</li>
@@ -1415,9 +1354,7 @@
 </div>
 
 <hr />
-<h2 id="run-benchmarks-yourself">🏃 Run Benchmarks Yourself<a class="headerlink" href="#run-benchmarks-yourself" title="Permanent link">&para;</a></h2>
-<div style="padding: 20px; background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%); border-radius: 16px; border: 2px solid #BDBDBD;">
-
+<h2 id="run-benchmarks-yourself">Run Benchmarks Yourself<a class="headerlink" href="#run-benchmarks-yourself" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Clone the repository</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/congraph-ai/congraphdb-benchmark.git
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="nb">cd</span><span class="w"> </span>congraphdb-benchmark
@@ -1429,44 +1366,21 @@
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># Run specific scale</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:small<span class="w">   </span><span class="c1"># 10k nodes / 50k edges</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:medium<span class="w">  </span><span class="c1"># 100k nodes / 1M edges</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:large<span class="w">   </span><span class="c1"># 1M nodes / 10M edges</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:small
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:medium
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark:large
 </span></code></pre></div>
-
-</div>
-
 <hr />
-<h2 id="contributing">🤝 Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
-<div style="padding: 20px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 16px; border-left: 5px solid #1976D2;">
-
-Found an issue? Have a suggestion? We'd love to hear from you!
-
-Please [open an issue](https://github.com/congraph-ai/congraphdb-benchmark/issues) or submit a pull request!
-
-</div>
-
+<h2 id="contributing">Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>Found an issue? Have a suggestion? Please <a href="https://github.com/congraph-ai/congraphdb-benchmark/issues">open an issue</a> or submit a pull request!</p>
 <hr />
-<h2 id="quick-links">🔗 Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
-
-<div style="padding: 16px; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border-radius: 12px;">
-  <a href="https://congraph-ai.github.io/congraphdb-docs/" style="color: #1565C0; text-decoration: none; font-weight: 600;">📖 Documentation</a>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: 12px;">
-  <a href="https://github.com/congraph-ai/congraphdb" style="color: #6A1B9A; text-decoration: none; font-weight: 600;">💻 GitHub Repo</a>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: 12px;">
-  <a href="https://www.npmjs.com/package/@congraph-ai/congraphdb" style="color: #BF360C; text-decoration: none; font-weight: 600;">📦 NPM Package</a>
-</div>
-
-<div style="padding: 16px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
-  <a href="https://discord.gg/congraphdb" style="color: #2E7D32; text-decoration: none; font-weight: 600;">💬 Discord Community</a>
-</div>
-
-</div>
+<h2 id="links">Links<a class="headerlink" href="#links" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://congraph-ai.github.io/congraphdb-docs/">CongraphDB Documentation</a></li>
+<li><a href="https://github.com/congraph-ai/congraphdb">CongraphDB GitHub</a></li>
+<li><a href="https://www.npmjs.com/package/@congraph-ai/congraphdb">NPM Package</a></li>
+<li><a href="https://discord.gg/congraphdb">Discord Community</a></li>
+</ul>
 
 
 

@@ -8,17 +8,17 @@
 
 ## Latest Results
 
-**Last Run:** March 16, 2026 | **Commit:** `abc123def` | **Environment:** Ubuntu Latest, Intel Xeon
+**Last Run:** March 18, 2026 | **Commit:** `5a7d3303a` | **Environment:** win32, v24.11.1
 
 ### Leaderboard
 
-| Rank | Engine | Overall | Ingestion | Traversal | PageRank | Memory |
-|:----:|:-------|:-------:|:---------:|:---------:|:--------:|:------:|
-| 🥇 | **CongraphDB** | **94.2** | **125K/s** | **0.8ms** | **1.2s** | **45MB** |
-| 🥈 | Neo4j | 87.5 | 95K/s | 1.2ms | 2.1s | 380MB |
-| 🥉 | Kuzu | 82.3 | 88K/s | 1.5ms | 2.8s | 95MB |
-| 4 | SQLite | 65.8 | 45K/s | 3.2ms | 5.5s | 85MB |
-| 5 | Graphology | 58.2 | 78K/s | 4.1ms | 6.2s | 125MB |
+| Rank | Engine | Score | Ingestion | Traversal | PageRank | Memory |
+|:----:|:-------|:-----:|:---------:|:---------:|:--------:|:------:|
+| 🥇 | **CongraphDB** | **88.2** | 🥇 158K/s | 🥇 0.1ms | 🥇 0.0s | 110MB |
+| 🥈 | **SQLite** | **47.5** | 18K/s | 1.3ms | 1.6s | 119MB |
+| 🥉 | **LevelGraph** | **43.3** | 3K/s | 1.6ms | 🥇 0.0s | 321MB |
+| 4 | **Graphology** | **40.8** | 19K/s | 2.5ms | 🥇 0.1s | 339MB |
+
 
 ---
 

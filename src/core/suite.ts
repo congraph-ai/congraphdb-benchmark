@@ -1,10 +1,28 @@
-import { EngineAdapter, Node, Edge, BenchmarkResult, DataScale, TraversalResult } from '../types.js';
+import { EngineAdapter, Node, Edge, BenchmarkResult, DataScale, TraversalResult, BenchmarkConfig, ExtendedTestResults, APIType, StorageType } from '../types.js';
 import { MetricsRecorder } from './recorder.js';
 
-export interface SuiteConfig {
+// Import v0.1.5 benchmark modules
+import { APIComparisonBenchmark } from '../benchmarks/api-comparison.js';
+import { DMLOperationsBenchmark } from '../benchmarks/dml-operations.js';
+import { PersistenceBenchmark, PersistenceEngineAdapter } from '../benchmarks/persistence.js';
+import { StatisticsBenchmark, StatisticsEngineAdapter } from '../benchmarks/statistics.js';
+
+export interface SuiteConfig extends Omit<BenchmarkConfig, 'api' | 'storage' | 'warmup'> {
+  // Keep old fields for backward compatibility
   scale: DataScale;
   traversalIterations: number;
   pagerankIterations: number;
+
+  // v0.1.5 new fields - override with optional versions
+  api?: APIType;
+  storage?: StorageType;
+  warmup?: boolean;
+
+  // Enable/disable v0.1.5 benchmarks
+  enableAPIComparison?: boolean;
+  enableDML?: boolean;
+  enablePersistence?: boolean;
+  enableStatistics?: boolean;
 }
 
 export class BenchmarkSuite {
@@ -160,5 +178,86 @@ export class BenchmarkSuite {
     if (currentMemory > this.peakMemory) {
       this.peakMemory = currentMemory;
     }
+  }
+
+  // ==================== v0.1.5 New Benchmark Methods ====================
+
+  /**
+   * Run API Comparison benchmark (Cypher vs JavaScript)
+   */
+  async runAPIComparison(javascriptEngine: EngineAdapter | null): Promise<void> {
+    if (!this.config.enableAPIComparison) {
+      return;
+    }
+
+    const apiBench = new APIComparisonBenchmark(
+      this.engine,
+      javascriptEngine,
+      { nodeCount: 10000, edgeCount: 50000, iterations: 10 }
+    );
+
+    const result = await apiBench.run();
+    if (result) {
+      this.recorder.recordAPIComparison(this.engine.name, this.config.scale, result);
+    }
+  }
+
+  /**
+   * Run DML Operations benchmark
+   */
+  async runDMLBenchmark(): Promise<void> {
+    if (!this.config.enableDML) {
+      return;
+    }
+
+    const dmlBench = new DMLOperationsBenchmark(this.engine);
+    const result = await dmlBench.run();
+    if (result) {
+      this.recorder.recordDML(this.engine.name, this.config.scale, result);
+    }
+  }
+
+  /**
+   * Run Persistence benchmark
+   */
+  async runPersistenceBenchmark(): Promise<void> {
+    if (!this.config.enablePersistence) {
+      return;
+    }
+
+    const storage = this.config.storage || 'memory';
+    const persistBench = new PersistenceBenchmark(storage);
+    const result = await persistBench.run();
+    this.recorder.recordPersistence(this.engine.name, this.config.scale, result);
+  }
+
+  /**
+   * Run Statistics benchmark
+   */
+  async runStatisticsBenchmark(): Promise<void> {
+    if (!this.config.enableStatistics) {
+      return;
+    }
+
+    const statsBench = new StatisticsBenchmark();
+    const result = await statsBench.run();
+    if (result) {
+      this.recorder.recordStatistics(this.engine.name, this.config.scale, result);
+    }
+  }
+
+  /**
+   * Run all v0.1.5 benchmarks
+   */
+  async runV015Benchmarks(javascriptEngine?: EngineAdapter | null): Promise<void> {
+    console.log('\n🎯 Running v0.1.5 Benchmark Suite');
+    console.log('='.repeat(60));
+
+    await this.runAPIComparison(javascriptEngine || null);
+    await this.runDMLBenchmark();
+    await this.runPersistenceBenchmark();
+    await this.runStatisticsBenchmark();
+
+    console.log('\n✅ v0.1.5 benchmarks complete');
   }
 }

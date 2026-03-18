@@ -29,7 +29,8 @@ let benchmarkData = null;
 async function loadBenchmarkData() {
   if (benchmarkData) return benchmarkData;
   try {
-    const response = await fetch('/data/latest.json');
+    // Use relative path from js/ directory to data/ directory
+    const response = await fetch('../data/latest.json');
     benchmarkData = await response.json();
     return benchmarkData;
   } catch (error) {

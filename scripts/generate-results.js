@@ -17,6 +17,7 @@ const __dirname = path.dirname(__filename);
 // Configuration
 const DATA_DIR = path.join(__dirname, '../data');
 const DOCS_DIR = path.join(__dirname, '../docs');
+const DOCS_DATA_DIR = path.join(__dirname, '../docs/data');
 
 // Load benchmark data
 function loadData() {
@@ -114,6 +115,9 @@ function generateLeaderboardTable(results, scale) {
 
   scores.forEach((item, index) => {
     const engine = capitalize(item.engine);
+    if (process.env.DEBUG) {
+      console.log(`Engine: ${item.engine} -> ${engine}`);
+    }
     const medal = medals[index] || `${index + 1}`;
     const data = results[scale][item.engine];
 
@@ -147,9 +151,17 @@ function formatValue(value, metric) {
   return value.toString();
 }
 
-// Capitalize first letter
+// Capitalize first letter and handle special cases
 function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  const specialCases = {
+    'congraphdb': 'CongraphDB',
+    'neo4j': 'Neo4j',
+    'sqlite': 'SQLite',
+    'kuzu': 'Kuzu',
+    'graphology': 'Graphology',
+    'levelgraph': 'LevelGraph'
+  };
+  return specialCases[str] || str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Generate summary cards
@@ -229,6 +241,11 @@ function generate() {
   console.log('Loading benchmark data...');
   const { latest, history } = loadData();
 
+  console.log(`Found ${Object.keys(latest.results || {}).length} scales in latest.json`);
+  if (latest.results?.small) {
+    console.log(`Found ${Object.keys(latest.results.small).length} engines in small scale`);
+  }
+
   console.log('Generating results pages...');
 
   // Generate main results page
@@ -299,26 +316,70 @@ ${generateLeaderboardTable(latest.results, 'large')}
   const indexPath = path.join(DOCS_DIR, 'index.md');
   if (fs.existsSync(indexPath)) {
     let indexContent = fs.readFileSync(indexPath, 'utf8');
-    // Update summary cards and metadata
+
+    // Update Last Run metadata line
+    const dateStr = new Date(latest.meta.timestamp).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const commitShort = latest.meta.commit.slice(0, 9);
+    // Match line by line and replace the metadata line
+    const lines = indexContent.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].includes('**Last Run:**') && lines[i].includes('**Commit:**')) {
+        lines[i] = `**Last Run:** ${dateStr} | **Commit:** \`${commitShort}\` | **Environment:** ${latest.meta.environment.os}, ${latest.meta.environment.node}`;
+        break;
+      }
+    }
+    indexContent = lines.join('\n');
+
+    // Update leaderboard table - find the table between ### Leaderboard and the next ---
+    const leaderboardTable = generateLeaderboardTable(latest.results, 'small');
+    if (process.env.DEBUG) {
+      console.log('Generated table snippet:');
+      console.log(leaderboardTable.split('\n').slice(0, 5).join('\n'));
+    }
+    const tableRegex = /### Leaderboard\n\n(\| Rank \| Engine \| Score \| Ingestion \| Traversal \| PageRank \| Memory \|\n\|:----:\|:-------\|:-----:\|:---------:\|:---------:\|:--------:\|:------:\|\n.*?\n)\n---/s;
     indexContent = indexContent.replace(
-      /<div class="summary-cards">.*?<\/div>\s*<\/div>/s,
-      generateSummaryCards(latest.results)
+      tableRegex,
+      `### Leaderboard\n\n${leaderboardTable}\n\n---`
     );
-    indexContent = indexContent.replace(
-      /\*\*Last Run:.*?\|\*\*Commit:/,
-      `**Last Run:** ${new Date(latest.meta.timestamp).toLocaleDateString()} | **Commit:**`
-    );
+
     fs.writeFileSync(indexPath, indexContent);
+    console.log('    Updated index.md with latest results');
   }
 
   console.log('✅ Results pages generated successfully!');
   console.log(`\nData source: ${path.join(DATA_DIR, 'latest.json')}`);
   console.log(`Version: ${latest.meta.version}`);
   console.log(`Commit: ${latest.meta.commit}`);
+
+  // Copy data files to docs/data for the website
+  const docsDataDir = path.join(__dirname, '../docs/data');
+  fs.mkdirSync(docsDataDir, { recursive: true });
+
+  const dataFiles = ['latest.json', 'history.json', 'schema.json'];
+  for (const file of dataFiles) {
+    const srcPath = path.join(DATA_DIR, file);
+    if (fs.existsSync(srcPath)) {
+      fs.copyFileSync(srcPath, path.join(docsDataDir, file));
+    }
+  }
+  console.log('📁 Copied data files to docs/data/');
 }
 
 // Run if called directly
-const isMainModule = import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`;
+const modulePath = fileURLToPath(import.meta.url);
+const isMainModule = process.argv[1] === modulePath;
+
+// Debug output
+if (process.env.DEBUG) {
+  console.log('modulePath:', modulePath);
+  console.log('argv[1]:', process.argv[1]);
+  console.log('isMainModule:', isMainModule);
+}
+
 if (isMainModule) {
   generate();
 }

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CongraphDB Benchmark Results Schema",
+  "type": "object",
+  "required": ["meta", "results"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["version", "timestamp", "commit", "environment"],
+      "properties": {
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{7,40}$" },
+        "environment": {
+          "type": "object",
+          "properties": {
+            "os": { "type": "string" },
+            "cpu": { "type": "string" },
+            "ram": { "type": "string" },
+            "node": { "type": "string" }
+          }
+        }
+      }
+    },
+    "results": {
+      "type": "object",
+      "patternProperties": {
+        "^(small|medium|large)$": {
+          "type": "object",
+          "properties": {
+            "congraphdb": { "$ref": "#/definitions/engineResult" },
+            "neo4j": { "$ref": "#/definitions/engineResult" },
+            "kuzu": { "$ref": "#/definitions/engineResult" },
+            "sqlite": { "$ref": "#/definitions/engineResult" },
+            "graphology": { "$ref": "#/definitions/engineResult" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "engineResult": {
+      "type": "object",
+      "properties": {
+        "ingestion": {
+          "type": "object",
+          "properties": {
+            "nodes_per_sec": { "type": "number" },
+            "edges_per_sec": { "type": "number" },
+            "total_time_ms": { "type": "number" }
+          }
+        },
+        "traversal": {
+          "type": "object",
+          "properties": {
+            "1hop": { "type": "number" },
+            "2hop": { "type": "number" },
+            "3hop": { "type": "number" },
+            "4hop": { "type": "number" },
+            "5hop": { "type": "number" }
+          }
+        },
+        "pagerank": {
+          "type": "object",
+          "properties": {
+            "time_ms": { "type": "number" },
+            "iterations": { "type": "number" }
+          }
+        },
+        "memory": {
+          "type": "object",
+          "properties": {
+            "peak_mb": { "type": "number" },
+            "rss_mb": { "type": "number" }
+          }
+        }
+      }
+    }
+  }
+}

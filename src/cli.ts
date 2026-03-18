@@ -15,6 +15,10 @@ import { SQLiteEngine } from './engines/sqlite.js';
 import { GraphologyEngine } from './engines/graphology.js';
 import { LevelGraphEngine } from './engines/levelgraph.js';
 
+// Import v0.1.5 engine adapters (available but not directly used in CLI)
+// import { PersistenceEngineAdapter } from './benchmarks/persistence.js';
+// import { StatisticsBenchmark, StatisticsEngineAdapter } from './benchmarks/statistics.js';
+
 // Load environment variables
 dotenv.config();
 
@@ -32,6 +36,11 @@ program
   .option('-s, --scale <scale>', 'Data scale: small, medium, or large', 'medium')
   .option('-o, --output <format>', 'Output format: json, csv, or both', 'both')
   .option('-v, --verbose', 'Verbose output', false)
+  // v0.1.5 options
+  .option('--api <apiType>', 'API type to benchmark: cypher, javascript, or both', 'cypher')
+  .option('--storage <storageType>', 'Storage type: memory or file', 'memory')
+  .option('--v015', 'Enable v0.1.5 extended benchmarks (API comparison, DML, persistence, statistics)', false)
+  .option('--benchmarks <benchmarks>', 'Comma-separated list of v0.1.5 benchmarks: api,dml,persistence,statistics', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -45,7 +54,16 @@ program
   });
 
 async function runBenchmarks(options: any) {
-  const { engines: enginesList, scale: scaleStr, output, verbose } = options;
+  const {
+    engines: enginesList,
+    scale: scaleStr,
+    output,
+    verbose,
+    api: apiType,
+    storage: storageType,
+    v015: enableV015,
+    benchmarks: v015Benchmarks
+  } = options;
 
   // Validate scale
   const scale = validateScale(scaleStr);
@@ -54,13 +72,36 @@ async function runBenchmarks(options: any) {
     process.exit(1);
   }
 
+  // Validate API type
+  const api = validateAPIType(apiType);
+  if (!api) {
+    console.error(`❌ Invalid API type: ${apiType}. Must be 'cypher', 'javascript', or 'both'.`);
+    process.exit(1);
+  }
+
+  // Validate storage type
+  const storage = validateStorageType(storageType);
+  if (!storage) {
+    console.error(`❌ Invalid storage type: ${storageType}. Must be 'memory' or 'file'.`);
+    process.exit(1);
+  }
+
   // Parse engines
   const engines = parseEngines(enginesList);
 
-  console.log('🔬 CongraphDB Benchmark Suite');
+  // Parse v0.1.5 benchmarks
+  const enabledBenchmarks = parseV015Benchmarks(v015Benchmarks, enableV015);
+
+  console.log('🔬 CongraphDB Benchmark Suite v0.1.5');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
+  console.log(`API: ${api.toUpperCase()}`);
+  console.log(`Storage: ${storage.toUpperCase()}`);
   console.log(`Engines: ${engines.join(', ')}`);
+
+  if (enableV015) {
+    console.log(`\n🎯 v0.1.5 Benchmarks: ${enabledBenchmarks.join(', ')}`);
+  }
   console.log('');
 
   const recorder = new MetricsRecorder();
@@ -75,14 +116,28 @@ async function runBenchmarks(options: any) {
     scale,
     traversalIterations: 10,
     pagerankIterations: 10,
+    api,
+    storage,
+    warmup: false,
+    enableAPIComparison: enabledBenchmarks.includes('api'),
+    enableDML: enabledBenchmarks.includes('dml'),
+    enablePersistence: enabledBenchmarks.includes('persistence'),
+    enableStatistics: enabledBenchmarks.includes('statistics'),
   };
 
   // Run benchmarks for each engine
   for (const engineName of engines) {
     try {
-      const engine = createEngine(engineName);
+      const engine = createEngine(engineName, storage);
       const suite = new BenchmarkSuite(engine, recorder, config);
+
+      // Run standard benchmarks
       await suite.run(nodes, edges);
+
+      // Run v0.1.5 benchmarks if enabled
+      if (enableV015) {
+        await suite.runV015Benchmarks();
+      }
     } catch (error: any) {
       if (error?.code === 'ERR_MODULE_NOT_FOUND' || error?.message?.includes('bindings')) {
         console.warn(`⚠️  Skipping ${engineName}: Missing native bindings`);
@@ -111,7 +166,13 @@ async function runBenchmarks(options: any) {
       console.log(`   CSV: ${csvPath}`);
     }
 
-    console.log('\n' + recorder.generateSummary());
+    // Export v0.1.5 results if enabled
+    if (enableV015) {
+      const v015JsonPath = await recorder.exportV015ToJSON();
+      console.log(`   v0.1.5 JSON: ${v015JsonPath}`);
+    }
+
+    console.log('\n' + (enableV015 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -136,6 +197,33 @@ function validateScale(scale: string): DataScale | null {
   return null;
 }
 
+function validateAPIType(api: string): 'cypher' | 'javascript' | 'both' | null {
+  if (api === 'cypher' || api === 'javascript' || api === 'both') {
+    return api;
+  }
+  return null;
+}
+
+function validateStorageType(storage: string): 'memory' | 'file' | null {
+  if (storage === 'memory' || storage === 'file') {
+    return storage;
+  }
+  return null;
+}
+
+function parseV015Benchmarks(benchmarks: string, enableV015: boolean): string[] {
+  if (!enableV015) return [];
+
+  const validBenchmarks = ['api', 'dml', 'persistence', 'statistics'];
+
+  if (benchmarks === 'all') {
+    return validBenchmarks;
+  }
+
+  const requested = benchmarks.split(',').map((b: string) => b.trim().toLowerCase());
+  return requested.filter((b: string) => validBenchmarks.includes(b));
+}
+
 function parseEngines(enginesStr: string): EngineType[] {
   const validEngines: EngineType[] = ['congraph', 'neo4j', 'kuzu', 'sqlite', 'graphology', 'levelgraph'];
   const requested = enginesStr.split(',').map((e: string) => e.trim().toLowerCase());
@@ -143,9 +231,10 @@ function parseEngines(enginesStr: string): EngineType[] {
   return requested.filter(e => validEngines.includes(e as EngineType)) as EngineType[];
 }
 
-function createEngine(engineName: EngineType): EngineAdapter {
+function createEngine(engineName: EngineType, storage: 'memory' | 'file' = 'memory'): EngineAdapter {
   switch (engineName) {
     case 'congraph':
+      // For persistence benchmarks, use the special adapter
       return new CongraphEngine();
     case 'neo4j':
       return new Neo4jEngine();

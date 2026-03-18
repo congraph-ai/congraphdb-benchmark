@@ -84,6 +84,11 @@ extra:
           data: 0
           note: Thanks for the feedback! Help us improve by <a href="https://github.com/congraph-ai/congraphdb-benchmark/issues" target="_blank">opening an issue</a>.
 
+# Include data files in the site and watch them
+watch:
+  - docs/data
+  - data
+
 extra_css:
   - styles/extra.css
 

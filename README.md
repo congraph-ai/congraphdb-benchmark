@@ -1,14 +1,14 @@
-# CongraphDB Performance Benchmark
+# CongraphDB Performance Benchmark v0.1.5
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-[![Benchmark](https://img.shields.io/badge/benchmark-active-success)](https://congraph-ai.github.io/congraphdb-benchmark/)
+[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.5-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
 
-**A comprehensive benchmark suite comparing [CongraphDB](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
+**A comprehensive benchmark suite comparing [CongraphDB v0.1.5](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
 
-[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results)
+[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.5 Features](#v015-features)
 
 </div>
 
@@ -33,6 +33,47 @@
 | 🔹 **Small** | 10K | 50K | Quick testing & development |
 | 🔸 **Medium** | 100K | 1M | Standard production workload |
 | 🔺 **Large** | 1M | 10M | Enterprise-scale scenarios |
+
+---
+
+## v0.1.5 Features
+
+**New in v0.1.5**: Extended benchmarks for CongraphDB's latest features including:
+
+| Benchmark | Description | Metrics |
+|-----------|-------------|---------|
+| 🔷 **API Comparison** | Cypher vs JavaScript-Native API | ops/s, latency ratio |
+| 🔧 **DML Operations** | SET, DELETE, MERGE, REMOVE | ops/s, affected rows |
+| 💾 **Persistence** | In-memory vs File-based storage | I/O overhead, checkpoint time |
+| 📊 **Query Statistics** | Statistics tracking overhead | enabled vs disabled time |
+
+### Running v0.1.5 Benchmarks
+
+```bash
+# Run all v0.1.5 benchmarks
+npm run benchmark:v015
+
+# Run specific v0.1.5 benchmark
+npm run benchmark:api          # API Comparison
+npm run benchmark:dml          # DML Operations
+npm run benchmark:persistence  # Persistence & Storage
+npm run benchmark:statistics   # Query Statistics
+
+# Combine with standard benchmarks
+node dist/cli.js run --v015 --scale medium
+
+# Select specific v0.1.5 benchmarks
+node dist/cli.js run --v015 --benchmarks api,dml
+```
+
+### New CLI Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--api <type>` | API type: cypher, javascript, both | cypher |
+| `--storage <type>` | Storage type: memory, file | memory |
+| `--v015` | Enable v0.1.5 benchmarks | false |
+| `--benchmarks <list>` | Comma-separated v0.1.5 benchmarks | all |
 
 ---
 
@@ -177,6 +218,11 @@ congraphdb-benchmark/
 │   │   ├── sqlite.ts    # Better-SQLite3 adapter
 │   │   ├── graphology.ts # Graphology adapter
 │   │   └── levelgraph.ts # LevelGraph adapter
+│   ├── benchmarks/      # v0.1.5 specialized benchmarks
+│   │   ├── api-comparison.ts  # Cypher vs JavaScript API
+│   │   ├── dml-operations.ts  # DML operations tests
+│   │   ├── persistence.ts      # Storage mode tests
+│   │   └── statistics.ts       # Query statistics overhead
 │   ├── core/
 │   │   ├── suite.ts     # Test suite executor
 │   │   └── recorder.ts  # Metrics & export
@@ -218,4 +264,4 @@ MIT
 
 ---
 
-*Last updated: 2025-03-16*
+*Last updated: 2026-03-17 (v0.1.5)*
