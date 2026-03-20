@@ -1,7 +1,7 @@
 # Benchmark Results
 
 
-> **Last Run:** March 18, 2026 | **Commit:** `5a7d330` | **Version:** 1.0.0
+> **Last Run:** March 20, 2026 | **Commit:** `872ce64` | **Version:** 1.0.0
 
 
 Detailed performance metrics comparing CongraphDB against competing graph databases.
@@ -18,10 +18,10 @@ Detailed performance metrics comparing CongraphDB against competing graph databa
 
 | Engine | Nodes/s | 3-hop | PageRank | Memory |
 |--------|-------:|-------:|-------:|-------:|
-| CongraphDB | 158,311 | 0.07 | 0.0s | 110MB |
-| SQLite | 17,683 | 3.139 | 1.6s | 119MB |
-| LevelGraph | 3,342 | 1.016 | 0.0s | 321MB |
-| Graphology | 18,502 | 6.857 | 0.1s | 339MB |
+| CongraphDB | 174,135 | 0.101 | 0.0s | 114MB |
+| SQLite | 19,122 | 3.057 | 1.5s | 124MB |
+| LevelGraph | 3,959 | 0.957 | 0.0s | 329MB |
+| Graphology | 24,564 | 8 | 0.1s | 341MB |
 
 
 ## Medium Dataset (100K nodes)
