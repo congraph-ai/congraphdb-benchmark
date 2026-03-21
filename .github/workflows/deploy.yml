@@ -33,7 +33,7 @@ jobs:
           npm install
 
       - name: Generate results pages
-        run: npm run generate-results
+        run: npm run docs:generate
 
       - name: Build documentation
         run: mkdocs build
