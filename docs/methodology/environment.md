@@ -119,7 +119,7 @@ dbms.connector.bolt.thread_pool_min_size=5
 Key production dependencies:
 ```json
 {
-  "congraphdb": "file:../congraphdb",
+  "congraphdb": "^0.1.6",
   "neo4j-driver": "^5.15.0",
   "graphology": "^0.25.4",
   "better-sqlite3": "^9.2.2"
