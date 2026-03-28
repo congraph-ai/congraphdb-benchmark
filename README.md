@@ -1,4 +1,4 @@
-# CongraphDB Performance Benchmark v0.1.6
+# CongraphDB Performance Benchmark v0.1.67
 
 <div align="center">
 
