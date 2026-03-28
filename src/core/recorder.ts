@@ -1,19 +1,19 @@
 import fs from 'fs/promises';
 import path from 'path';
-import { BenchmarkResult, EngineType, DataScale, APIComparisonResult, DMLTestResult, PersistenceResult, StatisticsResult } from '../types.js';
+import { BenchmarkResult, EngineType, DataScale, APIComparisonResult, DMLTestResult, PersistenceResult, StatisticsResult, VectorSearchResult, OptimizerResult, LogicalOptimizerResult } from '../types.js';
 
-// Type for v0.1.5 extended benchmark results
-interface V015Result {
+// Type for v0.1.6 extended benchmark results
+interface V016Result {
   benchmarkType: string;
   engine: EngineType;
   scale: DataScale;
   timestamp: number;
-  result: APIComparisonResult | DMLTestResult | PersistenceResult | StatisticsResult;
+  result: APIComparisonResult | DMLTestResult | PersistenceResult | StatisticsResult | VectorSearchResult | OptimizerResult | LogicalOptimizerResult;
 }
 
 export class MetricsRecorder {
   private results: Map<string, BenchmarkResult[]> = new Map();
-  private v015Results: Map<string, V015Result[]> = new Map();
+  private v016Results: Map<string, V016Result[]> = new Map();
 
   constructor(private resultsDir: string = './results') {}
 
@@ -174,47 +174,68 @@ export class MetricsRecorder {
     this.results.clear();
   }
 
-  // ==================== v0.1.5 New Recording Methods ====================
+  // ==================== v0.1.6 New Recording Methods ====================
 
   /**
    * Record API comparison results
    */
   recordAPIComparison(engine: EngineType, scale: DataScale, result: APIComparisonResult): void {
-    this.recordV015Result('api-comparison', engine, scale, result);
+    this.recordV016Result('api-comparison', engine, scale, result);
   }
 
   /**
    * Record DML operation results
    */
   recordDML(engine: EngineType, scale: DataScale, result: DMLTestResult): void {
-    this.recordV015Result('dml', engine, scale, result);
+    this.recordV016Result('dml', engine, scale, result);
   }
 
   /**
    * Record persistence benchmark results
    */
   recordPersistence(engine: EngineType, scale: DataScale, result: PersistenceResult): void {
-    this.recordV015Result('persistence', engine, scale, result);
+    this.recordV016Result('persistence', engine, scale, result);
   }
 
   /**
    * Record statistics benchmark results
    */
   recordStatistics(engine: EngineType, scale: DataScale, result: StatisticsResult): void {
-    this.recordV015Result('statistics', engine, scale, result);
+    this.recordV016Result('statistics', engine, scale, result);
   }
 
   /**
-   * Generic method to record v0.1.5 benchmark results
+   * Record vector search benchmark results
    */
-  private recordV015Result(
+  recordVectorSearch(engine: EngineType, scale: DataScale, result: VectorSearchResult): void {
+    this.recordV016Result('vector-search', engine, scale, result);
+  }
+
+  /**
+   * Record optimizer benchmark results
+   */
+  recordOptimizer(engine: EngineType, scale: DataScale, result: OptimizerResult): void {
+    this.recordV016Result('optimizer', engine, scale, result);
+  }
+
+  /**
+   * Record logical optimizer benchmark results
+   */
+  recordLogicalOptimizer(engine: EngineType, scale: DataScale, result: LogicalOptimizerResult): void {
+    this.recordV016Result('logical-optimizer', engine, scale, result);
+  }
+
+  /**
+   * Generic method to record v0.1.6 benchmark results
+   */
+  private recordV016Result(
     benchmarkType: string,
     engine: EngineType,
     scale: DataScale,
-    result: APIComparisonResult | DMLTestResult | PersistenceResult | StatisticsResult
+    result: APIComparisonResult | DMLTestResult | PersistenceResult | StatisticsResult | VectorSearchResult | OptimizerResult | LogicalOptimizerResult
   ): void {
     const key = `${engine}-${scale}-${benchmarkType}`;
-    const timestampedResult: V015Result = {
+    const timestampedResult: V016Result = {
       benchmarkType,
       engine,
       scale,
@@ -222,108 +243,157 @@ export class MetricsRecorder {
       result,
     };
 
-    // Store in separate v0.1.5 results map
-    const existing = this.v015Results.get(key) || [];
-    this.v015Results.set(key, [...existing, timestampedResult]);
+    // Store in separate v0.1.6 results map
+    const existing = this.v016Results.get(key) || [];
+    this.v016Results.set(key, [...existing, timestampedResult]);
   }
 
   /**
-   * Generate extended summary with v0.1.5 benchmarks
+   * Generate extended summary with v0.1.6 benchmarks
    */
   generateExtendedSummary(): string {
     const baseSummary = this.generateSummary();
-    let v015Summary = '\n## v0.1.5 Extended Benchmarks\n\n';
+    let v016Summary = '\n## v0.1.6 Extended Benchmarks\n\n';
 
-    // Get all v0.1.5 results
-    const v015Results = Array.from(this.v015Results.values())
+    // Get all v0.1.6 results
+    const v016Results = Array.from(this.v016Results.values())
       .flat();
 
-    if (v015Results.length === 0) {
+    if (v016Results.length === 0) {
       return baseSummary;
     }
 
     // Group by benchmark type
-    const byType = new Map<string, V015Result[]>();
-    for (const r of v015Results) {
+    const byType = new Map<string, V016Result[]>();
+    for (const r of v016Results) {
       const existing = byType.get(r.benchmarkType) || [];
       byType.set(r.benchmarkType, [...existing, r]);
     }
 
     // API Comparison
     if (byType.has('api-comparison')) {
-      v015Summary += '### API Comparison (Cypher vs JavaScript)\n\n';
-      v015Summary += '| Engine | Cypher Ops/s | JS Ops/s | Ratio |\n';
-      v015Summary += '|--------|--------------|----------|-------|\n';
+      v016Summary += '### API Comparison (Cypher vs JavaScript)\n\n';
+      v016Summary += '| Engine | Cypher Ops/s | JS Ops/s | Ratio |\n';
+      v016Summary += '|--------|--------------|----------|-------|\n';
 
       for (const r of byType.get('api-comparison')!) {
         const apiResult = r.result as APIComparisonResult;
-        v015Summary += `| ${r.engine} | ${apiResult.cypher.nodeCreateOps} | ${apiResult.javascript.nodeCreateOps} | ${apiResult.ratio.toFixed(2)}x |\n`;
+        v016Summary += `| ${r.engine} | ${apiResult.cypher.nodeCreateOps} | ${apiResult.javascript.nodeCreateOps} | ${apiResult.ratio.toFixed(2)}x |\n`;
       }
-      v015Summary += '\n';
+      v016Summary += '\n';
     }
 
     // DML Operations
     if (byType.has('dml')) {
-      v015Summary += '### DML Operations\n\n';
-      v015Summary += '| Engine | SET (ops/s) | DELETE (ops/s) | MERGE (ops/s) | REMOVE (ops/s) |\n';
-      v015Summary += '|--------|------------|---------------|---------------|----------------|\n';
+      v016Summary += '### DML Operations\n\n';
+      v016Summary += '| Engine | SET (ops/s) | DELETE (ops/s) | MERGE (ops/s) | REMOVE (ops/s) |\n';
+      v016Summary += '|--------|------------|---------------|---------------|----------------|\n';
 
       for (const r of byType.get('dml')!) {
         const dml = r.result as DMLTestResult;
-        v015Summary += `| ${r.engine} | ${dml.set.opsPerSecond} | ${dml.delete.opsPerSecond} | `;
-        v015Summary += `${dml.merge.opsPerSecond} | ${dml.remove.opsPerSecond} |\n`;
+        v016Summary += `| ${r.engine} | ${dml.set.opsPerSecond} | ${dml.delete.opsPerSecond} | `;
+        v016Summary += `${dml.merge.opsPerSecond} | ${dml.remove.opsPerSecond} |\n`;
       }
-      v015Summary += '\n';
+      v016Summary += '\n';
     }
 
     // Persistence
     if (byType.has('persistence')) {
-      v015Summary += '### Persistence & Storage\n\n';
-      v015Summary += '| Engine | Mode | I/O Overhead | Checkpoint (ms) | Recovery (ms) |\n';
-      v015Summary += '|--------|------|--------------|----------------|---------------|\n';
+      v016Summary += '### Persistence & Storage\n\n';
+      v016Summary += '| Engine | Mode | I/O Overhead | Checkpoint (ms) | Recovery (ms) |\n';
+      v016Summary += '|--------|------|--------------|----------------|---------------|\n';
 
       for (const r of byType.get('persistence')!) {
         const p = r.result as PersistenceResult;
-        v015Summary += `| ${r.engine} | ${p.mode} | ${p.ioOverheadPercent}% | ${p.checkpointTimeMs} | `;
-        v015Summary += `${p.recoveryTimeMs || 'N/A'} |\n`;
+        v016Summary += `| ${r.engine} | ${p.mode} | ${p.ioOverheadPercent}% | ${p.checkpointTimeMs} | `;
+        v016Summary += `${p.recoveryTimeMs || 'N/A'} |\n`;
       }
-      v015Summary += '\n';
+      v016Summary += '\n';
     }
 
     // Statistics
     if (byType.has('statistics')) {
-      v015Summary += '### Query Statistics Overhead\n\n';
-      v015Summary += '| Engine | Stats Enabled (ms) | Stats Disabled (ms) | Overhead % |\n';
-      v015Summary += '|--------|-------------------|--------------------|------------|\n';
+      v016Summary += '### Query Statistics Overhead\n\n';
+      v016Summary += '| Engine | Stats Enabled (ms) | Stats Disabled (ms) | Overhead % |\n';
+      v016Summary += '|--------|-------------------|--------------------|------------|\n';
 
       for (const r of byType.get('statistics')!) {
         const s = r.result as StatisticsResult;
-        v015Summary += `| ${r.engine} | ${s.statsEnabledTimeMs} | ${s.statsDisabledTimeMs} | ${s.overheadPercent}% |\n`;
+        v016Summary += `| ${r.engine} | ${s.statsEnabledTimeMs} | ${s.statsDisabledTimeMs} | ${s.overheadPercent}% |\n`;
       }
-      v015Summary += '\n';
+      v016Summary += '\n';
     }
 
-    return baseSummary + v015Summary;
+    // Vector Search (NEW in v0.1.6)
+    if (byType.has('vector-search')) {
+      v016Summary += '### Vector Search (HNSW Index)\n\n';
+      v016Summary += '| Engine | Dimension | Index Type | Build Time (ms) | QPS | Recall | Index Size (KB) |\n';
+      v016Summary += '|--------|-----------|------------|-----------------|-----|--------|----------------|\n';
+
+      for (const r of byType.get('vector-search')!) {
+        const v = r.result as VectorSearchResult;
+        v016Summary += `| ${r.engine} | ${v.vectorDimension} | ${v.indexType} | ${v.buildTimeMs} | `;
+        v016Summary += `${v.queriesPerSecond} | ${v.recall.toFixed(3)} | ${(v.indexSizeBytes / 1024).toFixed(2)} |\n`;
+      }
+      v016Summary += '\n';
+    }
+
+    // Optimizer (NEW in v0.1.6)
+    if (byType.has('optimizer')) {
+      v016Summary += '### Query Optimizer (CBO vs RBO)\n\n';
+      v016Summary += '| Engine | Type | Query Time (ms) | Planning (ms) | Execution (ms) | Improvement % |\n';
+      v016Summary += '|--------|------|-----------------|---------------|-----------------|---------------|\n';
+
+      for (const r of byType.get('optimizer')!) {
+        const o = r.result as OptimizerResult;
+        v016Summary += `| ${r.engine} | ${o.optimizerType} | ${o.queryTimeMs} | `;
+        v016Summary += `${o.planningTimeMs} | ${o.executionTimeMs} | ${o.improvementPercent > 0 ? '+' : ''}${o.improvementPercent}% |\n`;
+      }
+      v016Summary += '\n';
+    }
+
+    // Logical Optimizer (NEW in v0.1.6)
+    if (byType.has('logical-optimizer')) {
+      v016Summary += '### Logical Optimizer Features\n\n';
+      v016Summary += '| Engine | Predicate Pushdown (ms) | Projection Pruning (ms) | Constant Folding (ms) | Total (ms) |\n';
+      v016Summary += '|--------|------------------------|------------------------|----------------------|------------|\n';
+
+      for (const r of byType.get('logical-optimizer')!) {
+        const lo = r.result as LogicalOptimizerResult;
+        v016Summary += `| ${r.engine} | ${lo.predicatePushdownTimeMs} | ${lo.projectionPruningTimeMs} | `;
+        v016Summary += `${lo.constantFoldingTimeMs} | ${lo.totalTimeMs} |\n`;
+      }
+      v016Summary += '\n';
+    }
+
+    return baseSummary + v016Summary;
   }
 
   /**
-   * Export v0.1.5 results to separate JSON file
+   * Export v0.1.6 results to separate JSON file
    */
-  async exportV015ToJSON(filename?: string): Promise<string> {
-    const v015Results = Array.from(this.v015Results.values())
+  async exportV016ToJSON(filename?: string): Promise<string> {
+    const v016Results = Array.from(this.v016Results.values())
       .flat();
 
-    if (v015Results.length === 0) {
-      throw new Error('No v0.1.5 results to export');
+    if (v016Results.length === 0) {
+      throw new Error('No v0.1.6 results to export');
     }
 
     const filepath = filename || path.join(
       this.resultsDir,
-      `benchmark-v015-${Date.now()}.json`
+      `benchmark-v016-${Date.now()}.json`
     );
 
     await fs.mkdir(this.resultsDir, { recursive: true });
-    await fs.writeFile(filepath, JSON.stringify(v015Results, null, 2));
+    await fs.writeFile(filepath, JSON.stringify(v016Results, null, 2));
     return filepath;
+  }
+
+  /**
+   * Export v0.1.5 results to separate JSON file (deprecated - use exportV016ToJSON)
+   */
+  async exportV015ToJSON(filename?: string): Promise<string> {
+    return this.exportV016ToJSON(filename);
   }
 }

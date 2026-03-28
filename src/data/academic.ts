@@ -46,6 +46,12 @@ export class AcademicNetworkGenerator {
     const nodes: Node[] = [];
     const { nodes: count } = config;
 
+    // Progress logging
+    const progressInterval = Math.floor(count / 10);
+    let lastProgress = 0;
+
+    console.log(`   Starting to generate ${count} nodes...`);
+
     for (let i = 0; i < count; i++) {
       const category = this.randomElement(this.categories);
       const year = 2010 + Math.floor(this.seededRandom() * 15);
@@ -63,6 +69,13 @@ export class AcademicNetworkGenerator {
           citationCount: Math.floor(this.seededRandom() * 100),
         },
       });
+
+      // Log progress with console.log instead of process.stdout.write
+      if (i - lastProgress >= progressInterval || i === count - 1) {
+        const percent = Math.floor(((i + 1) / count) * 100);
+        console.log(`   Generating nodes: ${percent}% (${(i + 1).toLocaleString()}/${count.toLocaleString()})`);
+        lastProgress = i;
+      }
     }
 
     return nodes;
@@ -76,6 +89,9 @@ export class AcademicNetworkGenerator {
     const edges: Edge[] = [];
     const { nodes: nodeCount, edges: edgeCount } = config;
     const citationProbability = new Array(nodeCount).fill(1);
+
+    // Use a Set for O(1) edge existence check instead of O(n) linear search
+    const edgeSet = new Set<string>();
 
     let edgeId = 0;
     let attempts = 0;
@@ -91,7 +107,8 @@ export class AcademicNetworkGenerator {
       // Preferential attachment: papers with more citations get more citations
       const target = this.weightedRandomSelect(citationProbability);
 
-      if (source !== target && !this.edgeExists(edges, `paper_${source}`, `paper_${target}`)) {
+      const edgeKey = `${source}-${target}`;
+      if (source !== target && !edgeSet.has(edgeKey)) {
         edges.push({
           id: `cites_${edgeId++}`,
           source: `paper_${source}`,
@@ -101,6 +118,7 @@ export class AcademicNetworkGenerator {
             timestamp: 2010 + Math.floor(this.seededRandom() * 15),
           },
         });
+        edgeSet.add(edgeKey);
         citationProbability[target]++;
       }
     }
@@ -118,18 +136,77 @@ export class AcademicNetworkGenerator {
     return weights.length - 1;
   }
 
-  private edgeExists(edges: Edge[], source: string, target: string): boolean {
-    return edges.some(e => e.source === source && e.target === target);
-  }
-
   /**
    * Generate complete dataset for a given scale
    */
   generateDataset(scale: keyof typeof DATA_SCALES): { nodes: Node[]; edges: Edge[] } {
     const config = DATA_SCALES[scale];
-    return {
-      nodes: this.generateNodes(config),
-      edges: this.generateEdges(config),
-    };
+    console.log(`   Config: ${config.nodes.toLocaleString()} nodes, ${config.edges.toLocaleString()} edges`);
+
+    // Generate nodes
+    console.log('   Starting node generation...');
+    const nodes = this.generateNodes(config);
+    console.log('   Node generation complete');
+
+    // Generate edges with progress logging
+    console.log('   Starting edge generation...');
+    const edges = this.generateEdgesWithProgress(config);
+    console.log('   Edge generation complete');
+
+    return { nodes, edges };
+  }
+
+  /**
+   * Generate edges with progress logging
+   */
+  private generateEdgesWithProgress(config: DataScaleConfig): Edge[] {
+    const edges: Edge[] = [];
+    const { nodes: nodeCount, edges: edgeCount } = config;
+    const citationProbability = new Array(nodeCount).fill(1);
+
+    // Use a Set for O(1) edge existence check
+    const edgeSet = new Set<string>();
+
+    let edgeId = 0;
+    let attempts = 0;
+    const maxAttempts = edgeCount * 10;
+
+    // Progress logging - more frequent for large datasets
+    const progressInterval = Math.max(Math.floor(edgeCount / 20), 1000);
+    let lastProgress = 0;
+
+    console.log(`   Starting to generate ${edgeCount} edges...`);
+
+    while (edges.length < edgeCount && attempts < maxAttempts) {
+      attempts++;
+
+      const sourceOffset = Math.floor(Math.pow(this.seededRandom(), 0.3) * nodeCount);
+      const source = nodeCount - 1 - sourceOffset;
+      const target = this.weightedRandomSelect(citationProbability);
+
+      const edgeKey = `${source}-${target}`;
+      if (source !== target && !edgeSet.has(edgeKey)) {
+        edges.push({
+          id: `cites_${edgeId++}`,
+          source: `paper_${source}`,
+          target: `paper_${target}`,
+          label: 'CITES',
+          properties: {
+            timestamp: 2010 + Math.floor(this.seededRandom() * 15),
+          },
+        });
+        edgeSet.add(edgeKey);
+        citationProbability[target]++;
+
+        // Log progress with console.log
+        if (edges.length - lastProgress >= progressInterval) {
+          const percent = Math.floor((edges.length / edgeCount) * 100);
+          console.log(`   Generating edges: ${percent}% (${edges.length.toLocaleString()}/${edgeCount.toLocaleString()})`);
+          lastProgress = edges.length;
+        }
+      }
+    }
+
+    return edges;
   }
 }

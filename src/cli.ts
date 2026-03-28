@@ -36,11 +36,11 @@ program
   .option('-s, --scale <scale>', 'Data scale: small, medium, or large', 'medium')
   .option('-o, --output <format>', 'Output format: json, csv, or both', 'both')
   .option('-v, --verbose', 'Verbose output', false)
-  // v0.1.5 options
+  // v0.1.6 options
   .option('--api <apiType>', 'API type to benchmark: cypher, javascript, or both', 'cypher')
   .option('--storage <storageType>', 'Storage type: memory or file', 'memory')
-  .option('--v015', 'Enable v0.1.5 extended benchmarks (API comparison, DML, persistence, statistics)', false)
-  .option('--benchmarks <benchmarks>', 'Comma-separated list of v0.1.5 benchmarks: api,dml,persistence,statistics', 'all')
+  .option('--v016', 'Enable v0.1.6 extended benchmarks (API comparison, DML, persistence, statistics, vector, optimizer)', false)
+  .option('--benchmarks <benchmarks>', 'Comma-separated list of v0.1.6 benchmarks: api,dml,persistence,statistics,vector,optimizer', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -61,8 +61,8 @@ async function runBenchmarks(options: any) {
     verbose,
     api: apiType,
     storage: storageType,
-    v015: enableV015,
-    benchmarks: v015Benchmarks
+    v016: enableV016,
+    benchmarks: v016Benchmarks
   } = options;
 
   // Validate scale
@@ -89,18 +89,18 @@ async function runBenchmarks(options: any) {
   // Parse engines
   const engines = parseEngines(enginesList);
 
-  // Parse v0.1.5 benchmarks
-  const enabledBenchmarks = parseV015Benchmarks(v015Benchmarks, enableV015);
+  // Parse v0.1.6 benchmarks
+  const enabledBenchmarks = parseV016Benchmarks(v016Benchmarks, enableV016);
 
-  console.log('🔬 CongraphDB Benchmark Suite v0.1.5');
+  console.log('🔬 CongraphDB Benchmark Suite v0.1.6');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
   console.log(`API: ${api.toUpperCase()}`);
   console.log(`Storage: ${storage.toUpperCase()}`);
   console.log(`Engines: ${engines.join(', ')}`);
 
-  if (enableV015) {
-    console.log(`\n🎯 v0.1.5 Benchmarks: ${enabledBenchmarks.join(', ')}`);
+  if (enableV016) {
+    console.log(`\n🎯 v0.1.6 Benchmarks: ${enabledBenchmarks.join(', ')}`);
   }
   console.log('');
 
@@ -109,8 +109,14 @@ async function runBenchmarks(options: any) {
 
   // Generate dataset
   console.log('📊 Generating dataset...');
+  // Flush to ensure message appears
+  if (process.stdout.write) process.stdout.write('\n');
+
+  const startTime = Date.now();
   const { nodes, edges } = generator.generateDataset(scale);
-  console.log(`   Generated ${nodes.length.toLocaleString()} nodes, ${edges.length.toLocaleString()} edges\n`);
+  const elapsed = Date.now() - startTime;
+
+  console.log(`\n   Generated ${nodes.length.toLocaleString()} nodes, ${edges.length.toLocaleString()} edges in ${(elapsed / 1000).toFixed(2)}s\n`);
 
   const config: SuiteConfig = {
     scale,
@@ -123,6 +129,8 @@ async function runBenchmarks(options: any) {
     enableDML: enabledBenchmarks.includes('dml'),
     enablePersistence: enabledBenchmarks.includes('persistence'),
     enableStatistics: enabledBenchmarks.includes('statistics'),
+    enableVector: enabledBenchmarks.includes('vector'),
+    enableOptimizer: enabledBenchmarks.includes('optimizer'),
   };
 
   // Run benchmarks for each engine
@@ -134,9 +142,9 @@ async function runBenchmarks(options: any) {
       // Run standard benchmarks
       await suite.run(nodes, edges);
 
-      // Run v0.1.5 benchmarks if enabled
-      if (enableV015) {
-        await suite.runV015Benchmarks();
+      // Run v0.1.6 benchmarks if enabled
+      if (enableV016) {
+        await suite.runV016Benchmarks();
       }
     } catch (error: any) {
       if (error?.code === 'ERR_MODULE_NOT_FOUND' || error?.message?.includes('bindings')) {
@@ -166,13 +174,13 @@ async function runBenchmarks(options: any) {
       console.log(`   CSV: ${csvPath}`);
     }
 
-    // Export v0.1.5 results if enabled
-    if (enableV015) {
-      const v015JsonPath = await recorder.exportV015ToJSON();
-      console.log(`   v0.1.5 JSON: ${v015JsonPath}`);
+    // Export v0.1.6 results if enabled
+    if (enableV016) {
+      const v016JsonPath = await recorder.exportV016ToJSON();
+      console.log(`   v0.1.6 JSON: ${v016JsonPath}`);
     }
 
-    console.log('\n' + (enableV015 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
+    console.log('\n' + (enableV016 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -211,10 +219,10 @@ function validateStorageType(storage: string): 'memory' | 'file' | null {
   return null;
 }
 
-function parseV015Benchmarks(benchmarks: string, enableV015: boolean): string[] {
-  if (!enableV015) return [];
+function parseV016Benchmarks(benchmarks: string, enableV016: boolean): string[] {
+  if (!enableV016) return [];
 
-  const validBenchmarks = ['api', 'dml', 'persistence', 'statistics'];
+  const validBenchmarks = ['api', 'dml', 'persistence', 'statistics', 'vector', 'optimizer'];
 
   if (benchmarks === 'all') {
     return validBenchmarks;

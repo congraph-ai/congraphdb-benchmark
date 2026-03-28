@@ -121,6 +121,38 @@ export interface StatisticsResult {
   overheadPercent: number;
 }
 
+// v0.1.6 New result types
+
+export interface VectorSearchResult {
+  vectorDimension: number;
+  indexType: 'HNSW' | 'IVF' | 'brute-force';
+  buildTimeMs: number;
+  searchK: number;
+  queriesPerSecond: number;
+  recall: number;
+  indexSizeBytes: number;
+}
+
+export interface OptimizerResult {
+  optimizerType: 'rule-based' | 'cost-based';
+  predicatePushdown: boolean;
+  projectionPruning: boolean;
+  constantFolding: boolean;
+  queryTimeMs: number;
+  planningTimeMs: number;
+  executionTimeMs: number;
+  improvementPercent: number; // vs rule-based
+}
+
+export interface LogicalOptimizerResult {
+  predicatePushdownTimeMs: number;
+  projectionPruningTimeMs: number;
+  constantFoldingTimeMs: number;
+  totalTimeMs: number;
+  rowsFilteredEarly: number;
+  columnsPruned: number;
+}
+
 // Extended test results with v0.1.5 additions
 export interface ExtendedTestResults extends TestResults {
   // Optional new benchmark categories
@@ -128,6 +160,10 @@ export interface ExtendedTestResults extends TestResults {
   persistence?: PersistenceResult;
   statistics?: StatisticsResult;
   apiComparison?: APIComparisonResult;
+  // v0.1.6 additions
+  vectorSearch?: VectorSearchResult;
+  optimizer?: OptimizerResult;
+  logicalOptimizer?: LogicalOptimizerResult;
 }
 
 export interface BenchmarkConfig {
@@ -157,4 +193,10 @@ export interface EngineAdapter {
   dmlRemove?(nodeId: string, property: string): Promise<number>;
   checkpoint?(): Promise<number>;
   withStatistics?(enabled: boolean): void;
+
+  // v0.1.6 optional methods for vector search and optimizer benchmarks
+  createVectorIndex?(dimension: number, indexType: 'HNSW' | 'IVF'): Promise<number>;
+  vectorSearch?(queryVector: number[], k: number): Promise<{ id: string; score: number }[]>;
+  withOptimizer?(type: 'rule-based' | 'cost-based'): void;
+  withLogicalOptimizations?(options: { predicatePushdown?: boolean; projectionPruning?: boolean; constantFolding?: boolean }): void;
 }

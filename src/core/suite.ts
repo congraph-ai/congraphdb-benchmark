@@ -1,11 +1,13 @@
 import { EngineAdapter, Node, Edge, BenchmarkResult, DataScale, TraversalResult, BenchmarkConfig, ExtendedTestResults, APIType, StorageType } from '../types.js';
 import { MetricsRecorder } from './recorder.js';
 
-// Import v0.1.5 benchmark modules
+// Import v0.1.6 benchmark modules
 import { APIComparisonBenchmark } from '../benchmarks/api-comparison.js';
 import { DMLOperationsBenchmark } from '../benchmarks/dml-operations.js';
 import { PersistenceBenchmark, PersistenceEngineAdapter } from '../benchmarks/persistence.js';
 import { StatisticsBenchmark, StatisticsEngineAdapter } from '../benchmarks/statistics.js';
+import { VectorSearchBenchmark } from '../benchmarks/vector-search.js';
+import { OptimizerBenchmark } from '../benchmarks/optimizer.js';
 
 export interface SuiteConfig extends Omit<BenchmarkConfig, 'api' | 'storage' | 'warmup'> {
   // Keep old fields for backward compatibility
@@ -13,16 +15,18 @@ export interface SuiteConfig extends Omit<BenchmarkConfig, 'api' | 'storage' | '
   traversalIterations: number;
   pagerankIterations: number;
 
-  // v0.1.5 new fields - override with optional versions
+  // v0.1.6 new fields - override with optional versions
   api?: APIType;
   storage?: StorageType;
   warmup?: boolean;
 
-  // Enable/disable v0.1.5 benchmarks
+  // Enable/disable v0.1.6 benchmarks
   enableAPIComparison?: boolean;
   enableDML?: boolean;
   enablePersistence?: boolean;
   enableStatistics?: boolean;
+  enableVector?: boolean;
+  enableOptimizer?: boolean;
 }
 
 export class BenchmarkSuite {
@@ -247,17 +251,66 @@ export class BenchmarkSuite {
   }
 
   /**
-   * Run all v0.1.5 benchmarks
+   * Run all v0.1.6 benchmarks
    */
-  async runV015Benchmarks(javascriptEngine?: EngineAdapter | null): Promise<void> {
-    console.log('\n🎯 Running v0.1.5 Benchmark Suite');
+  async runV016Benchmarks(javascriptEngine?: EngineAdapter | null): Promise<void> {
+    console.log('\n🎯 Running v0.1.6 Benchmark Suite');
     console.log('='.repeat(60));
 
     await this.runAPIComparison(javascriptEngine || null);
     await this.runDMLBenchmark();
     await this.runPersistenceBenchmark();
     await this.runStatisticsBenchmark();
+    await this.runVectorBenchmark();
+    await this.runOptimizerBenchmark();
 
-    console.log('\n✅ v0.1.5 benchmarks complete');
+    console.log('\n✅ v0.1.6 benchmarks complete');
+  }
+
+  /**
+   * Run Vector Search benchmark
+   */
+  async runVectorBenchmark(): Promise<void> {
+    if (!this.config.enableVector) {
+      return;
+    }
+
+    const vectorBench = new VectorSearchBenchmark({
+      dimension: 128,
+      numVectors: 10000,
+      numQueries: 100,
+      searchK: 10
+    });
+    const result = await vectorBench.run(this.engine);
+    if (result) {
+      this.recorder.recordVectorSearch(this.engine.name, this.config.scale, result);
+    }
+  }
+
+  /**
+   * Run Optimizer benchmark
+   */
+  async runOptimizerBenchmark(): Promise<void> {
+    if (!this.config.enableOptimizer) {
+      return;
+    }
+
+    const optimizerBench = new OptimizerBenchmark({ iterations: 10 });
+    const result = await optimizerBench.run(this.engine);
+    if (result) {
+      this.recorder.recordOptimizer(this.engine.name, this.config.scale, result);
+    }
+
+    const logicalResult = await optimizerBench.runLogical(this.engine);
+    if (logicalResult) {
+      this.recorder.recordLogicalOptimizer(this.engine.name, this.config.scale, logicalResult);
+    }
+  }
+
+  /**
+   * Run all v0.1.5 benchmarks (deprecated - use runV016Benchmarks)
+   */
+  async runV015Benchmarks(javascriptEngine?: EngineAdapter | null): Promise<void> {
+    await this.runV016Benchmarks(javascriptEngine);
   }
 }

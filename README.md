@@ -38,7 +38,7 @@
 
 ## v0.1.6 Features
 
-**New in v0.1.6**: Extended benchmarks for CongraphDB's latest features including:
+**New in v0.1.6**: Extended benchmarks for CongraphDB's latest features based on architecture review:
 
 | Benchmark | Description | Metrics |
 |-----------|-------------|---------|
@@ -46,6 +46,18 @@
 | 🔧 **DML Operations** | SET, DELETE, MERGE, REMOVE | ops/s, affected rows |
 | 💾 **Persistence** | In-memory vs File-based storage | I/O overhead, checkpoint time |
 | 📊 **Query Statistics** | Statistics tracking overhead | enabled vs disabled time |
+| 🔶 **Vector Search** | HNSW index for ANN search | build time, QPS, recall |
+| 🚀 **Query Optimizer** | Cost-Based vs Rule-Based | query time, planning time |
+
+### Architecture Highlights
+
+CongraphDB v0.1.6 introduces significant architectural improvements:
+
+- **Modular Query Engine**: Separated Parser, Binder, Planner, and Executor layers
+- **Logical Optimizations**: Predicate pushdown, projection pruning, constant folding
+- **Cost-Based Optimizer (CBO)**: Statistics-driven query optimization
+- **Vector Search**: HNSW index support for AI/RAG applications
+- **Storage Abstraction**: Pluggable storage backends
 
 ### Running v0.1.6 Benchmarks
 
@@ -58,12 +70,14 @@ npm run benchmark:api          # API Comparison
 npm run benchmark:dml          # DML Operations
 npm run benchmark:persistence  # Persistence & Storage
 npm run benchmark:statistics   # Query Statistics
+npm run benchmark:vector       # Vector Search (NEW)
+npm run benchmark:optimizer    # Query Optimizer (NEW)
 
 # Combine with standard benchmarks
 node dist/cli.js run --v016 --scale medium
 
 # Select specific v0.1.6 benchmarks
-node dist/cli.js run --v015 --benchmarks api,dml
+node dist/cli.js run --v016 --benchmarks api,dml,vector,optimizer
 ```
 
 ### New CLI Options
@@ -222,7 +236,9 @@ congraphdb-benchmark/
 │   │   ├── api-comparison.ts  # Cypher vs JavaScript API
 │   │   ├── dml-operations.ts  # DML operations tests
 │   │   ├── persistence.ts      # Storage mode tests
-│   │   └── statistics.ts       # Query statistics overhead
+│   │   ├── statistics.ts       # Query statistics overhead
+│   │   ├── vector-search.ts    # HNSW vector search benchmarks (NEW)
+│   │   └── optimizer.ts        # Query optimizer benchmarks (NEW)
 │   ├── core/
 │   │   ├── suite.ts     # Test suite executor
 │   │   └── recorder.ts  # Metrics & export
