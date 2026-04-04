@@ -1,14 +1,14 @@
-# CongraphDB Performance Benchmark v0.1.67
+# CongraphDB Performance Benchmark v0.1.98
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.6-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
+[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.8-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
 
-**A comprehensive benchmark suite comparing [CongraphDB v0.1.6](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
+**A comprehensive benchmark suite comparing [CongraphDB v0.1.8](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
 
-[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.6 Features](#v016-features)
+[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.8 Features](#v018-features)
 
 </div>
 
@@ -36,58 +36,49 @@
 
 ---
 
-## v0.1.6 Features
+## v0.1.8 Features
 
-**New in v0.1.6**: Extended benchmarks for CongraphDB's latest features based on architecture review:
+**New in v0.1.8**: Extended benchmarks for CongraphDB's latest features including OCC, Schema API, and Graph Algorithms:
 
 | Benchmark | Description | Metrics |
 |-----------|-------------|---------|
-| 🔷 **API Comparison** | Cypher vs JavaScript-Native API | ops/s, latency ratio |
-| 🔧 **DML Operations** | SET, DELETE, MERGE, REMOVE | ops/s, affected rows |
-| 💾 **Persistence** | In-memory vs File-based storage | I/O overhead, checkpoint time |
-| 📊 **Query Statistics** | Statistics tracking overhead | enabled vs disabled time |
-| 🔶 **Vector Search** | HNSW index for ANN search | build time, QPS, recall |
-| 🚀 **Query Optimizer** | Cost-Based vs Rule-Based | query time, planning time |
+| 🔄 **OCC Concurrency** | Optimistic Concurrency Control | conflict_rate, retries/sec, throughput |
+| 🔶 **Schema API** | JavaScript Schema Operations | tables/sec, indexes/sec, ensureSchema |
+| 📊 **Graph Algorithms** | PageRank, Community Detection, Traversal | algorithm_time_ms, result_count |
 
-### Architecture Highlights
+### Algorithm Benchmarks
 
-CongraphDB v0.1.6 introduces significant architectural improvements:
+| Category | Algorithms |
+|----------|------------|
+| **Centrality** | PageRank, Betweenness, Closeness, Degree |
+| **Community Detection** | Louvain, Leiden, Spectral, SLPA, Infomap, Label Propagation |
+| **Traversal** | BFS, DFS, Dijkstra |
+| **Analytics** | Triangle Count, Connected Components, SCC |
 
-- **Modular Query Engine**: Separated Parser, Binder, Planner, and Executor layers
-- **Logical Optimizations**: Predicate pushdown, projection pruning, constant folding
-- **Cost-Based Optimizer (CBO)**: Statistics-driven query optimization
-- **Vector Search**: HNSW index support for AI/RAG applications
-- **Storage Abstraction**: Pluggable storage backends
-
-### Running v0.1.6 Benchmarks
+### Running v0.1.8 Benchmarks
 
 ```bash
-# Run all v0.1.6 benchmarks
-npm run benchmark:v016
+# Run all v0.1.8 benchmarks
+npm run benchmark:v018
 
-# Run specific v0.1.6 benchmark
-npm run benchmark:api          # API Comparison
-npm run benchmark:dml          # DML Operations
-npm run benchmark:persistence  # Persistence & Storage
-npm run benchmark:statistics   # Query Statistics
-npm run benchmark:vector       # Vector Search (NEW)
-npm run benchmark:optimizer    # Query Optimizer (NEW)
+# Run specific v0.1.8 benchmark
+npm run benchmark:occ      # OCC Concurrency
+npm run benchmark:schema   # Schema API
+npm run benchmark:algorithms  # Graph Algorithms
 
 # Combine with standard benchmarks
-node dist/cli.js run --v016 --scale medium
+node dist/cli.js run --v018 --scale medium
 
-# Select specific v0.1.6 benchmarks
-node dist/cli.js run --v016 --benchmarks api,dml,vector,optimizer
+# Select specific v0.1.8 benchmarks
+node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
 ```
 
 ### New CLI Options
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--api <type>` | API type: cypher, javascript, both | cypher |
-| `--storage <type>` | Storage type: memory, file | memory |
-| `--v016` | Enable v0.1.6 benchmarks | false |
-| `--benchmarks <list>` | Comma-separated v0.1.6 benchmarks | all |
+| `--v018` | Enable v0.1.8 benchmarks | false |
+| `--v018-benchmarks <list>` | Comma-separated v0.1.8 benchmarks | all |
 
 ---
 
@@ -232,7 +223,7 @@ congraphdb-benchmark/
 │   │   ├── sqlite.ts    # Better-SQLite3 adapter
 │   │   ├── graphology.ts # Graphology adapter
 │   │   └── levelgraph.ts # LevelGraph adapter
-│   ├── benchmarks/      # v0.1.6 specialized benchmarks
+│   ├── benchmarks/      # v0.1.9 specialized benchmarks
 │   │   ├── api-comparison.ts  # Cypher vs JavaScript API
 │   │   ├── dml-operations.ts  # DML operations tests
 │   │   ├── persistence.ts      # Storage mode tests
@@ -280,4 +271,4 @@ MIT
 
 ---
 
-*Last updated: 2026-03-21 (v0.1.6)*
+*Last updated: 2026-03-21 (v0.1.9)*

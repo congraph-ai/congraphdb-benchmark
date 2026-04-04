@@ -41,6 +41,9 @@ program
   .option('--storage <storageType>', 'Storage type: memory or file', 'memory')
   .option('--v016', 'Enable v0.1.6 extended benchmarks (API comparison, DML, persistence, statistics, vector, optimizer)', false)
   .option('--benchmarks <benchmarks>', 'Comma-separated list of v0.1.6 benchmarks: api,dml,persistence,statistics,vector,optimizer', 'all')
+  // v0.1.8 options
+  .option('--v018', 'Enable v0.1.8 benchmarks (OCC, Schema API, Algorithms)', false)
+  .option('--v018-benchmarks <benchmarks>', 'Comma-separated list of v0.1.8 benchmarks: occ,schema,algorithms', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -62,7 +65,9 @@ async function runBenchmarks(options: any) {
     api: apiType,
     storage: storageType,
     v016: enableV016,
-    benchmarks: v016Benchmarks
+    benchmarks: v016Benchmarks,
+    v018: enableV018,
+    'v018-benchmarks': v018Benchmarks
   } = options;
 
   // Validate scale
@@ -90,9 +95,12 @@ async function runBenchmarks(options: any) {
   const engines = parseEngines(enginesList);
 
   // Parse v0.1.6 benchmarks
-  const enabledBenchmarks = parseV016Benchmarks(v016Benchmarks, enableV016);
+  const enabledV016Benchmarks = parseV016Benchmarks(v016Benchmarks, enableV016);
 
-  console.log('🔬 CongraphDB Benchmark Suite v0.1.6');
+  // Parse v0.1.8 benchmarks
+  const enabledV018Benchmarks = parseV018Benchmarks(v018Benchmarks, enableV018);
+
+  console.log('🔬 CongraphDB Benchmark Suite v0.1.8');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
   console.log(`API: ${api.toUpperCase()}`);
@@ -100,7 +108,10 @@ async function runBenchmarks(options: any) {
   console.log(`Engines: ${engines.join(', ')}`);
 
   if (enableV016) {
-    console.log(`\n🎯 v0.1.6 Benchmarks: ${enabledBenchmarks.join(', ')}`);
+    console.log(`\n🎯 v0.1.6 Benchmarks: ${enabledV016Benchmarks.join(', ')}`);
+  }
+  if (enableV018) {
+    console.log(`\n🎯 v0.1.8 Benchmarks: ${enabledV018Benchmarks.join(', ')}`);
   }
   console.log('');
 
@@ -125,12 +136,16 @@ async function runBenchmarks(options: any) {
     api,
     storage,
     warmup: false,
-    enableAPIComparison: enabledBenchmarks.includes('api'),
-    enableDML: enabledBenchmarks.includes('dml'),
-    enablePersistence: enabledBenchmarks.includes('persistence'),
-    enableStatistics: enabledBenchmarks.includes('statistics'),
-    enableVector: enabledBenchmarks.includes('vector'),
-    enableOptimizer: enabledBenchmarks.includes('optimizer'),
+    enableAPIComparison: enabledV016Benchmarks.includes('api'),
+    enableDML: enabledV016Benchmarks.includes('dml'),
+    enablePersistence: enabledV016Benchmarks.includes('persistence'),
+    enableStatistics: enabledV016Benchmarks.includes('statistics'),
+    enableVector: enabledV016Benchmarks.includes('vector'),
+    enableOptimizer: enabledV016Benchmarks.includes('optimizer'),
+    // v0.1.8 benchmarks
+    enableOCC: enabledV018Benchmarks.includes('occ'),
+    enableSchemaAPI: enabledV018Benchmarks.includes('schema'),
+    enableAlgorithms: enabledV018Benchmarks.includes('algorithms'),
   };
 
   // Run benchmarks for each engine
@@ -145,6 +160,11 @@ async function runBenchmarks(options: any) {
       // Run v0.1.6 benchmarks if enabled
       if (enableV016) {
         await suite.runV016Benchmarks();
+      }
+
+      // Run v0.1.8 benchmarks if enabled
+      if (enableV018) {
+        await suite.runV018Benchmarks();
       }
     } catch (error: any) {
       if (error?.code === 'ERR_MODULE_NOT_FOUND' || error?.message?.includes('bindings')) {
@@ -180,7 +200,13 @@ async function runBenchmarks(options: any) {
       console.log(`   v0.1.6 JSON: ${v016JsonPath}`);
     }
 
-    console.log('\n' + (enableV016 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
+    // Export v0.1.8 results if enabled
+    if (enableV018) {
+      const v018JsonPath = await recorder.exportV018ToJSON();
+      console.log(`   v0.1.8 JSON: ${v018JsonPath}`);
+    }
+
+    console.log('\n' + (enableV016 || enableV018 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -223,6 +249,19 @@ function parseV016Benchmarks(benchmarks: string, enableV016: boolean): string[] 
   if (!enableV016) return [];
 
   const validBenchmarks = ['api', 'dml', 'persistence', 'statistics', 'vector', 'optimizer'];
+
+  if (benchmarks === 'all') {
+    return validBenchmarks;
+  }
+
+  const requested = benchmarks.split(',').map((b: string) => b.trim().toLowerCase());
+  return requested.filter((b: string) => validBenchmarks.includes(b));
+}
+
+function parseV018Benchmarks(benchmarks: string, enableV018: boolean): string[] {
+  if (!enableV018) return [];
+
+  const validBenchmarks = ['occ', 'schema', 'algorithms'];
 
   if (benchmarks === 'all') {
     return validBenchmarks;

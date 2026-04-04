@@ -1,7 +1,7 @@
 {
   "name": "congraphdb-benchmark",
-  "version": "0.1.6",
-  "description": "Performance benchmark suite for CongraphDB v0.1.6 vs industry-standard graph databases",
+  "version": "0.1.9",
+  "description": "Performance benchmark suite for CongraphDB v0.1.9 vs industry-standard graph databases",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -26,9 +26,6 @@
     "update:medium": "node scripts/run-and-update.js --medium",
     "update:large": "node scripts/run-and-update.js --large",
     "update": "node scripts/run-and-update.js --small",
-    "update:small": "node scripts/run-and-update.js --small",
-    "update:medium": "node scripts/run-and-update.js --medium",
-    "update:large": "node scripts/run-and-update.js --large",
     "update:all": "node scripts/run-and-update.js --small && node scripts/run-and-update.js --medium && node scripts/run-and-update.js --large"
   },
   "keywords": [
@@ -40,7 +37,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "congraphdb": "^0.1.7",
+    "congraphdb": "^0.1.9",
     "commander": "^12.1.0",
     "dotenv": "^16.4.7",
     "graphology": "^0.25.4",
