@@ -396,4 +396,40 @@ export class MetricsRecorder {
   async exportV015ToJSON(filename?: string): Promise<string> {
     return this.exportV016ToJSON(filename);
   }
+
+  /**
+   * Export v0.1.8 results to separate JSON file
+   */
+  async exportV018ToJSON(filename?: string): Promise<string> {
+    const v016Results = Array.from(this.v016Results.values())
+      .flat()
+      .filter(r => ['occ', 'schema', 'algorithms'].includes(r.benchmarkType));
+
+    const filepath = filename || path.join(
+      this.resultsDir,
+      `benchmark-v018-${Date.now()}.json`
+    );
+
+    await fs.mkdir(this.resultsDir, { recursive: true });
+    await fs.writeFile(filepath, JSON.stringify(v016Results, null, 2));
+    return filepath;
+  }
+
+  /**
+   * Export v0.1.10 results to separate JSON file
+   */
+  async exportV0110ToJSON(filename?: string): Promise<string> {
+    const v016Results = Array.from(this.v016Results.values())
+      .flat()
+      .filter(r => ['document', 'sql'].includes(r.benchmarkType));
+
+    const filepath = filename || path.join(
+      this.resultsDir,
+      `benchmark-v0110-${Date.now()}.json`
+    );
+
+    await fs.mkdir(this.resultsDir, { recursive: true });
+    await fs.writeFile(filepath, JSON.stringify(v016Results, null, 2));
+    return filepath;
+  }
 }

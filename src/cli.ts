@@ -44,6 +44,9 @@ program
   // v0.1.8 options
   .option('--v018', 'Enable v0.1.8 benchmarks (OCC, Schema API, Algorithms)', false)
   .option('--v018-benchmarks <benchmarks>', 'Comma-separated list of v0.1.8 benchmarks: occ,schema,algorithms', 'all')
+  // v0.1.10 options
+  .option('--v0110', 'Enable v0.1.10 benchmarks (Document API, SQL DDL)', false)
+  .option('--v0110-benchmarks <benchmarks>', 'Comma-separated list of v0.1.10 benchmarks: document,sql', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -67,7 +70,9 @@ async function runBenchmarks(options: any) {
     v016: enableV016,
     benchmarks: v016Benchmarks,
     v018: enableV018,
-    'v018-benchmarks': v018Benchmarks
+    'v018-benchmarks': v018Benchmarks,
+    v0110: enableV0110,
+    'v0110-benchmarks': v0110Benchmarks
   } = options;
 
   // Validate scale
@@ -100,6 +105,9 @@ async function runBenchmarks(options: any) {
   // Parse v0.1.8 benchmarks
   const enabledV018Benchmarks = parseV018Benchmarks(v018Benchmarks, enableV018);
 
+  // Parse v0.1.10 benchmarks
+  const enabledV0110Benchmarks = parseV0110Benchmarks(v0110Benchmarks, enableV0110);
+
   console.log('🔬 CongraphDB Benchmark Suite v0.1.8');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
@@ -112,6 +120,9 @@ async function runBenchmarks(options: any) {
   }
   if (enableV018) {
     console.log(`\n🎯 v0.1.8 Benchmarks: ${enabledV018Benchmarks.join(', ')}`);
+  }
+  if (enableV0110) {
+    console.log(`\n🎯 v0.1.10 Benchmarks: ${enabledV0110Benchmarks.join(', ')}`);
   }
   console.log('');
 
@@ -146,6 +157,9 @@ async function runBenchmarks(options: any) {
     enableOCC: enabledV018Benchmarks.includes('occ'),
     enableSchemaAPI: enabledV018Benchmarks.includes('schema'),
     enableAlgorithms: enabledV018Benchmarks.includes('algorithms'),
+    // v0.1.10 benchmarks
+    enableDocument: enabledV0110Benchmarks.includes('document'),
+    enableSQL: enabledV0110Benchmarks.includes('sql'),
   };
 
   // Run benchmarks for each engine
@@ -165,6 +179,11 @@ async function runBenchmarks(options: any) {
       // Run v0.1.8 benchmarks if enabled
       if (enableV018) {
         await suite.runV018Benchmarks();
+      }
+
+      // Run v0.1.10 benchmarks if enabled
+      if (enableV0110) {
+        await suite.runV0110Benchmarks();
       }
     } catch (error: any) {
       if (error?.code === 'ERR_MODULE_NOT_FOUND' || error?.message?.includes('bindings')) {
@@ -206,7 +225,13 @@ async function runBenchmarks(options: any) {
       console.log(`   v0.1.8 JSON: ${v018JsonPath}`);
     }
 
-    console.log('\n' + (enableV016 || enableV018 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
+    // Export v0.1.10 results if enabled
+    if (enableV0110) {
+      const v0110JsonPath = await recorder.exportV0110ToJSON();
+      console.log(`   v0.1.10 JSON: ${v0110JsonPath}`);
+    }
+
+    console.log('\n' + (enableV016 || enableV018 || enableV0110 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -262,6 +287,19 @@ function parseV018Benchmarks(benchmarks: string, enableV018: boolean): string[] 
   if (!enableV018) return [];
 
   const validBenchmarks = ['occ', 'schema', 'algorithms'];
+
+  if (benchmarks === 'all') {
+    return validBenchmarks;
+  }
+
+  const requested = benchmarks.split(',').map((b: string) => b.trim().toLowerCase());
+  return requested.filter((b: string) => validBenchmarks.includes(b));
+}
+
+function parseV0110Benchmarks(benchmarks: string, enableV0110: boolean): string[] {
+  if (!enableV0110) return [];
+
+  const validBenchmarks = ['document', 'sql'];
 
   if (benchmarks === 'all') {
     return validBenchmarks;

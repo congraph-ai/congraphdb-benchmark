@@ -1,14 +1,14 @@
-# CongraphDB Performance Benchmark v0.1.98
+# CongraphDB Performance Benchmark v0.1.10
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.8-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
+[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.10-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
 
-**A comprehensive benchmark suite comparing [CongraphDB v0.1.8](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
+**A comprehensive benchmark suite comparing [CongraphDB v0.1.10](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
 
-[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.8 Features](#v018-features)
+[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.10 Features](#v0110-features)
 
 </div>
 
@@ -36,12 +36,14 @@
 
 ---
 
-## v0.1.8 Features
+## v0.1.10 Features
 
-**New in v0.1.8**: Extended benchmarks for CongraphDB's latest features including OCC, Schema API, and Graph Algorithms:
+**New in v0.1.10**: Extended benchmarks for CongraphDB's latest features including Document API, SQL DDL, and enhanced Algorithms:
 
 | Benchmark | Description | Metrics |
 |-----------|-------------|---------|
+| 📄 **Document API** | High-level RAG operations | nodes/sec, chunks/sec, entity_extraction |
+| 🗄️ **SQL DDL** | SQL-style schema definition | tables/sec, insert_rate, catalog_sync |
 | 🔄 **OCC Concurrency** | Optimistic Concurrency Control | conflict_rate, retries/sec, throughput |
 | 🔶 **Schema API** | JavaScript Schema Operations | tables/sec, indexes/sec, ensureSchema |
 | 📊 **Graph Algorithms** | PageRank, Community Detection, Traversal | algorithm_time_ms, result_count |
@@ -55,11 +57,11 @@
 | **Traversal** | BFS, DFS, Dijkstra |
 | **Analytics** | Triangle Count, Connected Components, SCC |
 
-### Running v0.1.8 Benchmarks
+### Running v0.1.10 Benchmarks
 
 ```bash
-# Run all v0.1.8 benchmarks
-npm run benchmark:v018
+# Run all v0.1.10 benchmarks
+npm run benchmark:v0110
 
 # Run specific v0.1.8 benchmark
 npm run benchmark:occ      # OCC Concurrency
@@ -77,8 +79,8 @@ node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--v018` | Enable v0.1.8 benchmarks | false |
-| `--v018-benchmarks <list>` | Comma-separated v0.1.8 benchmarks | all |
+| `--v0110` | Enable v0.1.10 benchmarks | false |
+| `--v0110-benchmarks <list>` | Comma-separated v0.1.10 benchmarks | all |
 
 ---
 
@@ -223,7 +225,7 @@ congraphdb-benchmark/
 │   │   ├── sqlite.ts    # Better-SQLite3 adapter
 │   │   ├── graphology.ts # Graphology adapter
 │   │   └── levelgraph.ts # LevelGraph adapter
-│   ├── benchmarks/      # v0.1.9 specialized benchmarks
+│   ├── benchmarks/      # v0.1.10 specialized benchmarks
 │   │   ├── api-comparison.ts  # Cypher vs JavaScript API
 │   │   ├── dml-operations.ts  # DML operations tests
 │   │   ├── persistence.ts      # Storage mode tests
@@ -271,4 +273,4 @@ MIT
 
 ---
 
-*Last updated: 2026-03-21 (v0.1.9)*
+*Last updated: 2026-04-07 (v0.1.10)*

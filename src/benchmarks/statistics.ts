@@ -25,7 +25,11 @@ export class StatisticsBenchmark {
     // Initialize in-memory database
     this.db = new Database(':memory:');
     this.db.init();
-    this.conn = this.db.createConnection();
+    const connResult = this.db.createConnection();
+    if ('err' in connResult) {
+      throw new Error(`Failed to create connection: ${connResult.err.message}`);
+    }
+    this.conn = connResult;
 
     // Setup schema and data
     await this.setupSchema();
@@ -140,8 +144,14 @@ export class StatisticsBenchmark {
     for (let i = 0; i < iterations; i++) {
       for (const query of queries) {
         const result = await this.conn.query(query);
+        if ('err' in result) {
+          throw new Error(`Query failed: ${result.err.message}`);
+        }
         // Access results to ensure full execution
-        result.getAll();
+        const rows = result.getAll();
+        if ('err' in rows) {
+          throw new Error(`Failed to get rows: ${rows.err.message}`);
+        }
         result.close();
       }
     }
@@ -187,7 +197,11 @@ export class StatisticsEngineAdapter implements EngineAdapter {
   async connect(): Promise<void> {
     this.db = new Database(':memory:');
     this.db.init();
-    this.conn = this.db.createConnection();
+    const connResult = this.db.createConnection();
+    if ('err' in connResult) {
+      throw new Error(`Failed to create connection: ${connResult.err.message}`);
+    }
+    this.conn = connResult;
   }
 
   async disconnect(): Promise<void> {
@@ -269,7 +283,14 @@ export class StatisticsEngineAdapter implements EngineAdapter {
       LIMIT 100000
     `);
 
+    if ('err' in result) {
+      throw new Error(`Query failed: ${result.err.message}`);
+    }
+
     const rows = result.getAll();
+    if ('err' in rows) {
+      throw new Error(`Failed to get rows: ${rows.err.message}`);
+    }
     result.close();
     return rows.length;
   }

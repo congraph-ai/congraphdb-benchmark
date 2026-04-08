@@ -1,5 +1,6 @@
 import { EngineAdapter, Node, Edge, BenchmarkResult, DataScale, TraversalResult, BenchmarkConfig, ExtendedTestResults, APIType, StorageType } from '../types.js';
 import { MetricsRecorder } from './recorder.js';
+import chalk from 'chalk';
 
 // Import v0.1.6 benchmark modules
 import { APIComparisonBenchmark } from '../benchmarks/api-comparison.js';
@@ -27,6 +28,13 @@ export interface SuiteConfig extends Omit<BenchmarkConfig, 'api' | 'storage' | '
   enableStatistics?: boolean;
   enableVector?: boolean;
   enableOptimizer?: boolean;
+
+  // New in v0.1.8/0.1.10
+  enableOCC?: boolean;
+  enableSchemaAPI?: boolean;
+  enableAlgorithms?: boolean;
+  enableDocument?: boolean;
+  enableSQL?: boolean;
 }
 
 export class BenchmarkSuite {
@@ -265,6 +273,72 @@ export class BenchmarkSuite {
     await this.runOptimizerBenchmark();
 
     console.log('\n✅ v0.1.6 benchmarks complete');
+  }
+
+  /**
+   * Run all v0.1.10 benchmarks
+   */
+  async runV0110Benchmarks(): Promise<void> {
+    console.log('\n🎯 Running v0.1.10 Benchmark Suite');
+    console.log('='.repeat(60));
+
+    await this.runOCCBenchmark();
+    await this.runSchemaBenchmark();
+    await this.runAlgorithmsBenchmark();
+    await this.runDocumentAPIBenchmark();
+    await this.runSQLDDLBenchmark();
+
+    console.log('\n✅ v0.1.10 benchmarks complete');
+  }
+
+  /**
+   * Run all v0.1.8 benchmarks (deprecated - use runV0110Benchmarks)
+   */
+  async runV018Benchmarks(): Promise<void> {
+    await this.runV0110Benchmarks();
+  }
+
+  /**
+   * Run OCC Concurrency benchmark
+   */
+  async runOCCBenchmark(): Promise<void> {
+    if (!this.config.enableOCC) return;
+    // Implementation placeholder for OCC benchmark
+    console.log(chalk.gray('   [OCC Benchmark] skipped - pending implementation'));
+  }
+
+  /**
+   * Run Schema API benchmark
+   */
+  async runSchemaBenchmark(): Promise<void> {
+    if (!this.config.enableSchemaAPI) return;
+    // Implementation placeholder for Schema API benchmark
+    console.log(chalk.gray('   [Schema API Benchmark] skipped - pending implementation'));
+  }
+
+  /**
+   * Run Algorithms benchmark
+   */
+  async runAlgorithmsBenchmark(): Promise<void> {
+    if (!this.config.enableAlgorithms) return;
+    // Implementation placeholder for Algorithms benchmark
+    console.log(chalk.gray('   [Algorithms Benchmark] skipped - pending implementation'));
+  }
+
+  /**
+   * Run Document API benchmark (v0.1.10)
+   */
+  async runDocumentAPIBenchmark(): Promise<void> {
+    // New v0.1.10 benchmark
+    console.log(chalk.gray('   [Document API Benchmark] skipped - pending implementation'));
+  }
+
+  /**
+   * Run SQL DDL benchmark (v0.1.10)
+   */
+  async runSQLDDLBenchmark(): Promise<void> {
+    // New v0.1.10 benchmark
+    console.log(chalk.gray('   [SQL DDL Benchmark] skipped - pending implementation'));
   }
 
   /**

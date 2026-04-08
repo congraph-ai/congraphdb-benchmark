@@ -17,7 +17,11 @@ export class CongraphEngine implements EngineAdapter {
     this.db.init();
 
     // Create a connection for queries
-    this.conn = this.db.createConnection();
+    const connResult = this.db.createConnection();
+    if ('err' in connResult) {
+      throw new Error(`Failed to create connection: ${connResult.err.message}`);
+    }
+    this.conn = connResult;
 
     console.log('  [CongraphDB] Connected to in-memory database');
   }
@@ -122,7 +126,16 @@ export class CongraphEngine implements EngineAdapter {
       LIMIT 100000
     `);
 
-    return result.getAll().length;
+    if ('err' in result) {
+      throw new Error(`Query failed: ${result.err.message}`);
+    }
+
+    const rows = result.getAll();
+    if ('err' in rows) {
+      throw new Error(`Failed to get rows: ${rows.err.message}`);
+    }
+    result.close();
+    return rows.length;
   }
 
   async runPageRank(iterations: number): Promise<number> {
