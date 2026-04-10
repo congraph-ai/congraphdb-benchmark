@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { DataScale, DATA_SCALES } from '../../types.js';
+import { unwrap, unwrapAsync } from '../../utils/napi-helpers.js';
 
 /**
  * Traversal and Path Algorithm Benchmarks
@@ -24,8 +25,8 @@ export class TraversalBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create test graph (road network pattern)
     await this.setupTestGraph();
@@ -60,13 +61,13 @@ export class TraversalBenchmark {
 
     console.log(`  📊 Creating road network (${nodeCount} nodes, ${edgeCount} edges)...`);
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE City(id STRING, name STRING, x INT64, y INT64, PRIMARY KEY(id))
-    `);
+    `), 'Failed to create City table');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE Road(FROM City TO City, distance INT64)
-    `);
+    `), 'Failed to create Road table');
 
     // Create cities in a grid pattern
     const gridSize = Math.ceil(Math.sqrt(nodeCount));
@@ -74,9 +75,9 @@ export class TraversalBenchmark {
       for (let y = 0; y < gridSize; y++) {
         const id = x * gridSize + y;
         if (id < nodeCount) {
-          await this.conn.query(`
+          await unwrapAsync(this.conn.query(`
             CREATE (:City {id: 'c_${id}', name: 'City ${id}', x: ${x}, y: ${y}})
-          `);
+          `), `Failed to create city c_${id}`);
         }
       }
     }
@@ -94,10 +95,10 @@ export class TraversalBenchmark {
         const toY = Math.floor(toId / gridSize);
         const distance = Math.abs(toX - fromX) + Math.abs(toY - fromY) + 1;
 
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MATCH (f:City {id: 'c_${fromId}'}), (t:City {id: 'c_${toId}'})
           CREATE (f)-[:Road {distance: ${distance}}]->(t)
-        `);
+        `), `Failed to create road from c_${fromId} to c_${toId}`);
       }
     }
 
@@ -119,10 +120,10 @@ export class TraversalBenchmark {
     for (const depth of depths) {
       for (const direction of directions) {
         const start = performance.now();
-        const resultJson = this.conn.runAlgorithmSync('bfs', JSON.stringify({
+        const resultJson = unwrap(this.conn.runAlgorithmSync('bfs', JSON.stringify({
           maxDepth: depth,
           direction
-        }));
+        })), 'BFS failed');
         const result = JSON.parse(resultJson);
         const elapsed = performance.now() - start;
 
@@ -156,10 +157,10 @@ export class TraversalBenchmark {
     for (const depth of depths) {
       for (const direction of directions) {
         const start = performance.now();
-        const resultJson = this.conn.runAlgorithmSync('dfs', JSON.stringify({
+        const resultJson = unwrap(this.conn.runAlgorithmSync('dfs', JSON.stringify({
           maxDepth: depth,
           direction
-        }));
+        })), 'DFS failed');
         const result = JSON.parse(resultJson);
         const elapsed = performance.now() - start;
 
@@ -191,10 +192,10 @@ export class TraversalBenchmark {
 
     for (const direction of directions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('dijkstra', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('dijkstra', JSON.stringify({
         weightProperty: 'distance',
         direction
-      }));
+      })), 'Dijkstra failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 

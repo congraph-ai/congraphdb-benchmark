@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { DataScale, DATA_SCALES } from '../../types.js';
+import { unwrap, unwrapAsync } from '../../utils/napi-helpers.js';
 
 /**
  * Centrality Algorithm Benchmarks
@@ -24,8 +25,8 @@ export class CentralityBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create test graph
     await this.setupTestGraph();
@@ -62,20 +63,20 @@ export class CentralityBenchmark {
 
     console.log(`  📊 Creating test graph (${nodeCount} nodes, ${edgeCount} edges)...`);
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE Person(id STRING, name STRING, PRIMARY KEY(id))
-    `);
+    `), 'Failed to create Person table');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE Knows(FROM Person TO Person, strength FLOAT)
-    `);
+    `), 'Failed to create Knows table');
 
     // Create nodes
     const batchSize = 1000;
     for (let i = 0; i < nodeCount; i += batchSize) {
       const batch = Math.min(batchSize, nodeCount - i);
       for (let j = 0; j < batch; j++) {
-        await this.conn.query(`CREATE (:Person {id: 'p_${i + j}', name: 'Person ${i + j}'})`);
+        await unwrapAsync(this.conn.query(`CREATE (:Person {id: 'p_${i + j}', name: 'Person ${i + j}'})`), `Failed to create person p_${i + j}`);
       }
     }
 
@@ -85,10 +86,10 @@ export class CentralityBenchmark {
       const to = `p_${Math.floor(Math.random() * nodeCount)}`;
       const strength = Math.random();
 
-      await this.conn.query(`
+      await unwrapAsync(this.conn.query(`
         MATCH (f:Person {id: '${from}'}), (t:Person {id: '${to}'})
         CREATE (f)-[:Knows {strength: ${strength}}]->(t)
-      `);
+      `), `Failed to create Knows edge`);
     }
 
     console.log('  ✓ Test graph created');
@@ -112,7 +113,7 @@ export class CentralityBenchmark {
 
     for (const config of configs) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('pagerank', JSON.stringify(config));
+      const resultJson = unwrap(this.conn.runAlgorithmSync('pagerank', JSON.stringify(config)), 'PageRank failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -142,7 +143,7 @@ export class CentralityBenchmark {
 
     for (const direction of directions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('betweenness', JSON.stringify({ direction }));
+      const resultJson = unwrap(this.conn.runAlgorithmSync('betweenness', JSON.stringify({ direction })), 'Betweenness failed');
       JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -171,7 +172,7 @@ export class CentralityBenchmark {
 
     for (const direction of directions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('closeness', JSON.stringify({ direction }));
+      const resultJson = unwrap(this.conn.runAlgorithmSync('closeness', JSON.stringify({ direction })), 'Closeness failed');
       JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -206,7 +207,7 @@ export class CentralityBenchmark {
 
     for (const config of configs) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('degree', JSON.stringify(config));
+      const resultJson = unwrap(this.conn.runAlgorithmSync('degree', JSON.stringify(config)), 'Degree failed');
       JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 

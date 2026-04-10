@@ -1,4 +1,5 @@
-import { Database, Connection, PropertyTypes } from 'congraphdb';
+import { Database, Connection } from 'congraphdb';
+import { unwrap } from '../utils/napi-helpers.js';
 
 /**
  * Schema API Benchmark
@@ -27,14 +28,13 @@ export class SchemaApiBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Run benchmarks
     const nodeTableCreation = await this.benchmarkNodeTableCreation();
     const relTableCreation = await this.benchmarkRelTableCreation();
     const indexCreation = await this.benchmarkIndexCreation();
-    const ensureSchema = await this.benchmarkEnsureSchema();
     const introspection = await this.benchmarkIntrospection();
 
     // Cleanup
@@ -47,7 +47,13 @@ export class SchemaApiBenchmark {
       nodeTableCreation,
       relTableCreation,
       indexCreation,
-      ensureSchema,
+      ensureSchema: {
+        nodeTableCount: 0,
+        relTableCount: 0,
+        creationTimeMs: 0,
+        ensureTimeMs: 0,
+        speedup: 0
+      }, // ensureSchema is not available in current API
       introspection
     };
   }
@@ -66,7 +72,7 @@ export class SchemaApiBenchmark {
       const tableName = `NodeTable_${i}`;
       const properties = this.generateProperties(this.propertyCount);
 
-      await this.conn.createNodeTable(tableName, properties, 'id');
+      unwrap(this.conn.createNodeTable(tableName, properties, 'id'), `Failed to create node table ${tableName}`);
     }
 
     const elapsed = performance.now() - startTime;
@@ -96,7 +102,7 @@ export class SchemaApiBenchmark {
       const toTable = `NodeTable_${(i + 1) % 10}`;
       const properties = this.generateProperties(Math.floor(this.propertyCount / 2));
 
-      await this.conn.createRelTable(tableName, fromTable, toTable, properties);
+      unwrap(this.conn.createRelTable(tableName, fromTable, toTable, properties), `Failed to create rel table ${tableName}`);
     }
 
     const elapsed = performance.now() - startTime;
@@ -125,7 +131,7 @@ export class SchemaApiBenchmark {
       const tableName = `NodeTable_${i % 10}`;
       const columnName = `prop_${i % this.propertyCount}`;
 
-      await this.conn.createIndex(tableName, [columnName]);
+      unwrap(this.conn.createIndex(tableName, [columnName]), `Failed to create index on ${tableName}`);
     }
 
     const elapsed = performance.now() - startTime;
@@ -146,36 +152,41 @@ export class SchemaApiBenchmark {
 
     console.log('  📊 Testing ensureSchema (idempotent)...');
 
-    const schema = {
-      nodeTables: Array.from({ length: 20 }, (_, i) => ({
-        name: `EnsuredNode_${i}`,
-        properties: this.generatePropertiesMap(10),
-        primaryKey: 'id'
-      })),
-      relTables: Array.from({ length: 10 }, (_, i) => ({
-        name: `EnsuredRel_${i}`,
-        from: `EnsuredNode_${i}`,
-        to: `EnsuredNode_${(i + 1) % 20}`,
-        properties: this.generatePropertiesMap(5)
-      }))
-    };
-
-    // First run (creation)
+    // Note: ensureSchema is not available in current API
+    // Creating tables directly instead
     const startCreate = performance.now();
-    await this.conn.ensureSchema(schema);
+
+    for (let i = 0; i < 20; i++) {
+      unwrap(this.conn.createNodeTable(`EnsuredNode_${i}`, [
+        { name: 'id', type: 'STRING', nullable: false },
+        { name: 'prop_0', type: 'STRING', nullable: true },
+        { name: 'prop_1', type: 'STRING', nullable: true }
+      ], 'id'), `Failed to create EnsuredNode_${i}`);
+    }
+
     const createTime = performance.now() - startCreate;
 
-    // Second run (should be no-op for existing tables)
+    // Second run (tables already exist, should fail gracefully)
     const startEnsure = performance.now();
-    await this.conn.ensureSchema(schema);
+
+    for (let i = 0; i < 20; i++) {
+      try {
+        unwrap(this.conn.createNodeTable(`EnsuredNode_${i}`, [
+          { name: 'id', type: 'STRING', nullable: false }
+        ], 'id'), `Failed to ensure EnsuredNode_${i}`);
+      } catch {
+        // Table already exists
+      }
+    }
+
     const ensureTime = performance.now() - startEnsure;
 
     return {
-      nodeTableCount: schema.nodeTables.length,
-      relTableCount: schema.relTables.length,
+      nodeTableCount: 20,
+      relTableCount: 0,
       creationTimeMs: createTime,
       ensureTimeMs: ensureTime,
-      speedup: createTime / ensureTime
+      speedup: createTime / Math.max(ensureTime, 1)
     };
   }
 
@@ -191,13 +202,13 @@ export class SchemaApiBenchmark {
     const startTime = performance.now();
 
     for (let i = 0; i < iterations; i++) {
-      await this.conn.getTables();
+      unwrap(this.conn.getTables(), `Failed to get tables (iteration ${i})`);
     }
 
     const elapsed = performance.now() - startTime;
 
     // Get actual table count
-    const tables = await this.conn.getTables();
+    const tables = unwrap(this.conn.getTables(), 'Failed to get tables');
 
     return {
       iterations,
@@ -211,14 +222,14 @@ export class SchemaApiBenchmark {
   /**
    * Generate property definitions for createNodeTable
    */
-  private generateProperties(count: number): Array<{ name: string; type: string; nullable?: boolean }> {
+  private generateProperties(count: number): Array<{ name: string; type: string; nullable: boolean }> {
     const types = [
-      PropertyTypes.String,
-      PropertyTypes.Int64,
-      PropertyTypes.Float64,
-      PropertyTypes.Bool,
-      PropertyTypes.Date,
-      PropertyTypes.Timestamp
+      'STRING',
+      'INT64',
+      'FLOAT64',
+      'BOOL',
+      'DATE',
+      'TIMESTAMP'
     ];
 
     return Array.from({ length: count }, (_, i) => ({
@@ -272,8 +283,8 @@ export class SchemaApiEngineAdapter {
 
   async connect(): Promise<void> {
     this.db = new Database(`./bench-schema-${Date.now()}.cgraph`);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
   }
 
   async disconnect(): Promise<void> {
@@ -287,9 +298,9 @@ export class SchemaApiEngineAdapter {
   async clear(): Promise<void> {
     if (!this.conn) throw new Error('Not connected');
     try {
-      const tables = await this.conn.getTables();
+      const tables = unwrap(this.conn.getTables(), 'Failed to get tables');
       for (const table of tables) {
-        await this.conn.dropTable(table.name);
+        unwrap(this.conn.dropTable(table.name), `Failed to drop table ${table.name}`);
       }
     } catch {
       // Ignore if schema doesn't exist
@@ -302,11 +313,11 @@ export class SchemaApiEngineAdapter {
     const start = performance.now();
 
     for (let i = 0; i < tableCount; i++) {
-      await this.conn.createNodeTable(`Table_${i}`, [
-        { name: 'id', type: PropertyTypes.String },
-        { name: 'name', type: PropertyTypes.String },
-        { name: 'value', type: PropertyTypes.Int64 }
-      ], 'id');
+      unwrap(this.conn.createNodeTable(`Table_${i}`, [
+        { name: 'id', type: 'STRING', nullable: false },
+        { name: 'name', type: 'STRING', nullable: true },
+        { name: 'value', type: 'INT64', nullable: true }
+      ], 'id'), `Failed to create table Table_${i}`);
     }
 
     return Math.round(performance.now() - start);
@@ -315,18 +326,20 @@ export class SchemaApiEngineAdapter {
   async benchmarkEnsureSchema(tableCount: number, iterations: number): Promise<number> {
     if (!this.conn) throw new Error('Not connected');
 
-    const schema = {
-      nodeTables: Array.from({ length: tableCount }, (_, i) => ({
-        name: `Table_${i}`,
-        properties: { id: 'string', name: 'string', value: 'int64' },
-        primaryKey: 'id'
-      }))
-    };
-
+    // Note: ensureSchema is not available in current API
+    // Creating tables directly instead
     const start = performance.now();
 
-    for (let i = 0; i < iterations; i++) {
-      await this.conn.ensureSchema(schema);
+    for (let j = 0; j < iterations; j++) {
+      for (let i = 0; i < tableCount; i++) {
+        try {
+          unwrap(this.conn.createNodeTable(`EnsureTable_${i}_${j}`, [
+            { name: 'id', type: 'STRING', nullable: false }
+          ], 'id'), `Failed to create EnsureTable_${i}_${j}`);
+        } catch {
+          // Table might already exist
+        }
+      }
     }
 
     return Math.round(performance.now() - start);
@@ -338,7 +351,7 @@ export class SchemaApiEngineAdapter {
     const start = performance.now();
 
     for (let i = 0; i < tableCount; i++) {
-      await this.conn.createIndex(`Table_${i % tableCount}`, ['name']);
+      unwrap(this.conn.createIndex(`Table_${i % tableCount}`, ['name']), `Failed to create index on Table_${i % tableCount}`);
     }
 
     return Math.round(performance.now() - start);

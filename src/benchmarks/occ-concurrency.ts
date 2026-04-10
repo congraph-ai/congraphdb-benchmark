@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { DataScale, DATA_SCALES } from '../types.js';
+import { unwrap, unwrapAsync } from '../utils/napi-helpers.js';
 
 /**
  * OCC Concurrency Benchmark
@@ -28,8 +29,8 @@ export class OccConcurrencyBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create schema
     await this.setupSchema();
@@ -66,14 +67,14 @@ export class OccConcurrencyBenchmark {
   private async setupSchema(): Promise<void> {
     if (!this.conn) throw new Error('Not connected');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE Account(
         id STRING,
         balance FLOAT,
         version INT64,
         PRIMARY KEY(id)
       )
-    `);
+    `), 'Failed to create Account table');
   }
 
   /**
@@ -89,9 +90,9 @@ export class OccConcurrencyBenchmark {
       const batch = Math.min(batchSize, count - i);
       for (let j = 0; j < batch; j++) {
         const id = `acc_${i + j}`;
-        await this.conn!.query(`
+        await unwrapAsync(this.conn!.query(`
           CREATE (:Account {id: '${id}', balance: 1000.0, version: 0})
-        `);
+        `), `Failed to create account ${id}`);
       }
     }
 
@@ -112,18 +113,18 @@ export class OccConcurrencyBenchmark {
 
     const workers = Array.from({ length: this.workerCount }, (_, workerId) =>
       this.runWorker(async () => {
-        const conn = this.db!.createConnection();
+        const conn = unwrap(this.db!.createConnection(), 'Worker failed to create connection');
 
         for (let i = 0; i < transactionsPerWorker; i++) {
           const nodeId = `acc_${workerId * transactionsPerWorker + i}`;
 
           conn.beginTransaction();
           try {
-            await conn.query(`
+            await unwrapAsync(conn.query(`
               MATCH (a:Account {id: '${nodeId}'})
               SET a.balance = a.balance + 10
-            `);
-            await conn.commitWithOccSync(5);
+            `), `Worker failed to update account ${nodeId}`);
+            unwrap(conn.commitWithOccSync(5), `Worker failed to commit transaction for ${nodeId}`);
           } catch (e) {
             conn.rollback();
           }
@@ -135,16 +136,16 @@ export class OccConcurrencyBenchmark {
     const elapsed = performance.now() - startTime;
 
     const totalTransactions = this.workerCount * transactionsPerWorker;
-    const stats = await this.conn.getOccStatistics();
+    const stats = unwrap(this.conn.getOccStatistics(), 'Failed to get OCC statistics');
 
     return {
       totalTransactions,
-      successfulTransactions: stats.successful_transactions,
-      failedTransactions: stats.failed_transactions,
-      conflictsDetected: stats.conflicts_detected,
-      totalRetries: stats.total_retries,
-      maxRetryCount: stats.max_retry_count,
-      conflictRate: stats.conflict_rate,
+      successfulTransactions: stats.successfulTransactions,
+      failedTransactions: stats.failedTransactions,
+      conflictsDetected: stats.validationConflicts,
+      totalRetries: stats.totalRetries,
+      maxRetryCount: stats.maxRetryCount,
+      conflictRate: stats.conflictRate,
       throughput: totalTransactions / (elapsed / 1000),
       averageLatencyMs: elapsed / totalTransactions
     };
@@ -163,27 +164,27 @@ export class OccConcurrencyBenchmark {
     const hotAccountId = 'hot_account';
 
     // Create hot account
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE (:Account {id: '${hotAccountId}', balance: 1000000.0, version: 0})
-    `);
+    `), 'Failed to create hot account');
 
     // Reset statistics
-    await this.conn.resetOccStatistics();
+    unwrap(this.conn.resetOccStatistics(), 'Failed to reset OCC statistics');
 
     const startTime = performance.now();
 
     const workers = Array.from({ length: this.workerCount }, () =>
       this.runWorker(async () => {
-        const conn = this.db!.createConnection();
+        const conn = unwrap(this.db!.createConnection(), 'Worker failed to create connection');
 
         for (let i = 0; i < transactionsPerWorker; i++) {
           conn.beginTransaction();
           try {
-            await conn.query(`
+            await unwrapAsync(conn.query(`
               MATCH (a:Account {id: '${hotAccountId}'})
               SET a.balance = a.balance - 1
-            `);
-            await conn.commitWithOccSync(10);
+            `), 'Worker failed to update hot account');
+            unwrap(conn.commitWithOccSync(10), 'Worker failed to commit hot account transaction');
           } catch (e) {
             conn.rollback();
           }
@@ -195,16 +196,16 @@ export class OccConcurrencyBenchmark {
     const elapsed = performance.now() - startTime;
 
     const totalTransactions = this.workerCount * transactionsPerWorker;
-    const stats = await this.conn.getOccStatistics();
+    const stats = unwrap(this.conn.getOccStatistics(), 'Failed to get OCC statistics');
 
     return {
       totalTransactions,
-      successfulTransactions: stats.successful_transactions,
-      failedTransactions: stats.failed_transactions,
-      conflictsDetected: stats.conflicts_detected,
-      totalRetries: stats.total_retries,
-      maxRetryCount: stats.max_retry_count,
-      conflictRate: stats.conflict_rate,
+      successfulTransactions: stats.successfulTransactions,
+      failedTransactions: stats.failedTransactions,
+      conflictsDetected: stats.validationConflicts,
+      totalRetries: stats.totalRetries,
+      maxRetryCount: stats.maxRetryCount,
+      conflictRate: stats.conflictRate,
       throughput: totalTransactions / (elapsed / 1000),
       averageLatencyMs: elapsed / totalTransactions
     };
@@ -223,14 +224,14 @@ export class OccConcurrencyBenchmark {
 
     const workers = Array.from({ length: this.workerCount }, () =>
       this.runWorker(async () => {
-        const conn = this.db!.createConnection();
+        const conn = unwrap(this.db!.createConnection(), 'Worker failed to create connection');
 
         for (let i = 0; i < readsPerWorker; i++) {
           const nodeId = `acc_${i % 1000}`;
-          await conn.query(`
+          await unwrapAsync(conn.query(`
             MATCH (a:Account {id: '${nodeId}'})
             RETURN a.balance
-          `);
+          `), `Worker failed to read account ${nodeId}`);
         }
       })
     );
@@ -260,15 +261,15 @@ export class OccConcurrencyBenchmark {
     // Without statistics
     const startWithout = performance.now();
     for (let i = 0; i < iterations; i++) {
-      await this.conn.query(`MATCH (a:Account) RETURN count(*)`);
+      await unwrapAsync(this.conn.query(`MATCH (a:Account) RETURN count(*)`), 'Failed to query accounts');
     }
     const withoutStats = performance.now() - startWithout;
 
     // With statistics (getOccStatistics)
     const startWith = performance.now();
     for (let i = 0; i < iterations; i++) {
-      await this.conn.query(`MATCH (a:Account) RETURN count(*)`);
-      await this.conn.getOccStatistics();
+      await unwrapAsync(this.conn.query(`MATCH (a:Account) RETURN count(*)`), 'Failed to query accounts');
+      unwrap(this.conn.getOccStatistics(), 'Failed to get OCC statistics');
     }
     const withStats = performance.now() - startWith;
 
@@ -320,8 +321,8 @@ export class OccEngineAdapter {
 
   async connect(): Promise<void> {
     this.db = new Database(`./bench-occ-${Date.now()}.cgraph`);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
   }
 
   async disconnect(): Promise<void> {
@@ -335,7 +336,7 @@ export class OccEngineAdapter {
   async clear(): Promise<void> {
     if (!this.conn) throw new Error('Not connected');
     try {
-      await this.conn.query('MATCH (n) DETACH DELETE n');
+      await unwrapAsync(this.conn.query('MATCH (n) DETACH DELETE n'), 'Failed to clear nodes');
     } catch {
       // Ignore if schema doesn't exist
     }
@@ -345,12 +346,12 @@ export class OccEngineAdapter {
     if (!this.conn) throw new Error('Not connected');
 
     // Create test account
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE Account(id STRING, balance FLOAT, PRIMARY KEY(id))
-    `);
-    await this.conn.query(`CREATE (:Account {id: 'hot', balance: 1000})`);
+    `), 'Failed to create Account table');
+    await unwrapAsync(this.conn.query(`CREATE (:Account {id: 'hot', balance: 1000})`), 'Failed to create hot account');
 
-    await this.conn.resetOccStatistics();
+    unwrap(this.conn.resetOccStatistics(), 'Failed to reset OCC statistics');
 
     const tasks = Array.from({ length: workers }, () =>
       this.runTransaction(transactionsPerWorker)
@@ -358,18 +359,18 @@ export class OccEngineAdapter {
 
     await Promise.all(tasks);
 
-    const stats = await this.conn.getOccStatistics();
-    return stats.conflict_rate;
+    const stats = unwrap(this.conn.getOccStatistics(), 'Failed to get OCC statistics');
+    return stats.conflictRate;
   }
 
   private async runTransaction(count: number): Promise<void> {
-    const conn = this.db!.createConnection();
+    const conn = unwrap(this.db!.createConnection(), 'Failed to create connection');
 
     for (let i = 0; i < count; i++) {
       conn.beginTransaction();
       try {
-        await conn.query(`MATCH (a:Account {id: 'hot'}) SET a.balance = a.balance + 1`);
-        await conn.commitWithOccSync(5);
+        await unwrapAsync(conn.query(`MATCH (a:Account {id: 'hot'}) SET a.balance = a.balance + 1`), 'Failed to update hot account');
+        unwrap(conn.commitWithOccSync(5), 'Failed to commit transaction');
       } catch (e) {
         conn.rollback();
       }
@@ -378,7 +379,7 @@ export class OccEngineAdapter {
 
   getStatistics() {
     if (!this.conn) throw new Error('Not connected');
-    return this.conn.getOccStatistics();
+    return unwrap(this.conn.getOccStatistics(), 'Failed to get OCC statistics');
   }
 }
 

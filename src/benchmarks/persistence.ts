@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { EngineAdapter, Node, Edge, StorageType, PersistenceResult } from '../types.js';
+import { unwrap, unwrapAsync } from '../utils/napi-helpers.js';
 
 /**
  * Persistence Benchmark
@@ -31,8 +32,8 @@ export class PersistenceBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create schema
     await this.setupSchema();
@@ -73,7 +74,7 @@ export class PersistenceBenchmark {
   private async setupSchema(): Promise<void> {
     if (!this.conn) throw new Error('Not connected');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE IF NOT EXISTS Paper(
         id STRING,
         title STRING,
@@ -81,11 +82,11 @@ export class PersistenceBenchmark {
         year INT64,
         PRIMARY KEY(id)
       )
-    `);
+    `), 'Failed to create Paper table');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE IF NOT EXISTS CITES(FROM Paper TO Paper)
-    `);
+    `), 'Failed to create CITES table');
   }
 
   /**
@@ -108,14 +109,14 @@ export class PersistenceBenchmark {
       const start = performance.now();
 
       for (let j = 0; j < batchSize; j++) {
-        await this.conn!.query(`
+        await unwrapAsync(this.conn!.query(`
           CREATE (:Paper {
             id: 'io_test_${i}_${j}',
             title: 'IO Test Paper',
             category: 'TEST',
             year: 2024
           })
-        `);
+        `), `Failed to create test paper io_test_${i}_${j}`);
       }
 
       times.push(performance.now() - start);
@@ -151,7 +152,7 @@ export class PersistenceBenchmark {
 
     // Measure checkpoint time
     const start = performance.now();
-    this.db.checkpoint();
+    unwrap(this.db.checkpoint(), 'Failed to checkpoint database');
     const elapsed = performance.now() - start;
 
     return Math.round(elapsed);
@@ -174,13 +175,13 @@ export class PersistenceBenchmark {
     // Re-open and measure recovery time
     const start = performance.now();
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database during recovery');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection during recovery');
     const recoveryTime = performance.now() - start;
 
     // Verify data was recovered
-    const result = await this.conn!.query('MATCH (p:Paper) RETURN count(*) AS count');
-    const rows = result.getAll() as Array<{ count: number }>;
+    const result = await unwrapAsync(this.conn!.query('MATCH (p:Paper) RETURN count(*) AS count'), 'Failed to query recovered data');
+    const rows = unwrap(result.getAll(), 'Failed to get all rows') as Array<{ count: number }>;
     const count = rows[0]?.count || 0;
 
     console.log(`  ✓ Recovered ${count} nodes in ${recoveryTime.toFixed(2)}ms`);
@@ -201,9 +202,9 @@ export class PersistenceBenchmark {
       for (let j = 0; j < batch; j++) {
         const id = `recovery_test_${i + j}`;
         const title = `Recovery Test ${i + j}`;
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           CREATE (:Paper {id: '${id}', title: '${title}', category: 'TEST', year: 2024})
-        `);
+        `), `Failed to create recovery test node ${id}`);
       }
     }
 
@@ -214,10 +215,10 @@ export class PersistenceBenchmark {
       for (let j = 0; j < batch; j++) {
         const source = `recovery_test_${(i + j) % nodeCount}`;
         const target = `recovery_test_${(i + j + 1) % nodeCount}`;
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MATCH (s:Paper {id: '${source}'}), (t:Paper {id: '${target}'})
           CREATE (s)-[:CITES]->(t)
-        `);
+        `), `Failed to create edge from ${source} to ${target}`);
       }
     }
   }
@@ -262,8 +263,8 @@ export class PersistenceEngineAdapter implements EngineAdapter {
       : ':memory:';
 
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
   }
 
   async disconnect(): Promise<void> {
@@ -280,7 +281,7 @@ export class PersistenceEngineAdapter implements EngineAdapter {
   async clear(): Promise<void> {
     if (!this.conn) throw new Error('Not connected');
     try {
-      await this.conn.query('MATCH (n) DETACH DELETE n');
+      await unwrapAsync(this.conn.query('MATCH (n) DETACH DELETE n'), 'Failed to clear nodes');
     } catch {
       // Ignore if schema doesn't exist
     }
@@ -290,7 +291,7 @@ export class PersistenceEngineAdapter implements EngineAdapter {
     if (!this.conn) throw new Error('Not connected');
 
     // Create schema if needed
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE IF NOT EXISTS Paper(
         id STRING,
         title STRING,
@@ -298,7 +299,7 @@ export class PersistenceEngineAdapter implements EngineAdapter {
         year INT64,
         PRIMARY KEY(id)
       )
-    `);
+    `), 'Failed to create Paper table');
 
     const batchSize = 1000;
     for (let i = 0; i < nodes.length; i += batchSize) {
@@ -307,10 +308,10 @@ export class PersistenceEngineAdapter implements EngineAdapter {
         const title = (n.properties.title || '').replace(/'/g, "\\'");
         const category = (n.properties.category || '').replace(/'/g, "\\'");
         const year = n.properties.year || 2024;
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MERGE (p:Paper {id: '${n.id}'})
           SET p.title = '${title}', p.category = '${category}', p.year = ${year}
-        `);
+        `), `Failed to ingest node ${n.id}`);
       }
     }
 
@@ -320,18 +321,18 @@ export class PersistenceEngineAdapter implements EngineAdapter {
   async ingestEdges(edges: Edge[]): Promise<number> {
     if (!this.conn) throw new Error('Not connected');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE IF NOT EXISTS CITES(FROM Paper TO Paper)
-    `);
+    `), 'Failed to create CITES table');
 
     const batchSize = 1000;
     for (let i = 0; i < edges.length; i += batchSize) {
       const batch = edges.slice(i, i + batchSize);
       for (const e of batch) {
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MATCH (s:Paper {id: '${e.source}'}), (t:Paper {id: '${e.target}'})
           MERGE (s)-[r:CITES]->(t)
-        `);
+        `), `Failed to ingest edge from ${e.source} to ${e.target}`);
       }
     }
 
@@ -341,13 +342,13 @@ export class PersistenceEngineAdapter implements EngineAdapter {
   async traverse(sourceId: string, hops: number): Promise<number> {
     if (!this.conn) throw new Error('Not connected');
 
-    const result = await this.conn.query(`
+    const result = await unwrapAsync(this.conn.query(`
       MATCH path = (start:Paper {id: '${sourceId}'})-[:CITES*1..${hops}]->(end:Paper)
       RETURN DISTINCT end.id
       LIMIT 100000
-    `);
+    `), `Failed to traverse from ${sourceId}`);
 
-    return result.getAll().length;
+    return unwrap(result.getAll(), 'Failed to get all traversal results').length;
   }
 
   async runPageRank(iterations: number): Promise<number> {
@@ -356,15 +357,15 @@ export class PersistenceEngineAdapter implements EngineAdapter {
     const start = performance.now();
 
     try {
-      await this.conn.query('CALL set_node_property(Paper, pagerank, 0.0)');
+      await unwrapAsync(this.conn.query('CALL set_node_property(Paper, pagerank, 0.0)'), 'Failed to set node property');
     } catch {
       // Property may already exist
     }
 
-    await this.conn.query('MATCH (p:Paper) SET p.pagerank = 1.0');
+    await unwrapAsync(this.conn.query('MATCH (p:Paper) SET p.pagerank = 1.0'), 'Failed to initialize PageRank');
 
     for (let i = 0; i < iterations; i++) {
-      await this.conn.query(`
+      await unwrapAsync(this.conn.query(`
         MATCH (p:Paper)
         SET p.pagerank = 0.15 + 0.85 * COALESCE(
           (
@@ -374,7 +375,7 @@ export class PersistenceEngineAdapter implements EngineAdapter {
           ),
           1.0
         )
-      `);
+      `), `Failed to run PageRank iteration ${i}`);
     }
 
     return Math.round(performance.now() - start);
@@ -385,10 +386,10 @@ export class PersistenceEngineAdapter implements EngineAdapter {
   }
 
   async checkpoint(): Promise<number> {
-    if (!this.db) throw new Error('Not connected');
+    if (!this.db) throw new Error('Database not initialized');
 
     const start = performance.now();
-    this.db.checkpoint();
+    unwrap(this.db.checkpoint(), 'Failed to checkpoint database');
     return Math.round(performance.now() - start);
   }
 }

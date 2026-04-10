@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { DataScale, DATA_SCALES } from '../../types.js';
+import { unwrap, unwrapAsync } from '../../utils/napi-helpers.js';
 
 /**
  * Analytics Algorithm Benchmarks
@@ -24,8 +25,8 @@ export class AnalyticsBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create test graph (social network with triangles)
     await this.setupTestGraph();
@@ -60,17 +61,17 @@ export class AnalyticsBenchmark {
 
     console.log(`  📊 Creating social network (${nodeCount} nodes, ${edgeCount} edges)...`);
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE Person(id STRING, name STRING, PRIMARY KEY(id))
-    `);
+    `), 'Failed to create Person table');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE Friends(FROM Person TO Person)
-    `);
+    `), 'Failed to create Friends table');
 
     // Create people
     for (let i = 0; i < nodeCount; i++) {
-      await this.conn.query(`CREATE (:Person {id: 'p_${i}', name: 'Person ${i}'})`);
+      await unwrapAsync(this.conn.query(`CREATE (:Person {id: 'p_${i}', name: 'Person ${i}'})`), `Failed to create person p_${i}`);
     }
 
     // Create friendships (with bias towards creating triangles)
@@ -84,10 +85,10 @@ export class AnalyticsBenchmark {
       }
 
       if (fromId !== toId) {
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MATCH (f:Person {id: 'p_${fromId}'}), (t:Person {id: 'p_${toId}'})
           CREATE (f)-[:Friends]->(t)
-        `);
+        `), `Failed to create friendship from p_${fromId} to p_${toId}`);
       }
     }
 
@@ -107,7 +108,7 @@ export class AnalyticsBenchmark {
 
     for (let i = 0; i < iterations; i++) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('triangleCount', '{}');
+      const resultJson = unwrap(this.conn.runAlgorithmSync('triangleCount', '{}'), 'Triangle count failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -141,9 +142,9 @@ export class AnalyticsBenchmark {
 
     for (const direction of directions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('connectedComponents', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('connectedComponents', JSON.stringify({
         direction
-      }));
+      })), 'Connected components failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -170,7 +171,7 @@ export class AnalyticsBenchmark {
     console.log('  📊 Benchmarking SCC...');
 
     const start = performance.now();
-    const resultJson = this.conn.runAlgorithmSync('scc', '{}');
+    const resultJson = unwrap(this.conn.runAlgorithmSync('scc', '{}'), 'SCC failed');
     const result = JSON.parse(resultJson);
     const elapsed = performance.now() - start;
 

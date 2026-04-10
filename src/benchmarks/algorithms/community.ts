@@ -1,5 +1,6 @@
 import { Database, Connection } from 'congraphdb';
 import { DataScale, DATA_SCALES } from '../../types.js';
+import { unwrap, unwrapAsync } from '../../utils/napi-helpers.js';
 
 /**
  * Community Detection Algorithm Benchmarks
@@ -24,8 +25,8 @@ export class CommunityDetectionBenchmark {
 
     // Initialize database
     this.db = new Database(dbPath);
-    this.db.init();
-    this.conn = this.db.createConnection();
+    unwrap(this.db.init(), 'Failed to initialize database');
+    this.conn = unwrap(this.db.createConnection(), 'Failed to create connection');
 
     // Create test graph (citation network pattern)
     await this.setupTestGraph();
@@ -67,21 +68,21 @@ export class CommunityDetectionBenchmark {
 
     console.log(`  📊 Creating citation network (${nodeCount} nodes, ${communityCount} communities)...`);
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE NODE TABLE Paper(id STRING, title STRING, community INT64, PRIMARY KEY(id))
-    `);
+    `), 'Failed to create Paper table');
 
-    await this.conn.query(`
+    await unwrapAsync(this.conn.query(`
       CREATE REL TABLE Cites(FROM Paper TO Paper)
-    `);
+    `), 'Failed to create Cites table');
 
     // Create papers in communities
     for (let c = 0; c < communityCount; c++) {
       for (let i = 0; i < nodesPerCommunity; i++) {
         const id = `p_${c}_${i}`;
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           CREATE (:Paper {id: '${id}', title: 'Paper ${c}-${i}', community: ${c}})
-        `);
+        `), `Failed to create paper ${id}`);
       }
     }
 
@@ -95,10 +96,10 @@ export class CommunityDetectionBenchmark {
       const toNode = `p_${toComm}_${Math.floor(Math.random() * nodesPerCommunity)}`;
 
       if (fromNode !== toNode) {
-        await this.conn.query(`
+        await unwrapAsync(this.conn.query(`
           MATCH (f:Paper {id: '${fromNode}'}), (t:Paper {id: '${toNode}'})
           CREATE (f)-[:Cites]->(t)
-        `);
+        `), `Failed to create citation from ${fromNode} to ${toNode}`);
       }
     }
 
@@ -118,10 +119,10 @@ export class CommunityDetectionBenchmark {
 
     for (const resolution of resolutions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('louvain', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('louvain', JSON.stringify({
         resolution,
         maxIterations: 20
-      }));
+      })), 'Louvain failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -152,10 +153,10 @@ export class CommunityDetectionBenchmark {
 
     for (const resolution of resolutions) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('leiden', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('leiden', JSON.stringify({
         resolution,
         maxIterations: 20
-      }));
+      })), 'Leiden failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -186,10 +187,10 @@ export class CommunityDetectionBenchmark {
 
     for (const numClusters of clusterCounts) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('spectral', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('spectral', JSON.stringify({
         maxIterations: 20,
         numClusters
-      }));
+      })), 'Spectral failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -220,10 +221,10 @@ export class CommunityDetectionBenchmark {
 
     for (const threshold of thresholds) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('slpa', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('slpa', JSON.stringify({
         threshold,
         maxIterations: 20
-      }));
+      })), 'SLPA failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -256,9 +257,9 @@ export class CommunityDetectionBenchmark {
 
     for (const maxIterations of iterations) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('infomap', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('infomap', JSON.stringify({
         maxIterations
-      }));
+      })), 'Infomap failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
@@ -289,9 +290,9 @@ export class CommunityDetectionBenchmark {
 
     for (const maxIterations of iterations) {
       const start = performance.now();
-      const resultJson = this.conn.runAlgorithmSync('labelPropagation', JSON.stringify({
+      const resultJson = unwrap(this.conn.runAlgorithmSync('labelPropagation', JSON.stringify({
         maxIterations
-      }));
+      })), 'Label propagation failed');
       const result = JSON.parse(resultJson);
       const elapsed = performance.now() - start;
 
