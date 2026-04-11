@@ -2,6 +2,17 @@
   "versions": [
     {
       "version": "1.0.0",
+      "date": "2026-04-10",
+      "commit": "eaf3e84d913256dacb3af06473255ae963371411",
+      "overall_score": {
+        "congraphdb": 84.8,
+        "sqlite": 47.6,
+        "levelgraph": 43.2,
+        "graphology": 41.9
+      }
+    },
+    {
+      "version": "1.0.0",
       "date": "2026-03-20",
       "commit": "872ce64f9ff8ee786402f88ecfd57d6852a59ef2",
       "overall_score": {

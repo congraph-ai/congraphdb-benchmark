@@ -1,10 +1,10 @@
 {
   "meta": {
     "version": "1.0.0",
-    "timestamp": "2026-03-20T02:09:04.015Z",
-    "commit": "872ce64f9ff8ee786402f88ecfd57d6852a59ef2",
+    "timestamp": "2026-04-10T14:01:20.954Z",
+    "commit": "eaf3e84d913256dacb3af06473255ae963371411",
     "branch": "main",
-    "run_id": "1773972557453",
+    "run_id": "1775829699707",
     "environment": {
       "os": "win32",
       "cpu": "Unknown",
@@ -16,90 +16,90 @@
     "small": {
       "congraphdb": {
         "ingestion": {
-          "nodes_per_sec": 174135,
-          "edges_per_sec": 870675,
-          "total_time_ms": 57
+          "nodes_per_sec": 113805,
+          "edges_per_sec": 569025,
+          "total_time_ms": 88
         },
         "traversal": {
-          "1hop": 0.10074999999997089,
-          "2hop": 0.08479000000006635,
-          "3hop": 0.10071999999963736,
-          "4hop": 0.06604000000006635,
-          "5hop": 0.06276000000034401
+          "1hop": 0.6860599999999977,
+          "2hop": 0.6266299999999319,
+          "3hop": 0.6582900000000336,
+          "4hop": 0.6824500000000626,
+          "5hop": 0.6436999999998079
         },
         "pagerank": {
-          "time_ms": 1,
+          "time_ms": 9,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 114,
-          "rss_mb": 97
+          "peak_mb": 128,
+          "rss_mb": 109
         }
       },
       "sqlite": {
         "ingestion": {
-          "nodes_per_sec": 19122,
-          "edges_per_sec": 95611,
-          "total_time_ms": 523
+          "nodes_per_sec": 17428,
+          "edges_per_sec": 87141,
+          "total_time_ms": 574
         },
         "traversal": {
-          "1hop": 0.26010999999962225,
-          "2hop": 0.6109200000002601,
-          "3hop": 3.056759999999849,
-          "4hop": 14.337789999999586,
-          "5hop": 48.52647999999935
+          "1hop": 0.2960799999999836,
+          "2hop": 0.5822500000001127,
+          "3hop": 2.9715299999998934,
+          "4hop": 14.28734999999988,
+          "5hop": 50.047460000000044
         },
         "pagerank": {
-          "time_ms": 1533,
+          "time_ms": 1572,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 124,
-          "rss_mb": 105
+          "peak_mb": 142,
+          "rss_mb": 121
         }
       },
       "levelgraph": {
         "ingestion": {
-          "nodes_per_sec": 3959,
-          "edges_per_sec": 19795,
-          "total_time_ms": 2526
+          "nodes_per_sec": 3525,
+          "edges_per_sec": 17627,
+          "total_time_ms": 2837
         },
         "traversal": {
-          "1hop": 2.4615599999997357,
-          "2hop": 1.0985700000004726,
-          "3hop": 0.9565600000001723,
-          "4hop": 1.0285599999999249,
-          "5hop": 1.1611199999992095
+          "1hop": 2.6762100000003555,
+          "2hop": 1.1739799999999376,
+          "3hop": 1.0054800000003525,
+          "4hop": 1.0946900000000823,
+          "5hop": 1.212540000000081
         },
         "pagerank": {
           "time_ms": 2,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 329,
-          "rss_mb": 279
+          "peak_mb": 336,
+          "rss_mb": 285
         }
       },
       "graphology": {
         "ingestion": {
-          "nodes_per_sec": 24564,
-          "edges_per_sec": 122820,
-          "total_time_ms": 407
+          "nodes_per_sec": 20592,
+          "edges_per_sec": 102961,
+          "total_time_ms": 486
         },
         "traversal": {
-          "1hop": 0.14099999999998544,
-          "2hop": 0.47599999999983994,
-          "3hop": 8.000309999999809,
-          "4hop": 232.89477000000042,
-          "5hop": 495.1164799999988
+          "1hop": 0.15931999999993424,
+          "2hop": 0.5633700000000317,
+          "3hop": 6.279660000000513,
+          "4hop": 249.40902000000023,
+          "5hop": 957.31245
         },
         "pagerank": {
-          "time_ms": 58,
+          "time_ms": 72,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 341,
-          "rss_mb": 290
+          "peak_mb": 354,
+          "rss_mb": 301
         }
       }
     },

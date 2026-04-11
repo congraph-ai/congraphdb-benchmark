@@ -1,14 +1,14 @@
-# CongraphDB Performance Benchmark v0.1.10
+# CongraphDB Performance Benchmark v0.1.11
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.10-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
+[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.11-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
 
-**A comprehensive benchmark suite comparing [CongraphDB v0.1.10](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
+**A comprehensive benchmark suite comparing [CongraphDB v0.1.11](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
 
-[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.10 Features](#v0110-features)
+[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.11 Features](#v0111-features)
 
 </div>
 
@@ -36,17 +36,17 @@
 
 ---
 
-## v0.1.10 Features
+## v0.1.11 Features
 
-**New in v0.1.10**: Extended benchmarks for CongraphDB's latest features including Document API, SQL DDL, and enhanced Algorithms:
+**New in v0.1.11**: Extended benchmarks for CongraphDB's latest features including Transaction Control, Hierarchical Communities, and WAL Recovery:
 
 | Benchmark | Description | Metrics |
 |-----------|-------------|---------|
+| 🔒 **Transactions** | Explicit BEGIN/COMMIT overhead | latency_ms, throughput_tps, recovery_time |
+| 🏘️ **Hierarchical** | Multi-level Louvain clustering | community_count, modularity, time_ms |
 | 📄 **Document API** | High-level RAG operations | nodes/sec, chunks/sec, entity_extraction |
 | 🗄️ **SQL DDL** | SQL-style schema definition | tables/sec, insert_rate, catalog_sync |
-| 🔄 **OCC Concurrency** | Optimistic Concurrency Control | conflict_rate, retries/sec, throughput |
-| 🔶 **Schema API** | JavaScript Schema Operations | tables/sec, indexes/sec, ensureSchema |
-| 📊 **Graph Algorithms** | PageRank, Community Detection, Traversal | algorithm_time_ms, result_count |
+| 📊 **Graph Algorithms** | PageRank, Leiden, Closeness, Dijkstra | algorithm_time_ms, result_count |
 
 ### Algorithm Benchmarks
 
@@ -57,19 +57,19 @@
 | **Traversal** | BFS, DFS, Dijkstra |
 | **Analytics** | Triangle Count, Connected Components, SCC |
 
-### Running v0.1.10 Benchmarks
+### Running v0.1.11 Benchmarks
 
 ```bash
-# Run all v0.1.10 benchmarks
-npm run benchmark:v0110
+# Run all v0.1.11 benchmarks
+npm run benchmark:v0111
 
-# Run specific v0.1.8 benchmark
-npm run benchmark:occ      # OCC Concurrency
-npm run benchmark:schema   # Schema API
-npm run benchmark:algorithms  # Graph Algorithms
+# Run specific v0.1.11 benchmark
+npm run benchmark:dml      # DML operations
+npm run benchmark:api      # API comparison
+npm run benchmark:persistence  # Persistence tests
 
 # Combine with standard benchmarks
-node dist/cli.js run --v018 --scale medium
+node dist/cli.js run --v0111 --scale medium
 
 # Select specific v0.1.8 benchmarks
 node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
@@ -79,8 +79,8 @@ node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--v0110` | Enable v0.1.10 benchmarks | false |
-| `--v0110-benchmarks <list>` | Comma-separated v0.1.10 benchmarks | all |
+| `--v0111` | Enable v0.1.11 benchmarks | false |
+| `--v0111-benchmarks <list>` | Comma-separated v0.1.11 benchmarks | all |
 
 ---
 
@@ -273,4 +273,4 @@ MIT
 
 ---
 
-*Last updated: 2026-04-07 (v0.1.10)*
+*Last updated: 2026-04-10 (v0.1.11)*

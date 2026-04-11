@@ -1,7 +1,7 @@
 # Performance Leaderboard
 
 
-> **Last Run:** March 20, 2026 | **Commit:** `872ce64` | **Version:** 1.0.0
+> **Last Run:** April 10, 2026 | **Commit:** `eaf3e84` | **Version:** 1.0.0
 
 
 Current rankings based on overall performance across all metrics.
@@ -10,10 +10,10 @@ Current rankings based on overall performance across all metrics.
 
 | Rank | Engine | Score | Ingestion | Traversal | PageRank | Memory |
 |:----:|:-------|:-----:|:---------:|:---------:|:--------:|:------:|
-| 🥇 | **CongraphDB** | **87.9** | 🥇 174K/s | 🥇 0.1ms | 🥇 0.0s | 114MB |
-| 🥈 | **SQLite** | **49.0** | 19K/s | 1.3ms | 1.5s | 124MB |
-| 🥉 | **LevelGraph** | **44.5** | 4K/s | 1.5ms | 🥇 0.0s | 329MB |
-| 4 | **Graphology** | **40.9** | 25K/s | 2.9ms | 🥇 0.1s | 341MB |
+| 🥇 | **CongraphDB** | **84.8** | 114K/s | 🥇 0.7ms | 🥇 0.0s | 128MB |
+| 🥈 | **SQLite** | **47.6** | 17K/s | 1.3ms | 1.6s | 142MB |
+| 🥉 | **LevelGraph** | **43.2** | 4K/s | 1.6ms | 🥇 0.0s | 336MB |
+| 4 | **Graphology** | **41.9** | 21K/s | 2.3ms | 🥇 0.1s | 354MB |
 
 
 ## Overall Score - Medium Dataset
