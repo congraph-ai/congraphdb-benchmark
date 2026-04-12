@@ -130,9 +130,9 @@ export class CongraphEngine implements EngineAdapter {
       throw new Error(`Query failed: ${result.err.message}`);
     }
 
-    const rows = result.getAll();
+    const rows = await result.getAll();
     if ('err' in rows) {
-      throw new Error(`Failed to get rows: ${rows.err.message}`);
+      throw new Error(`Failed to get rows: ${(rows.err as Error).message}`);
     }
     result.close();
     return rows.length;

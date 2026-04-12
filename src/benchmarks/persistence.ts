@@ -181,7 +181,7 @@ export class PersistenceBenchmark {
 
     // Verify data was recovered
     const result = await unwrapAsync(this.conn!.query('MATCH (p:Paper) RETURN count(*) AS count'), 'Failed to query recovered data');
-    const rows = unwrap(result.getAll(), 'Failed to get all rows') as Array<{ count: number }>;
+    const rows = await unwrapAsync(result.getAll(), 'Failed to get all rows') as Array<{ count: number }>;
     const count = rows[0]?.count || 0;
 
     console.log(`  ✓ Recovered ${count} nodes in ${recoveryTime.toFixed(2)}ms`);
@@ -348,7 +348,7 @@ export class PersistenceEngineAdapter implements EngineAdapter {
       LIMIT 100000
     `), `Failed to traverse from ${sourceId}`);
 
-    return unwrap(result.getAll(), 'Failed to get all traversal results').length;
+    return (await unwrapAsync(result.getAll(), 'Failed to get all traversal results')).length;
   }
 
   async runPageRank(iterations: number): Promise<number> {
