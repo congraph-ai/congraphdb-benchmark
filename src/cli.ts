@@ -44,9 +44,9 @@ program
   // v0.1.8 options
   .option('--v018', 'Enable v0.1.8 benchmarks (OCC, Schema API, Algorithms)', false)
   .option('--v018-benchmarks <benchmarks>', 'Comma-separated list of v0.1.8 benchmarks: occ,schema,algorithms', 'all')
-  // v0.1.10 options
-  .option('--v0110', 'Enable v0.1.10 benchmarks (Document API, SQL DDL)', false)
-  .option('--v0110-benchmarks <benchmarks>', 'Comma-separated list of v0.1.10 benchmarks: document,sql', 'all')
+  // v0.1.12 options
+  .option('--v0112', 'Enable v0.1.10 benchmarks (Document API, SQL DDL, Algorithms)', false)
+  .option('--v0112-benchmarks <benchmarks>', 'Comma-separated list of v0.1.10 benchmarks: document,sql,algorithms', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -71,8 +71,8 @@ async function runBenchmarks(options: any) {
     benchmarks: v016Benchmarks,
     v018: enableV018,
     'v018-benchmarks': v018Benchmarks,
-    v0110: enableV0110,
-    'v0110-benchmarks': v0110Benchmarks
+    v0112: enableV0112,
+    'v0112-benchmarks': v0112Benchmarks
   } = options;
 
   // Validate scale
@@ -105,10 +105,10 @@ async function runBenchmarks(options: any) {
   // Parse v0.1.8 benchmarks
   const enabledV018Benchmarks = parseV018Benchmarks(v018Benchmarks, enableV018);
 
-  // Parse v0.1.10 benchmarks
-  const enabledV0110Benchmarks = parseV0110Benchmarks(v0110Benchmarks, enableV0110);
+  // Parse v0.1.12 benchmarks
+  const enabledV0112Benchmarks = parseV0112Benchmarks(v0112Benchmarks, enableV0112);
 
-  console.log('🔬 CongraphDB Benchmark Suite v0.1.8');
+  console.log('🔬 CongraphDB Benchmark Suite v0.1.12');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
   console.log(`API: ${api.toUpperCase()}`);
@@ -121,8 +121,8 @@ async function runBenchmarks(options: any) {
   if (enableV018) {
     console.log(`\n🎯 v0.1.8 Benchmarks: ${enabledV018Benchmarks.join(', ')}`);
   }
-  if (enableV0110) {
-    console.log(`\n🎯 v0.1.10 Benchmarks: ${enabledV0110Benchmarks.join(', ')}`);
+  if (enableV0112) {
+    console.log(`\n🎯 v0.1.12 Benchmarks: ${enabledV0112Benchmarks.join(', ')}`);
   }
   console.log('');
 
@@ -157,9 +157,9 @@ async function runBenchmarks(options: any) {
     enableOCC: enabledV018Benchmarks.includes('occ'),
     enableSchemaAPI: enabledV018Benchmarks.includes('schema'),
     enableAlgorithms: enabledV018Benchmarks.includes('algorithms'),
-    // v0.1.10 benchmarks
-    enableDocument: enabledV0110Benchmarks.includes('document'),
-    enableSQL: enabledV0110Benchmarks.includes('sql'),
+    // v0.1.12 benchmarks
+    enableDocument: enabledV0112Benchmarks.includes('document'),
+    enableSQL: enabledV0112Benchmarks.includes('sql'),
   };
 
   // Run benchmarks for each engine
@@ -182,7 +182,7 @@ async function runBenchmarks(options: any) {
       }
 
       // Run v0.1.10 benchmarks if enabled
-      if (enableV0110) {
+      if (enableV0112) {
         await suite.runV0110Benchmarks();
       }
     } catch (error: any) {
@@ -226,12 +226,12 @@ async function runBenchmarks(options: any) {
     }
 
     // Export v0.1.10 results if enabled
-    if (enableV0110) {
-      const v0110JsonPath = await recorder.exportV0110ToJSON();
-      console.log(`   v0.1.10 JSON: ${v0110JsonPath}`);
+    if (enableV0112) {
+      const v0112JsonPath = await recorder.exportV0110ToJSON();
+      console.log(`   v0.1.10 JSON: ${v0112JsonPath}`);
     }
 
-    console.log('\n' + (enableV016 || enableV018 || enableV0110 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
+    console.log('\n' + (enableV016 || enableV018 || enableV0112 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -296,10 +296,10 @@ function parseV018Benchmarks(benchmarks: string, enableV018: boolean): string[] 
   return requested.filter((b: string) => validBenchmarks.includes(b));
 }
 
-function parseV0110Benchmarks(benchmarks: string, enableV0110: boolean): string[] {
-  if (!enableV0110) return [];
+function parseV0112Benchmarks(benchmarks: string, enableV0112: boolean): string[] {
+  if (!enableV0112) return [];
 
-  const validBenchmarks = ['document', 'sql'];
+  const validBenchmarks = ['document', 'sql', 'algorithms'];
 
   if (benchmarks === 'all') {
     return validBenchmarks;
