@@ -2,7 +2,7 @@
 
 export type DataScale = 'small' | 'medium' | 'large';
 
-export type EngineType = 'congraph' | 'neo4j' | 'kuzu' | 'sqlite' | 'graphology' | 'levelgraph' | 'congraph-persistence' | 'congraph-stats';
+export type EngineType = 'congraph' | 'neo4j' | 'kuzu' | 'sqlite' | 'graphology' | 'levelgraph' | 'congraph-persistence' | 'congraph-stats' | 'ladybug';
 
 export type APIType = 'cypher' | 'javascript' | 'both';
 

@@ -40,6 +40,13 @@ RETURN gds.util.asNode(nodeId).id, score
 ORDER BY score DESC
 ```
 
+#### LadybugDB (Cypher via Native Binding)
+```cypher
+-- Manually unrolled variable length paths for current engine limitations
+MATCH (start:Paper {id: $id})-[:CITES]->()-[:CITES]->()-[:CITES]->(end)
+RETURN COUNT(end) AS count
+```
+
 #### SQLite (Recursive CTE)
 ```sql
 -- Optimized recursive query with indexes
@@ -78,6 +85,7 @@ Each engine configured for fair comparison:
 |--------|----------------|-----------|
 | **CongraphDB** | Default (auto) | Embedded, automatic management |
 | **Neo4j** | 1GB heap + 1GB pagecache | Standard for this dataset size |
+| **LadybugDB** | Default | Managed via native C++ backend |
 | **Graphology** | Node.js default (1.5GB) | No custom configuration available |
 | **SQLite** | Default | Minimal overhead |
 
@@ -112,6 +120,10 @@ CREATE INDEX idx_edges_target ON edges(target_id);
 - **Mature Optimizer** - Advanced query planning
 - **GDS Library** - Native algorithm implementations
 - **Caching** - Page cache for hot data
+
+#### LadybugDB Advantages
+- **Embedded C++ Native** - High throughput with low latency
+- **Efficient Cypher Execution** - Kuzu-based Cypher parser optimizations
 
 #### Graphology Advantages
 - **Pure JavaScript** - No FFI overhead

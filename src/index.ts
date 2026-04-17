@@ -12,6 +12,7 @@ export { KuzuEngine } from './engines/kuzu.js';
 export { SQLiteEngine } from './engines/sqlite.js';
 export { GraphologyEngine } from './engines/graphology.js';
 export { LevelGraphEngine } from './engines/levelgraph.js';
+export { LadybugEngine } from './engines/ladybug.js';
 
 // Benchmark exports (v0.1.6)
 export { APIComparisonBenchmark } from './benchmarks/api-comparison.js';

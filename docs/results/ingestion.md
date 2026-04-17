@@ -16,19 +16,15 @@ Ingestion performance measures how quickly each database can load graph data (no
 
 ## Results Summary
 
-<div class="ingestion-summary">
-
 ### Small Dataset (10K nodes / 50K edges)
 
 | Engine | Nodes/s | Edges/s | Total Time | Rank |
 |--------|---------|---------|------------|------|
-| **CongraphDB** | **125,000** | **98,000** | **1.25s** | 🥇 |
-| Neo4j | 95,000 | 78,000 | 1.68s | 🥈 |
-| Kuzu | 88,000 | 72,000 | 1.82s | 🥉 |
-| Graphology | 78,000 | 65,000 | 2.05s | 4 |
-| SQLite | 45,000 | 38,000 | 3.55s | 5 |
-
-</div>
+| **CongraphDB** | **95,181** | **475,906** | **0.10s** | 🥇 |
+| Graphology | 18,348 | 91,739 | 0.54s | 🥈 |
+| SQLite | 16,828 | 84,141 | 0.59s | 🥉 |
+| LevelGraph | 3,143 | 15,717 | 3.18s | 4 |
+| LadybugDB | 139 | 697 | 71.70s | 5 |
 
 <div class="ingestion-chart-container">
   <canvas id="ingestionSmallChart" height="300"></canvas>

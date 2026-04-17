@@ -9,7 +9,8 @@ const engineColors = {
   neo4j: '#3B82F6',       // Blue
   kuzu: '#F59E0B',        // Amber
   sqlite: '#6B7280',      // Gray
-  graphology: '#8B5CF6'   // Purple
+  graphology: '#8B5CF6',  // Purple
+  ladybug: '#EF4444'      // Red
 };
 
 const engineLabels = {
@@ -17,7 +18,8 @@ const engineLabels = {
   neo4j: 'Neo4j',
   kuzu: 'Kuzu',
   sqlite: 'SQLite',
-  graphology: 'Graphology'
+  graphology: 'Graphology',
+  ladybug: 'LadybugDB'
 };
 
 // Global chart instances
@@ -266,6 +268,7 @@ function createOverallScoreChart(canvasId) {
     congraphdb: 94.2,
     neo4j: 87.5,
     kuzu: 82.3,
+    ladybug: 78.5,
     sqlite: 65.8,
     graphology: 58.2
   };
@@ -319,6 +322,12 @@ function createRadarChart(canvasId) {
           data: [76, 67, 57, 12],
           borderColor: engineColors.neo4j,
           backgroundColor: engineColors.neo4j + '33'
+        },
+        {
+          label: 'LadybugDB',
+          data: [65, 50, 45, 20],
+          borderColor: engineColors.ladybug,
+          backgroundColor: engineColors.ladybug + '33'
         }
       ]
     },
@@ -430,7 +439,7 @@ function createIngestionScalingChart(canvasId) {
   if (!ctx || !benchmarkData) return;
 
   const scales = ['small', 'medium', 'large'];
-  const engines = ['congraphdb', 'neo4j', 'kuzu', 'graphology', 'sqlite'];
+  const engines = ['congraphdb', 'neo4j', 'kuzu', 'ladybug', 'graphology', 'sqlite'];
 
   new Chart(ctx, {
     type: 'line',
@@ -524,6 +533,7 @@ function createTraversalScoreChart(canvasId) {
     neo4j: 2.84,
     graphology: 3.41,
     kuzu: 3.57,
+    ladybug: 4.15,
     sqlite: 14.32
   };
 
@@ -564,7 +574,7 @@ function createTraversalScalingChart(canvasId) {
 
   // Traversal scaling by hop count
   const hops = [1, 2, 3, 4, 5];
-  const engines = ['congraphdb', 'neo4j', 'graphology'];
+  const engines = ['congraphdb', 'neo4j', 'ladybug', 'graphology'];
 
   new Chart(ctx, {
     type: 'line',
@@ -656,6 +666,7 @@ function createIterationChart(canvasId) {
     congraphdb: 1.45,
     neo4j: 2.45,
     kuzu: 3.20,
+    ladybug: 3.55,
     sqlite: 6.80,
     graphology: 7.80
   };
@@ -696,7 +707,7 @@ function createPageRankScalingChart(canvasId) {
   if (!ctx || !benchmarkData) return;
 
   const scales = ['small', 'medium', 'large'];
-  const engines = ['congraphdb', 'neo4j', 'kuzu'];
+  const engines = ['congraphdb', 'neo4j', 'kuzu', 'ladybug'];
 
   new Chart(ctx, {
     type: 'line',

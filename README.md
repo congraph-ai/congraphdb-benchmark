@@ -1,14 +1,14 @@
-# CongraphDB Performance Benchmark v0.1.12
+# CongraphDB Performance Benchmark v0.1.13
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org)
-[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.12-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
+[![Benchmark](https://img.shields.io/badge/benchmark-v0.1.13-orange)](https://congraph-ai.github.io/congraphdb-benchmark/)
 
-**A comprehensive benchmark suite comparing [CongraphDB v0.1.12](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
+**A comprehensive benchmark suite comparing [CongraphDB v0.1.13](https://github.com/your-org/congraphdb) against industry-standard graph databases and data storage solutions.**
 
-[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.12 Features](#v0112-features)
+[📊 Live Results](https://congraph-ai.github.io/congraphdb-benchmark/) • [Quick Start](#quick-start) • [Documentation](#results) • [v0.1.13 Features](#v0113-features)
 
 </div>
 
@@ -36,9 +36,9 @@
 
 ---
 
-## v0.1.12 Features
+## v0.1.13 Features
 
-**New in v0.1.12**: Extended benchmarks for CongraphDB's latest features including Hybrid Deletion Detection, OptionalMatch Refinements, and Eager Mutation Execution:
+**New in v0.1.13**: Extended benchmarks for CongraphDB's latest features including HNSW Vector Index Support, Multi-Table Graph Traversal, and Type Functions:
 
 | Benchmark | Description | Metrics |
 |-----------|-------------|---------|
@@ -57,19 +57,19 @@
 | **Traversal** | BFS, DFS, Dijkstra |
 | **Analytics** | Triangle Count, Connected Components, SCC |
 
-### Running v0.1.12 Benchmarks
+### Running v0.1.13 Benchmarks
 
 ```bash
-# Run all v0.1.12 benchmarks
-npm run benchmark:v0112
+# Run all v0.1.13 benchmarks
+npm run benchmark:v0113
 
-# Run specific v0.1.12 benchmark
+# Run specific v0.1.13 benchmark
 npm run benchmark:dml      # DML operations
 npm run benchmark:api      # API comparison
 npm run benchmark:persistence  # Persistence tests
 
 # Combine with standard benchmarks
-node dist/cli.js run --v0112 --scale medium
+node dist/cli.js run --v0113 --scale medium
 
 # Select specific v0.1.8 benchmarks
 node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
@@ -79,8 +79,8 @@ node dist/cli.js run --v018 --v018-benchmarks occ,schema,algorithms
 
 | Option | Description | Default |
 |--------|-------------|---------|
-| `--v0112` | Enable v0.1.12 benchmarks | false |
-| `--v0112-benchmarks <list>` | Comma-separated v0.1.12 benchmarks | all |
+| `--v0113` | Enable v0.1.13 benchmarks | false |
+| `--v0113-benchmarks <list>` | Comma-separated v0.1.13 benchmarks | all |
 
 ---
 
@@ -273,4 +273,4 @@ MIT
 
 ---
 
-*Last updated: 2026-04-12 (v0.1.12)*
+*Last updated: 2026-04-17 (v0.1.13)*

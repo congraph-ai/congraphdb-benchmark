@@ -1,10 +1,10 @@
 {
   "meta": {
     "version": "1.0.0",
-    "timestamp": "2026-04-10T14:01:20.954Z",
-    "commit": "eaf3e84d913256dacb3af06473255ae963371411",
+    "timestamp": "2026-04-17T01:49:57.814Z",
+    "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
     "branch": "main",
-    "run_id": "1775829699707",
+    "run_id": "1776411957024",
     "environment": {
       "os": "win32",
       "cpu": "Unknown",
@@ -16,202 +16,202 @@
     "small": {
       "congraphdb": {
         "ingestion": {
-          "nodes_per_sec": 113805,
-          "edges_per_sec": 569025,
-          "total_time_ms": 88
+          "nodes_per_sec": 95181,
+          "edges_per_sec": 475906,
+          "total_time_ms": 105
         },
         "traversal": {
-          "1hop": 0.6860599999999977,
-          "2hop": 0.6266299999999319,
-          "3hop": 0.6582900000000336,
-          "4hop": 0.6824500000000626,
-          "5hop": 0.6436999999998079
+          "1hop": 0.7625100000002021,
+          "2hop": 0.6763600000001133,
+          "3hop": 0.6301799999999276,
+          "4hop": 0.6462500000001455,
+          "5hop": 0.6078200000001743
         },
         "pagerank": {
-          "time_ms": 9,
+          "time_ms": 7,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 128,
-          "rss_mb": 109
+          "peak_mb": 133,
+          "rss_mb": 113
         }
       },
       "sqlite": {
         "ingestion": {
-          "nodes_per_sec": 17428,
-          "edges_per_sec": 87141,
-          "total_time_ms": 574
+          "nodes_per_sec": 16828,
+          "edges_per_sec": 84141,
+          "total_time_ms": 594
         },
         "traversal": {
-          "1hop": 0.2960799999999836,
-          "2hop": 0.5822500000001127,
-          "3hop": 2.9715299999998934,
-          "4hop": 14.28734999999988,
-          "5hop": 50.047460000000044
+          "1hop": 0.2894400000011956,
+          "2hop": 0.6789900000003399,
+          "3hop": 3.2696199999991222,
+          "4hop": 15.59331000000093,
+          "5hop": 52.54435999999987
         },
         "pagerank": {
-          "time_ms": 1572,
+          "time_ms": 1771,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 142,
-          "rss_mb": 121
+          "peak_mb": 179,
+          "rss_mb": 153
         }
       },
       "levelgraph": {
         "ingestion": {
-          "nodes_per_sec": 3525,
-          "edges_per_sec": 17627,
-          "total_time_ms": 2837
+          "nodes_per_sec": 3143,
+          "edges_per_sec": 15717,
+          "total_time_ms": 3181
         },
         "traversal": {
-          "1hop": 2.6762100000003555,
-          "2hop": 1.1739799999999376,
-          "3hop": 1.0054800000003525,
-          "4hop": 1.0946900000000823,
-          "5hop": 1.212540000000081
+          "1hop": 2.791530000000057,
+          "2hop": 1.2173500000018975,
+          "3hop": 1.033119999999326,
+          "4hop": 1.1242700000002515,
+          "5hop": 1.260979999999836
         },
         "pagerank": {
           "time_ms": 2,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 336,
-          "rss_mb": 285
+          "peak_mb": 415,
+          "rss_mb": 353
         }
       },
       "graphology": {
         "ingestion": {
-          "nodes_per_sec": 20592,
-          "edges_per_sec": 102961,
-          "total_time_ms": 486
+          "nodes_per_sec": 18348,
+          "edges_per_sec": 91739,
+          "total_time_ms": 545
         },
         "traversal": {
-          "1hop": 0.15931999999993424,
-          "2hop": 0.5633700000000317,
-          "3hop": 6.279660000000513,
-          "4hop": 249.40902000000023,
-          "5hop": 957.31245
+          "1hop": 0.16680000000123982,
+          "2hop": 0.6022600000003877,
+          "3hop": 6.30144000000073,
+          "4hop": 266.2405699999981,
+          "5hop": 651.713069999998
         },
         "pagerank": {
-          "time_ms": 72,
+          "time_ms": 96,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 354,
-          "rss_mb": 301
+          "peak_mb": 433,
+          "rss_mb": 368
+        }
+      },
+      "ladybug": {
+        "ingestion": {
+          "nodes_per_sec": 139,
+          "edges_per_sec": 697,
+          "total_time_ms": 71697
+        },
+        "traversal": {
+          "1hop": 4.1786699999967825,
+          "2hop": 12.654380000004313,
+          "3hop": 25.30325999999186,
+          "4hop": 38.12803999999596,
+          "5hop": 52.684800000002724
+        },
+        "pagerank": {
+          "time_ms": 45,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 489,
+          "rss_mb": 416
         }
       }
     },
     "medium": {
       "congraphdb": {
         "ingestion": {
-          "nodes_per_sec": 118000,
-          "edges_per_sec": 92000,
-          "total_time_ms": 12800
+          "nodes_per_sec": 69304,
+          "edges_per_sec": 693037,
+          "total_time_ms": 1443
         },
         "traversal": {
-          "1hop": 0.12,
-          "2hop": 0.35,
-          "3hop": 0.95,
-          "4hop": 2.5,
-          "5hop": 6.2
+          "1hop": 0.6842700000037439,
+          "2hop": 0.6200800000020535,
+          "3hop": 0.6280200000008336,
+          "4hop": 0.6305300000036368,
+          "5hop": 0.6371500000095693
         },
         "pagerank": {
-          "time_ms": 14500,
+          "time_ms": 7,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 385,
-          "rss_mb": 345
-        }
-      },
-      "neo4j": {
-        "ingestion": {
-          "nodes_per_sec": 92000,
-          "edges_per_sec": 75000,
-          "total_time_ms": 16500
-        },
-        "traversal": {
-          "1hop": 0.22,
-          "2hop": 0.55,
-          "3hop": 1.35,
-          "4hop": 3.2,
-          "5hop": 7.8
-        },
-        "pagerank": {
-          "time_ms": 24500,
-          "iterations": 10
-        },
-        "memory": {
-          "peak_mb": 1850,
-          "rss_mb": 1650
-        }
-      },
-      "graphology": {
-        "ingestion": {
-          "nodes_per_sec": 72000,
-          "edges_per_sec": 58000,
-          "total_time_ms": 21200
-        },
-        "traversal": {
-          "1hop": 0.18,
-          "2hop": 0.48,
-          "3hop": 1.25,
-          "4hop": 3.8,
-          "5hop": 10.2
-        },
-        "pagerank": {
-          "time_ms": 78000,
-          "iterations": 10
-        },
-        "memory": {
-          "peak_mb": 980,
-          "rss_mb": 890
+          "peak_mb": 501,
+          "rss_mb": 425
         }
       },
       "sqlite": {
         "ingestion": {
-          "nodes_per_sec": 42000,
-          "edges_per_sec": 35000,
-          "total_time_ms": 36500
+          "nodes_per_sec": 6716,
+          "edges_per_sec": 67162,
+          "total_time_ms": 14889
         },
         "traversal": {
-          "1hop": 1.2,
-          "2hop": 4.5,
-          "3hop": 12.5,
-          "4hop": 35,
-          "5hop": null
+          "1hop": 0.3261300000012852,
+          "2hop": 2.39136999999464,
+          "3hop": 28.476190000001225,
+          "4hop": 248.9939299999969,
+          "5hop": 1213.6956599999946
         },
         "pagerank": {
-          "time_ms": 68000,
+          "time_ms": 51068,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 680,
-          "rss_mb": 620
+          "peak_mb": 651,
+          "rss_mb": 553
         }
       },
-      "kuzu": {
+      "levelgraph": {
         "ingestion": {
-          "nodes_per_sec": 85000,
-          "edges_per_sec": 68000,
-          "total_time_ms": 18800
+          "nodes_per_sec": 1879,
+          "edges_per_sec": 18794,
+          "total_time_ms": 53207
         },
         "traversal": {
-          "1hop": 0.2,
-          "2hop": 0.5,
-          "3hop": 1.4,
-          "4hop": 4,
-          "5hop": 10.5
+          "1hop": 2.962260000000242,
+          "2hop": 1.150309999997262,
+          "3hop": 0.9757400000002235,
+          "4hop": 1.0463500000012573,
+          "5hop": 1.2239799999981187
         },
         "pagerank": {
-          "time_ms": 32000,
+          "time_ms": 2,
           "iterations": 10
         },
         "memory": {
-          "peak_mb": 720,
-          "rss_mb": 680
+          "peak_mb": 2124,
+          "rss_mb": 1805
+        }
+      },
+      "graphology": {
+        "ingestion": {
+          "nodes_per_sec": 7334,
+          "edges_per_sec": 73338,
+          "total_time_ms": 13636
+        },
+        "traversal": {
+          "1hop": 0.162859999993816,
+          "2hop": 1.321890000003623,
+          "3hop": 174.79496999999975,
+          "4hop": 122049.73251,
+          "5hop": 1861330.4194899998
+        },
+        "pagerank": {
+          "time_ms": 2427,
+          "iterations": 10
+        },
+        "memory": {
+          "peak_mb": 2870,
+          "rss_mb": 2440
         }
       }
     },

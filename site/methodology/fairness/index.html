@@ -683,6 +683,8 @@
       
         
       
+        
+      
     
     
     
@@ -810,6 +812,34 @@
     
   
     Kuzu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../engines/ladybug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LadybugDB
   
 
     
@@ -1144,6 +1174,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ladybugdb-cypher-via-native-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LadybugDB (Cypher via Native Binding)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sqlite-recursive-cte" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1254,6 +1295,17 @@
     <span class="md-ellipsis">
       
         Neo4j Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ladybugdb-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LadybugDB Advantages
       
     </span>
   </a>
@@ -1637,6 +1689,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ladybugdb-cypher-via-native-binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LadybugDB (Cypher via Native Binding)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sqlite-recursive-cte" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1747,6 +1810,17 @@
     <span class="md-ellipsis">
       
         Neo4j Advantages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ladybugdb-advantages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LadybugDB Advantages
       
     </span>
   </a>
@@ -2080,27 +2154,32 @@
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">RETURN</span><span class="w"> </span><span class="n">gds</span><span class="p">.</span><span class="n">util</span><span class="p">.</span><span class="n">asNode</span><span class="p">(</span><span class="n">nodeId</span><span class="p">).</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">score</span>
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">score</span><span class="w"> </span><span class="k">DESC</span>
 </span></code></pre></div>
+<h4 id="ladybugdb-cypher-via-native-binding">LadybugDB (Cypher via Native Binding)<a class="headerlink" href="#ladybugdb-cypher-via-native-binding" title="Permanent link">&para;</a></h4>
+<div class="language-cypher highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="err">--</span><span class="w"> </span><span class="n">Manually</span><span class="w"> </span><span class="n">unrolled</span><span class="w"> </span><span class="n">variable</span><span class="w"> </span><span class="n">length</span><span class="w"> </span><span class="n">paths</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">current</span><span class="w"> </span><span class="n">engine</span><span class="w"> </span><span class="n">limitations</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">MATCH</span><span class="w"> </span><span class="p">(</span><span class="k">start</span><span class="p">:</span><span class="n">Paper</span><span class="w"> </span><span class="p">{</span><span class="n">id</span><span class="p">:</span><span class="w"> </span><span class="err">$</span><span class="n">id</span><span class="p">})</span><span class="o">-[</span><span class="p">:</span><span class="n">CITES</span><span class="o">]-&gt;</span><span class="p">()</span><span class="o">-[</span><span class="p">:</span><span class="n">CITES</span><span class="o">]-&gt;</span><span class="p">()</span><span class="o">-[</span><span class="p">:</span><span class="n">CITES</span><span class="o">]-&gt;</span><span class="p">(</span><span class="k">end</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">RETURN</span><span class="w"> </span><span class="n">COUNT</span><span class="p">(</span><span class="k">end</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">count</span>
+</span></code></pre></div>
 <h4 id="sqlite-recursive-cte">SQLite (Recursive CTE)<a class="headerlink" href="#sqlite-recursive-cte" title="Permanent link">&para;</a></h4>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">-- Optimized recursive query with indexes</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">traversal</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">target_id</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">depth</span><span class="p">,</span><span class="w"> </span><span class="n">source_id</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">edges</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">source_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CITES&#39;</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">target_id</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">source_id</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="n">e</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">traversal</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">source_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">target_id</span>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CITES&#39;</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">)</span>
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">target_id</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">traversal</span><span class="p">;</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">-- Optimized recursive query with indexes</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">WITH</span><span class="w"> </span><span class="k">RECURSIVE</span><span class="w"> </span><span class="n">traversal</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">target_id</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">depth</span><span class="p">,</span><span class="w"> </span><span class="n">source_id</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">edges</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">source_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CITES&#39;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">target_id</span><span class="p">,</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">source_id</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="n">edges</span><span class="w"> </span><span class="n">e</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="k">JOIN</span><span class="w"> </span><span class="n">traversal</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">source_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">target_id</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">t</span><span class="p">.</span><span class="n">depth</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;CITES&#39;</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="p">)</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">target_id</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">traversal</span><span class="p">;</span>
 </span></code></pre></div>
 <h4 id="graphology-javascript-api">Graphology (JavaScript API)<a class="headerlink" href="#graphology-javascript-api" title="Permanent link">&para;</a></h4>
-<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Using built-in traversal methods</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">bfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">graphology</span><span class="p">.</span><span class="nx">traversal</span><span class="p">.</span><span class="nx">bfs</span><span class="p">;</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bfs</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">order</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;pre&#39;</span><span class="p">,</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">node</span><span class="p">,</span><span class="w"> </span><span class="nx">attr</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">attr</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">startId</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">});</span>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">// Using built-in traversal methods</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">bfs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">graphology</span><span class="p">.</span><span class="nx">traversal</span><span class="p">.</span><span class="nx">bfs</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">bfs</span><span class="p">(</span><span class="nx">graph</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nx">order</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;pre&#39;</span><span class="p">,</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nx">filter</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="nx">node</span><span class="p">,</span><span class="w"> </span><span class="nx">attr</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">attr</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">startId</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">});</span>
 </span></code></pre></div>
 <hr />
 <h2 id="configuration-choices">Configuration Choices<a class="headerlink" href="#configuration-choices" title="Permanent link">&para;</a></h2>
@@ -2126,6 +2205,11 @@
 <td>Standard for this dataset size</td>
 </tr>
 <tr>
+<td><strong>LadybugDB</strong></td>
+<td>Default</td>
+<td>Managed via native C++ backend</td>
+</tr>
+<tr>
 <td><strong>Graphology</strong></td>
 <td>Node.js default (1.5GB)</td>
 <td>No custom configuration available</td>
@@ -2139,15 +2223,15 @@
 </table>
 <h3 id="index-strategy">Index Strategy<a class="headerlink" href="#index-strategy" title="Permanent link">&para;</a></h3>
 <p>All engines use similar indexing:</p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1">-- CongraphDB (automatic)</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">:</span><span class="n">Paper</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">-- Neo4j (explicit)</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">paper_id</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paper</span><span class="p">)</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">id</span><span class="p">);</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">-- SQLite (manual)</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_edges_source</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="p">(</span><span class="n">source_id</span><span class="p">);</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_edges_target</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="p">(</span><span class="n">target_id</span><span class="p">);</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">-- CongraphDB (automatic)</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">:</span><span class="n">Paper</span><span class="p">(</span><span class="n">id</span><span class="p">);</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">-- Neo4j (explicit)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">paper_id</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">:</span><span class="n">Paper</span><span class="p">)</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">id</span><span class="p">);</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">-- SQLite (manual)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_edges_source</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="p">(</span><span class="n">source_id</span><span class="p">);</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_edges_target</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">edges</span><span class="p">(</span><span class="n">target_id</span><span class="p">);</span>
 </span></code></pre></div>
 <hr />
 <h2 id="known-biases">Known Biases<a class="headerlink" href="#known-biases" title="Permanent link">&para;</a></h2>
@@ -2163,6 +2247,11 @@
 <li><strong>Mature Optimizer</strong> - Advanced query planning</li>
 <li><strong>GDS Library</strong> - Native algorithm implementations</li>
 <li><strong>Caching</strong> - Page cache for hot data</li>
+</ul>
+<h4 id="ladybugdb-advantages">LadybugDB Advantages<a class="headerlink" href="#ladybugdb-advantages" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Embedded C++ Native</strong> - High throughput with low latency</li>
+<li><strong>Efficient Cypher Execution</strong> - Kuzu-based Cypher parser optimizations</li>
 </ul>
 <h4 id="graphology-advantages">Graphology Advantages<a class="headerlink" href="#graphology-advantages" title="Permanent link">&para;</a></h4>
 <ul>
@@ -2216,12 +2305,12 @@
 - <strong>Timestamp</strong>: When benchmark was run
 - <strong>Environment</strong>: Hardware and software specs</p>
 <h3 id="reproducibility">Reproducibility<a class="headerlink" href="#reproducibility" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Reproduce exact results</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/congraph-ai/congraphdb-benchmark.git
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">cd</span><span class="w"> </span>congraphdb-benchmark
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>git<span class="w"> </span>checkout<span class="w"> </span>&lt;commit-hash&gt;
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>npm<span class="w"> </span>install
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Reproduce exact results</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/congraph-ai/congraphdb-benchmark.git
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="nb">cd</span><span class="w"> </span>congraphdb-benchmark
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>git<span class="w"> </span>checkout<span class="w"> </span>&lt;commit-hash&gt;
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>npm<span class="w"> </span>install
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>npm<span class="w"> </span>run<span class="w"> </span>benchmark
 </span></code></pre></div>
 <hr />
 <h2 id="reporting-standards">Reporting Standards<a class="headerlink" href="#reporting-standards" title="Permanent link">&para;</a></h2>

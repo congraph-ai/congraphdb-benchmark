@@ -11,6 +11,7 @@ Detailed information about each benchmarked graph database engine.
 | **CongraphDB** | Embedded | Rust | MIT | Native addon |
 | **Neo4j** | Client-Server | Java | AGPL v3 / Commercial | Network service |
 | **Kuzu** | Embedded | C++ | MIT | Native bindings |
+| **LadybugDB** | Embedded | C++ | MIT | Native bindings |
 | **SQLite** | Embedded (SQL) | C | Public Domain | Native library |
 | **Graphology** | Library | JavaScript | MIT | Pure JS |
 
@@ -41,6 +42,11 @@ Detailed information about each benchmarked graph database engine.
 - **Use when**: Working outside Node.js ecosystem
 - **Avoid when**: You need pure JavaScript solution
 
+### LadybugDB
+- **Best for**: Lightweight Node.js apps needing Cypher
+- **Use when**: You want an embedded C++ database with Neo4j compatibility
+- **Avoid when**: You need full production-ready Cypher standard
+
 ### SQLite
 - **Best for**: Applications needing SQL + some graph queries
 - **Use when**: You already use SQLite and need basic graph features
@@ -60,6 +66,7 @@ Select an engine for detailed performance analysis and implementation notes:
 - [CongraphDB](congraphdb.md) - The benchmark leader
 - [Neo4j](neo4j.md) - Industry standard
 - [Kuzu](kuzu.md) - C++ embedded option
+- [LadybugDB](ladybug.md) - Lightweight Cypher engine
 - [SQLite](sqlite.md) - Relational with graph features
 - [Graphology](graphology.md) - Pure JavaScript
 

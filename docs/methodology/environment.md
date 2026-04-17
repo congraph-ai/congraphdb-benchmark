@@ -73,6 +73,7 @@ Kernel:         5.15.0-1058-gke
 | **CongraphDB** | 0.1.0 (local) | 2026-03-16 |
 | **Neo4j** | 5.15.0 Community | 2026-03-16 |
 | **Kuzu** | 0.4.0 (placeholder) | - |
+| **LadybugDB** | 0.1.x (@ladybugdb/core) | 2026-04-17 |
 | **SQLite** | 3.45.1 (via better-sqlite3 9.2.2) | 2026-03-16 |
 | **Graphology** | 0.25.4 | 2026-03-16 |
 
@@ -122,7 +123,8 @@ Key production dependencies:
   "congraphdb": "^0.1.6",
   "neo4j-driver": "^5.15.0",
   "graphology": "^0.25.4",
-  "better-sqlite3": "^9.2.2"
+  "better-sqlite3": "^9.2.2",
+  "@ladybugdb/core": "latest"
 }
 ```
 

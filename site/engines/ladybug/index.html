@@ -12,25 +12,31 @@
         <meta name="author" content="CongraphDB Contributors">
       
       
+        <link rel="canonical" href="https://congraph-ai.github.io/congraphdb-benchmark/engines/ladybug/">
       
+      
+        <link rel="prev" href="../kuzu/">
+      
+      
+        <link rel="next" href="../sqlite/">
       
       
         
       
       
-      <link rel="icon" href="/congraphdb-benchmark/assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
-        <title>CongraphDB Benchmark</title>
+        <title>LadybugDB - CongraphDB Benchmark</title>
       
     
     
-      <link rel="stylesheet" href="/congraphdb-benchmark/assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="/congraphdb-benchmark/assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,9 +55,9 @@
       
     
     
-      <link rel="stylesheet" href="/congraphdb-benchmark/styles/extra.css">
+      <link rel="stylesheet" href="../../styles/extra.css">
     
-    <script>__md_scope=new URL("/congraphdb-benchmark/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -77,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ladybugdb" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -87,7 +98,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/congraphdb-benchmark/." title="CongraphDB Benchmark" class="md-header__button md-logo" aria-label="CongraphDB Benchmark" data-md-component="logo">
+    <a href="../.." title="CongraphDB Benchmark" class="md-header__button md-logo" aria-label="CongraphDB Benchmark" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg>
@@ -107,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              LadybugDB
             
           </span>
         </div>
@@ -227,7 +238,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/congraphdb-benchmark/." class="md-tabs__link">
+        <a href="../.." class="md-tabs__link">
           
   
   
@@ -249,7 +260,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/congraphdb-benchmark/results/" class="md-tabs__link">
+        <a href="../../results/" class="md-tabs__link">
           
   
   
@@ -267,11 +278,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="/congraphdb-benchmark/engines/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   
@@ -293,7 +306,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="/congraphdb-benchmark/methodology/" class="md-tabs__link">
+        <a href="../../methodology/" class="md-tabs__link">
           
   
   
@@ -329,7 +342,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/congraphdb-benchmark/." title="CongraphDB Benchmark" class="md-nav__button md-logo" aria-label="CongraphDB Benchmark" data-md-component="logo">
+    <a href="../.." title="CongraphDB Benchmark" class="md-nav__button md-logo" aria-label="CongraphDB Benchmark" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m16 11.78 4.24-7.33 1.73 1-5.23 9.05-6.51-3.75L5.46 19H22v2H2V3h2v14.54L9.5 8z"/></svg>
@@ -384,7 +397,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/congraphdb-benchmark/." class="md-nav__link ">
+            <a href="../.." class="md-nav__link ">
               
   
   
@@ -465,7 +478,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/congraphdb-benchmark/results/" class="md-nav__link ">
+            <a href="../../results/" class="md-nav__link ">
               
   
   
@@ -509,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/results/leaderboard/" class="md-nav__link">
+      <a href="../../results/leaderboard/" class="md-nav__link">
         
   
   
@@ -537,7 +550,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/results/ingestion/" class="md-nav__link">
+      <a href="../../results/ingestion/" class="md-nav__link">
         
   
   
@@ -565,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/results/traversal/" class="md-nav__link">
+      <a href="../../results/traversal/" class="md-nav__link">
         
   
   
@@ -593,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/results/pagerank/" class="md-nav__link">
+      <a href="../../results/pagerank/" class="md-nav__link">
         
   
   
@@ -621,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/results/memory/" class="md-nav__link">
+      <a href="../../results/memory/" class="md-nav__link">
         
   
   
@@ -653,6 +666,8 @@
       
   
   
+    
+  
   
   
     
@@ -678,22 +693,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/congraphdb-benchmark/engines/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -711,13 +727,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -737,7 +753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/congraphdb/" class="md-nav__link">
+      <a href="../congraphdb/" class="md-nav__link">
         
   
   
@@ -765,7 +781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/neo4j/" class="md-nav__link">
+      <a href="../neo4j/" class="md-nav__link">
         
   
   
@@ -793,7 +809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/kuzu/" class="md-nav__link">
+      <a href="../kuzu/" class="md-nav__link">
         
   
   
@@ -818,10 +834,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/ladybug/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LadybugDB
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -837,6 +880,98 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strengths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -849,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/sqlite/" class="md-nav__link">
+      <a href="../sqlite/" class="md-nav__link">
         
   
   
@@ -877,7 +1012,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/engines/graphology/" class="md-nav__link">
+      <a href="../graphology/" class="md-nav__link">
         
   
   
@@ -943,7 +1078,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="/congraphdb-benchmark/methodology/" class="md-nav__link ">
+            <a href="../../methodology/" class="md-nav__link ">
               
   
   
@@ -987,7 +1122,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/methodology/dataset/" class="md-nav__link">
+      <a href="../../methodology/dataset/" class="md-nav__link">
         
   
   
@@ -1015,7 +1150,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/methodology/environment/" class="md-nav__link">
+      <a href="../../methodology/environment/" class="md-nav__link">
         
   
   
@@ -1043,7 +1178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/congraphdb-benchmark/methodology/fairness/" class="md-nav__link">
+      <a href="../../methodology/fairness/" class="md-nav__link">
         
   
   
@@ -1088,6 +1223,88 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strengths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strengths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-details" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Details
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1100,8 +1317,152 @@
               
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="ladybugdb">LadybugDB<a class="headerlink" href="#ladybugdb" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>LadybugDB is an emerging embedded graph database focusing on simplicity and performance, utilizing a native C++ engine with a Cypher-like query language (powered by Kuzu under the hood). </p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Architecture</strong></td>
+<td>Embedded Native Library</td>
+</tr>
+<tr>
+<td><strong>Language</strong></td>
+<td>C++ (with Node.js bindings)</td>
+</tr>
+<tr>
+<td><strong>Query Language</strong></td>
+<td>Cypher-compatible</td>
+</tr>
+<tr>
+<td><strong>License</strong></td>
+<td>MIT</td>
+</tr>
+<tr>
+<td><strong>Data Model</strong></td>
+<td>Labeled Property Graph</td>
+</tr>
+</tbody>
+</table>
+<h2 id="performance-profile">Performance Profile<a class="headerlink" href="#performance-profile" title="Permanent link">&para;</a></h2>
+<p>LadybugDB shows competitive performance in our benchmarks, particularly excelling in multi-hop traversals where its native graph representation outpaces relational and pure JavaScript engines. </p>
+<h3 id="strengths">Strengths<a class="headerlink" href="#strengths" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Memory Efficiency</strong>: Low memory footprint relative to Neo4j.</li>
+<li><strong>Traversal Speed</strong>: Fast k-hop traversals.</li>
+<li><strong>Cypher Support</strong>: Easy to adopt if coming from Neo4j.</li>
+</ol>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Syntax Nuances</strong>: As an early-stage engine, its Cypher parser has some limitations (e.g., specific requirements for variable-length paths and MATCH syntax).</li>
+<li><strong>Batch Ingestion</strong>: Can be sensitive to batch sizes and specific <code>CREATE</code> patterns over <code>MERGE</code>.</li>
+</ol>
+<h2 id="implementation-details">Implementation Details<a class="headerlink" href="#implementation-details" title="Permanent link">&para;</a></h2>
+<p>Our benchmark implements the LadybugDB engine using <code>@ladybugdb/core</code>:</p>
+<ul>
+<li><strong>Storage</strong>: In-memory for benchmarking (<code>:memory:</code> database)</li>
+<li><strong>Ingestion</strong>: Uses batched <code>CREATE</code> statements with prepared statements to maximize throughput. </li>
+<li><strong>Traversals</strong>: Uses manually chained <code>MATCH</code> patterns due to current limitations with variable-length path syntax in its Cypher parser.</li>
+<li><strong>Algorithms</strong>: Capable of executing native Cypher-based PageRank iterations.</li>
+</ul>
+<h2 id="code-example">Code Example<a class="headerlink" href="#code-example" title="Permanent link">&para;</a></h2>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">import</span><span class="w"> </span><span class="nx">lbug</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;@ladybugdb/core&#39;</span><span class="p">;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">// Initialize</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">lbug</span><span class="p">.</span><span class="nx">Database</span><span class="p">(</span><span class="s1">&#39;:memory:&#39;</span><span class="p">);</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">await</span><span class="w"> </span><span class="nx">db</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kd">const</span><span class="w"> </span><span class="nx">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">lbug</span><span class="p">.</span><span class="nx">Connection</span><span class="p">(</span><span class="nx">db</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">await</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">// Create schema</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">await</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;CREATE NODE TABLE IF NOT EXISTS User(id STRING, PRIMARY KEY(id))&#39;</span><span class="p">);</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="k">await</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="s1">&#39;CREATE REL TABLE IF NOT EXISTS FOLLOWS(FROM User TO User)&#39;</span><span class="p">);</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">// Insert data</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="k">await</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="sb">`CREATE (:User {id: &#39;u1&#39;})`</span><span class="p">);</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">// Query</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">conn</span><span class="p">.</span><span class="nx">query</span><span class="p">(</span><span class="sb">`MATCH (a:User)-[:FOLLOWS]-&gt;(b:User) RETURN b.id`</span><span class="p">);</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="kd">const</span><span class="w"> </span><span class="nx">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">getAll</span><span class="p">();</span>
+</span></code></pre></div>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <form class="md-feedback" name="feedback" hidden>
+    <fieldset>
+      <legend class="md-feedback__title">
+        Was this helpful?
+      </legend>
+      <div class="md-feedback__inner">
+        <div class="md-feedback__list">
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page was helpful" data-md-value="1">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m7 0c0 .8-.7 1.5-1.5 1.5S14 10.3 14 9.5 14.7 8 15.5 8s1.5.7 1.5 1.5m-5 7.73c-1.75 0-3.29-.73-4.19-1.81L9.23 14c.45.72 1.52 1.23 2.77 1.23s2.32-.51 2.77-1.23l1.42 1.42c-.9 1.08-2.44 1.81-4.19 1.81"/></svg>
+            </button>
+          
+            <button class="md-feedback__icon md-icon" type="submit" title="This page could be improved" data-md-value="0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8m2 0a10 10 0 0 1-10 10A10 10 0 0 1 2 12 10 10 0 0 1 12 2a10 10 0 0 1 10 10m-6.5-4c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5M10 9.5c0 .8-.7 1.5-1.5 1.5S7 10.3 7 9.5 7.7 8 8.5 8s1.5.7 1.5 1.5m2 4.5c1.75 0 3.29.72 4.19 1.81l-1.42 1.42C14.32 16.5 13.25 16 12 16s-2.32.5-2.77 1.23l-1.42-1.42C8.71 14.72 10.25 14 12 14"/></svg>
+            </button>
+          
+        </div>
+        <div class="md-feedback__note">
+          
+            <div data-md-value="1" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for the feedback!
+            </div>
+          
+            <div data-md-value="0" hidden>
+              
+              
+                
+              
+              
+              
+                
+                
+              
+              Thanks for the feedback! Help us improve by <a href="https://github.com/congraph-ai/congraphdb-benchmark/issues" target="_blank">opening an issue</a>.
+            </div>
+          
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+
+                
               </article>
             </div>
           
@@ -1121,6 +1482,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../kuzu/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Kuzu">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Kuzu
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../sqlite/" class="md-footer__link md-footer__link--next" aria-label="Next: SQLite">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                SQLite
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -1175,16 +1574,16 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "/congraphdb-benchmark/", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link", "toc.follow", "announce.dismiss"], "search": "/congraphdb-benchmark/assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.tabs.link", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="/congraphdb-benchmark/assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
       
-        <script src="/congraphdb-benchmark/js/benchmark-charts.js"></script>
+        <script src="../../js/benchmark-charts.js"></script>
       
     
   </body>

@@ -688,6 +688,8 @@
       
         
       
+        
+      
     
     
     
@@ -815,6 +817,34 @@
     
   
     Kuzu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engines/ladybug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LadybugDB
   
 
     
@@ -1160,7 +1190,7 @@
 
 <h1 id="benchmark-results">Benchmark Results<a class="headerlink" href="#benchmark-results" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>Last Run:</strong> April 10, 2026 | <strong>Commit:</strong> <code>eaf3e84</code> | <strong>Version:</strong> 1.0.0</p>
+<p><strong>Last Run:</strong> April 17, 2026 | <strong>Commit:</strong> <code>ed22125</code> | <strong>Version:</strong> 1.0.0</p>
 </blockquote>
 <p>Detailed performance metrics comparing CongraphDB against competing graph databases.</p>
 <h2 id="dataset-scale">Dataset Scale<a class="headerlink" href="#dataset-scale" title="Permanent link">&para;</a></h2>
@@ -1184,31 +1214,38 @@
 <tbody>
 <tr>
 <td>CongraphDB</td>
-<td style="text-align: right;">113,805</td>
-<td style="text-align: right;">0.658</td>
+<td style="text-align: right;">95,181</td>
+<td style="text-align: right;">0.63</td>
 <td style="text-align: right;">0.0s</td>
-<td style="text-align: right;">128MB</td>
+<td style="text-align: right;">133MB</td>
 </tr>
 <tr>
 <td>SQLite</td>
-<td style="text-align: right;">17,428</td>
-<td style="text-align: right;">2.972</td>
-<td style="text-align: right;">1.6s</td>
-<td style="text-align: right;">142MB</td>
+<td style="text-align: right;">16,828</td>
+<td style="text-align: right;">3.27</td>
+<td style="text-align: right;">1.8s</td>
+<td style="text-align: right;">179MB</td>
 </tr>
 <tr>
 <td>LevelGraph</td>
-<td style="text-align: right;">3,525</td>
-<td style="text-align: right;">1.005</td>
+<td style="text-align: right;">3,143</td>
+<td style="text-align: right;">1.033</td>
 <td style="text-align: right;">0.0s</td>
-<td style="text-align: right;">336MB</td>
+<td style="text-align: right;">415MB</td>
 </tr>
 <tr>
 <td>Graphology</td>
-<td style="text-align: right;">20,592</td>
-<td style="text-align: right;">6.28</td>
+<td style="text-align: right;">18,348</td>
+<td style="text-align: right;">6.301</td>
 <td style="text-align: right;">0.1s</td>
-<td style="text-align: right;">354MB</td>
+<td style="text-align: right;">433MB</td>
+</tr>
+<tr>
+<td>Ladybug</td>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">25.303</td>
+<td style="text-align: right;">0.0s</td>
+<td style="text-align: right;">489MB</td>
 </tr>
 </tbody>
 </table>
@@ -1226,38 +1263,31 @@
 <tbody>
 <tr>
 <td>CongraphDB</td>
-<td style="text-align: right;">118,000</td>
-<td style="text-align: right;">0.95</td>
-<td style="text-align: right;">14.5s</td>
-<td style="text-align: right;">385MB</td>
-</tr>
-<tr>
-<td>Neo4j</td>
-<td style="text-align: right;">92,000</td>
-<td style="text-align: right;">1.35</td>
-<td style="text-align: right;">24.5s</td>
-<td style="text-align: right;">1850MB</td>
-</tr>
-<tr>
-<td>Graphology</td>
-<td style="text-align: right;">72,000</td>
-<td style="text-align: right;">1.25</td>
-<td style="text-align: right;">78.0s</td>
-<td style="text-align: right;">980MB</td>
+<td style="text-align: right;">69,304</td>
+<td style="text-align: right;">0.628</td>
+<td style="text-align: right;">0.0s</td>
+<td style="text-align: right;">501MB</td>
 </tr>
 <tr>
 <td>SQLite</td>
-<td style="text-align: right;">42,000</td>
-<td style="text-align: right;">12.5</td>
-<td style="text-align: right;">68.0s</td>
-<td style="text-align: right;">680MB</td>
+<td style="text-align: right;">6,716</td>
+<td style="text-align: right;">28.476</td>
+<td style="text-align: right;">51.1s</td>
+<td style="text-align: right;">651MB</td>
 </tr>
 <tr>
-<td>Kuzu</td>
-<td style="text-align: right;">85,000</td>
-<td style="text-align: right;">1.4</td>
-<td style="text-align: right;">32.0s</td>
-<td style="text-align: right;">720MB</td>
+<td>LevelGraph</td>
+<td style="text-align: right;">1,879</td>
+<td style="text-align: right;">0.976</td>
+<td style="text-align: right;">0.0s</td>
+<td style="text-align: right;">2124MB</td>
+</tr>
+<tr>
+<td>Graphology</td>
+<td style="text-align: right;">7,334</td>
+<td style="text-align: right;">174.795</td>
+<td style="text-align: right;">2.4s</td>
+<td style="text-align: right;">2870MB</td>
 </tr>
 </tbody>
 </table>

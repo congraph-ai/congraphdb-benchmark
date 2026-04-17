@@ -2,6 +2,63 @@
   "versions": [
     {
       "version": "1.0.0",
+      "date": "2026-04-17",
+      "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
+      "overall_score": {
+        "congraphdb": 80.8,
+        "sqlite": 42.3,
+        "levelgraph": 42.1,
+        "graphology": 40.9,
+        "ladybug": 28.6
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-17",
+      "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
+      "overall_score": {
+        "congraphdb": 80.8,
+        "sqlite": 42.3,
+        "levelgraph": 42.1,
+        "graphology": 40.9,
+        "ladybug": 28.6
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-17",
+      "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
+      "overall_score": {
+        "congraphdb": 65.9,
+        "sqlite": 44.7,
+        "levelgraph": 43.7,
+        "graphology": 43
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-17",
+      "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
+      "overall_score": {
+        "congraphdb": 80.8,
+        "sqlite": 42.5,
+        "levelgraph": 42.8,
+        "graphology": 41.2
+      }
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-04-17",
+      "commit": "ed22125c7c8da0e97ef83d7b241194e07ec6d783",
+      "overall_score": {
+        "congraphdb": 82.5,
+        "sqlite": 46.1,
+        "levelgraph": 43.8,
+        "graphology": 43
+      }
+    },
+    {
+      "version": "1.0.0",
       "date": "2026-04-10",
       "commit": "eaf3e84d913256dacb3af06473255ae963371411",
       "overall_score": {

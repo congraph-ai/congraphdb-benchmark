@@ -53,6 +53,7 @@ These benchmarks are designed to provide fair, reproducible comparisons between 
 | CongraphDB | 0.1.0 |
 | Neo4j | 5.15.0 Community |
 | Kuzu | 0.4.0 (placeholder) |
+| LadybugDB | 0.1.x (@ladybugdb/core) |
 | SQLite (better-sqlite3) | 9.2.2 |
 | Graphology | 0.25.4 |
 

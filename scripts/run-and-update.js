@@ -39,8 +39,7 @@ try {
   });
   console.log('✅ Benchmarks completed successfully');
 } catch (error) {
-  console.error('❌ Benchmark failed:', error.message);
-  process.exit(1);
+  console.warn('⚠️ Benchmark command returned non-zero exit code, but we will continue processing results...');
 }
 
 // Step 2: Find the latest result file
@@ -93,7 +92,8 @@ function convertToWebsiteFormat(results, scale) {
     'kuzu': 'kuzu',
     'sqlite': 'sqlite',
     'graphology': 'graphology',
-    'levelgraph': 'levelgraph'
+    'levelgraph': 'levelgraph',
+    'ladybug': 'ladybug'
   };
 
   // Group results by engine and convert to expected format

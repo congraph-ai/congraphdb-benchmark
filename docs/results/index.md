@@ -1,7 +1,7 @@
 # Benchmark Results
 
 
-> **Last Run:** April 10, 2026 | **Commit:** `eaf3e84` | **Version:** 1.0.0
+> **Last Run:** April 17, 2026 | **Commit:** `ed22125` | **Version:** 1.0.0
 
 
 Detailed performance metrics comparing CongraphDB against competing graph databases.
@@ -18,21 +18,21 @@ Detailed performance metrics comparing CongraphDB against competing graph databa
 
 | Engine | Nodes/s | 3-hop | PageRank | Memory |
 |--------|-------:|-------:|-------:|-------:|
-| CongraphDB | 113,805 | 0.658 | 0.0s | 128MB |
-| SQLite | 17,428 | 2.972 | 1.6s | 142MB |
-| LevelGraph | 3,525 | 1.005 | 0.0s | 336MB |
-| Graphology | 20,592 | 6.28 | 0.1s | 354MB |
+| CongraphDB | 95,181 | 0.63 | 0.0s | 133MB |
+| SQLite | 16,828 | 3.27 | 1.8s | 179MB |
+| LevelGraph | 3,143 | 1.033 | 0.0s | 415MB |
+| Graphology | 18,348 | 6.301 | 0.1s | 433MB |
+| Ladybug | 139 | 25.303 | 0.0s | 489MB |
 
 
 ## Medium Dataset (100K nodes)
 
 | Engine | Nodes/s | 3-hop | PageRank | Memory |
 |--------|-------:|-------:|-------:|-------:|
-| CongraphDB | 118,000 | 0.95 | 14.5s | 385MB |
-| Neo4j | 92,000 | 1.35 | 24.5s | 1850MB |
-| Graphology | 72,000 | 1.25 | 78.0s | 980MB |
-| SQLite | 42,000 | 12.5 | 68.0s | 680MB |
-| Kuzu | 85,000 | 1.4 | 32.0s | 720MB |
+| CongraphDB | 69,304 | 0.628 | 0.0s | 501MB |
+| SQLite | 6,716 | 28.476 | 51.1s | 651MB |
+| LevelGraph | 1,879 | 0.976 | 0.0s | 2124MB |
+| Graphology | 7,334 | 174.795 | 2.4s | 2870MB |
 
 
 ## Large Dataset (1M nodes)

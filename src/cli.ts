@@ -14,6 +14,7 @@ import { KuzuEngine } from './engines/kuzu.js';
 import { SQLiteEngine } from './engines/sqlite.js';
 import { GraphologyEngine } from './engines/graphology.js';
 import { LevelGraphEngine } from './engines/levelgraph.js';
+import { LadybugEngine } from './engines/ladybug.js';
 
 // Import v0.1.5 engine adapters (available but not directly used in CLI)
 // import { PersistenceEngineAdapter } from './benchmarks/persistence.js';
@@ -32,7 +33,7 @@ program
 program
   .command('run')
   .description('Run benchmark suite')
-  .option('-e, --engines <engines>', 'Comma-separated list of engines to benchmark', 'congraph,sqlite,levelgraph,graphology')
+  .option('-e, --engines <engines>', 'Comma-separated list of engines to benchmark', 'congraph,neo4j,kuzu,sqlite,levelgraph,graphology,ladybug')
   .option('-s, --scale <scale>', 'Data scale: small, medium, or large', 'medium')
   .option('-o, --output <format>', 'Output format: json, csv, or both', 'both')
   .option('-v, --verbose', 'Verbose output', false)
@@ -44,9 +45,9 @@ program
   // v0.1.8 options
   .option('--v018', 'Enable v0.1.8 benchmarks (OCC, Schema API, Algorithms)', false)
   .option('--v018-benchmarks <benchmarks>', 'Comma-separated list of v0.1.8 benchmarks: occ,schema,algorithms', 'all')
-  // v0.1.12 options
-  .option('--v0112', 'Enable v0.1.10 benchmarks (Document API, SQL DDL, Algorithms)', false)
-  .option('--v0112-benchmarks <benchmarks>', 'Comma-separated list of v0.1.10 benchmarks: document,sql,algorithms', 'all')
+  // v0.1.13 options
+  .option('--v0113', 'Enable v0.1.10 benchmarks (Document API, SQL DDL, Algorithms)', false)
+  .option('--v0113-benchmarks <benchmarks>', 'Comma-separated list of v0.1.10 benchmarks: document,sql,algorithms', 'all')
   .action(async (options) => {
     await runBenchmarks(options);
   });
@@ -71,8 +72,8 @@ async function runBenchmarks(options: any) {
     benchmarks: v016Benchmarks,
     v018: enableV018,
     'v018-benchmarks': v018Benchmarks,
-    v0112: enableV0112,
-    'v0112-benchmarks': v0112Benchmarks
+    v0113: enableV0113,
+    'v0113-benchmarks': v0113Benchmarks
   } = options;
 
   // Validate scale
@@ -105,10 +106,10 @@ async function runBenchmarks(options: any) {
   // Parse v0.1.8 benchmarks
   const enabledV018Benchmarks = parseV018Benchmarks(v018Benchmarks, enableV018);
 
-  // Parse v0.1.12 benchmarks
-  const enabledV0112Benchmarks = parseV0112Benchmarks(v0112Benchmarks, enableV0112);
+  // Parse v0.1.13 benchmarks
+  const enabledV0113Benchmarks = parseV0113Benchmarks(v0113Benchmarks, enableV0113);
 
-  console.log('🔬 CongraphDB Benchmark Suite v0.1.12');
+  console.log('🔬 CongraphDB Benchmark Suite v0.1.13');
   console.log('='.repeat(50));
   console.log(`Scale: ${scale.toUpperCase()}`);
   console.log(`API: ${api.toUpperCase()}`);
@@ -121,8 +122,8 @@ async function runBenchmarks(options: any) {
   if (enableV018) {
     console.log(`\n🎯 v0.1.8 Benchmarks: ${enabledV018Benchmarks.join(', ')}`);
   }
-  if (enableV0112) {
-    console.log(`\n🎯 v0.1.12 Benchmarks: ${enabledV0112Benchmarks.join(', ')}`);
+  if (enableV0113) {
+    console.log(`\n🎯 v0.1.13 Benchmarks: ${enabledV0113Benchmarks.join(', ')}`);
   }
   console.log('');
 
@@ -157,9 +158,9 @@ async function runBenchmarks(options: any) {
     enableOCC: enabledV018Benchmarks.includes('occ'),
     enableSchemaAPI: enabledV018Benchmarks.includes('schema'),
     enableAlgorithms: enabledV018Benchmarks.includes('algorithms'),
-    // v0.1.12 benchmarks
-    enableDocument: enabledV0112Benchmarks.includes('document'),
-    enableSQL: enabledV0112Benchmarks.includes('sql'),
+    // v0.1.13 benchmarks
+    enableDocument: enabledV0113Benchmarks.includes('document'),
+    enableSQL: enabledV0113Benchmarks.includes('sql'),
   };
 
   // Run benchmarks for each engine
@@ -182,7 +183,7 @@ async function runBenchmarks(options: any) {
       }
 
       // Run v0.1.10 benchmarks if enabled
-      if (enableV0112) {
+      if (enableV0113) {
         await suite.runV0110Benchmarks();
       }
     } catch (error: any) {
@@ -226,12 +227,12 @@ async function runBenchmarks(options: any) {
     }
 
     // Export v0.1.10 results if enabled
-    if (enableV0112) {
-      const v0112JsonPath = await recorder.exportV0110ToJSON();
-      console.log(`   v0.1.10 JSON: ${v0112JsonPath}`);
+    if (enableV0113) {
+      const v0113JsonPath = await recorder.exportV0110ToJSON();
+      console.log(`   v0.1.10 JSON: ${v0113JsonPath}`);
     }
 
-    console.log('\n' + (enableV016 || enableV018 || enableV0112 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
+    console.log('\n' + (enableV016 || enableV018 || enableV0113 ? recorder.generateExtendedSummary() : recorder.generateSummary()));
   } catch (error) {
     console.error('❌ Error exporting results:', error);
   }
@@ -296,8 +297,8 @@ function parseV018Benchmarks(benchmarks: string, enableV018: boolean): string[] 
   return requested.filter((b: string) => validBenchmarks.includes(b));
 }
 
-function parseV0112Benchmarks(benchmarks: string, enableV0112: boolean): string[] {
-  if (!enableV0112) return [];
+function parseV0113Benchmarks(benchmarks: string, enableV0113: boolean): string[] {
+  if (!enableV0113) return [];
 
   const validBenchmarks = ['document', 'sql', 'algorithms'];
 
@@ -310,7 +311,7 @@ function parseV0112Benchmarks(benchmarks: string, enableV0112: boolean): string[
 }
 
 function parseEngines(enginesStr: string): EngineType[] {
-  const validEngines: EngineType[] = ['congraph', 'neo4j', 'kuzu', 'sqlite', 'graphology', 'levelgraph'];
+  const validEngines: EngineType[] = ['congraph', 'neo4j', 'kuzu', 'sqlite', 'graphology', 'levelgraph', 'ladybug'];
   const requested = enginesStr.split(',').map((e: string) => e.trim().toLowerCase());
 
   return requested.filter(e => validEngines.includes(e as EngineType)) as EngineType[];
@@ -331,6 +332,8 @@ function createEngine(engineName: EngineType, storage: 'memory' | 'file' = 'memo
       return new GraphologyEngine();
     case 'levelgraph':
       return new LevelGraphEngine();
+    case 'ladybug':
+      return new LadybugEngine();
     default:
       throw new Error(`Unknown engine: ${engineName}`);
   }

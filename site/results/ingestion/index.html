@@ -636,6 +636,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#small-dataset-10k-nodes-50k-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Small Dataset (10K nodes / 50K edges)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#medium-dataset-100k-nodes-1m-edges" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -946,6 +957,8 @@
       
         
       
+        
+      
     
     
     
@@ -1073,6 +1086,34 @@
     
   
     Kuzu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../engines/ladybug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LadybugDB
   
 
     
@@ -1365,6 +1406,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#small-dataset-10k-nodes-50k-edges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Small Dataset (10K nodes / 50K edges)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#medium-dataset-100k-nodes-1m-edges" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1583,20 +1635,55 @@
 - ETL processes</p>
 <hr />
 <h2 id="results-summary">Results Summary<a class="headerlink" href="#results-summary" title="Permanent link">&para;</a></h2>
-<div class="ingestion-summary">
-
-### Small Dataset (10K nodes / 50K edges)
-
-| Engine | Nodes/s | Edges/s | Total Time | Rank |
-|--------|---------|---------|------------|------|
-| **CongraphDB** | **125,000** | **98,000** | **1.25s** | 🥇 |
-| Neo4j | 95,000 | 78,000 | 1.68s | 🥈 |
-| Kuzu | 88,000 | 72,000 | 1.82s | 🥉 |
-| Graphology | 78,000 | 65,000 | 2.05s | 4 |
-| SQLite | 45,000 | 38,000 | 3.55s | 5 |
-
-</div>
-
+<h3 id="small-dataset-10k-nodes-50k-edges">Small Dataset (10K nodes / 50K edges)<a class="headerlink" href="#small-dataset-10k-nodes-50k-edges" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Nodes/s</th>
+<th>Edges/s</th>
+<th>Total Time</th>
+<th>Rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CongraphDB</strong></td>
+<td><strong>95,181</strong></td>
+<td><strong>475,906</strong></td>
+<td><strong>0.10s</strong></td>
+<td>🥇</td>
+</tr>
+<tr>
+<td>Graphology</td>
+<td>18,348</td>
+<td>91,739</td>
+<td>0.54s</td>
+<td>🥈</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>16,828</td>
+<td>84,141</td>
+<td>0.59s</td>
+<td>🥉</td>
+</tr>
+<tr>
+<td>LevelGraph</td>
+<td>3,143</td>
+<td>15,717</td>
+<td>3.18s</td>
+<td>4</td>
+</tr>
+<tr>
+<td>LadybugDB</td>
+<td>139</td>
+<td>697</td>
+<td>71.70s</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
 <div class="ingestion-chart-container">
   <canvas id="ingestionSmallChart" height="300"></canvas>
 </div>

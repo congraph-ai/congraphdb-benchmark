@@ -1,7 +1,7 @@
 # Performance Leaderboard
 
 
-> **Last Run:** April 10, 2026 | **Commit:** `eaf3e84` | **Version:** 1.0.0
+> **Last Run:** April 17, 2026 | **Commit:** `ed22125` | **Version:** 1.0.0
 
 
 Current rankings based on overall performance across all metrics.
@@ -10,21 +10,21 @@ Current rankings based on overall performance across all metrics.
 
 | Rank | Engine | Score | Ingestion | Traversal | PageRank | Memory |
 |:----:|:-------|:-----:|:---------:|:---------:|:--------:|:------:|
-| 🥇 | **CongraphDB** | **84.8** | 114K/s | 🥇 0.7ms | 🥇 0.0s | 128MB |
-| 🥈 | **SQLite** | **47.6** | 17K/s | 1.3ms | 1.6s | 142MB |
-| 🥉 | **LevelGraph** | **43.2** | 4K/s | 1.6ms | 🥇 0.0s | 336MB |
-| 4 | **Graphology** | **41.9** | 21K/s | 2.3ms | 🥇 0.1s | 354MB |
+| 🥇 | **CongraphDB** | **80.8** | 95K/s | 🥇 0.7ms | 🥇 0.0s | 133MB |
+| 🥈 | **SQLite** | **42.3** | 17K/s | 1.4ms | 1.8s | 179MB |
+| 🥉 | **LevelGraph** | **42.1** | 3K/s | 1.7ms | 🥇 0.0s | 415MB |
+| 4 | **Graphology** | **40.9** | 18K/s | 2.4ms | 🥇 0.1s | 433MB |
+| 5 | **Ladybug** | **28.6** | 0K/s | 14.0ms | 🥇 0.0s | 489MB |
 
 
 ## Overall Score - Medium Dataset
 
 | Rank | Engine | Score | Ingestion | Traversal | PageRank | Memory |
 |:----:|:-------|:-----:|:---------:|:---------:|:--------:|:------:|
-| 🥇 | **CongraphDB** | **100.0** | 🥇 118K/s | 🥇 0.5ms | 🥇 14.5s | 🥇 385MB |
-| 🥈 | **Kuzu** | **70.0** | 85K/s | 🥇 0.7ms | 32.0s | 720MB |
-| 🥉 | **Neo4j** | **68.4** | 92K/s | 🥇 0.7ms | 24.5s | 1850MB |
-| 4 | **Graphology** | **57.8** | 72K/s | 🥇 0.6ms | 78.0s | 980MB |
-| 5 | **SQLite** | **30.3** | 42K/s | 6.1ms | 68.0s | 680MB |
+| 🥇 | **CongraphDB** | **85.1** | 69K/s | 🥇 0.6ms | 🥇 0.0s | 501MB |
+| 🥈 | **LevelGraph** | **45.8** | 2K/s | 1.7ms | 🥇 0.0s | 2124MB |
+| 🥉 | **Graphology** | **29.7** | 7K/s | 58.8ms | 🥇 2.4s | 2870MB |
+| 4 | **SQLite** | **23.1** | 7K/s | 10.4ms | 51.1s | 651MB |
 
 
 ## Overall Score - Large Dataset

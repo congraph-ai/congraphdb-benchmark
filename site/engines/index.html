@@ -29,7 +29,7 @@
     
     
       
-        <title>Engine Comparison - CongraphDB Benchmark</title>
+        <title>Overview - CongraphDB Benchmark</title>
       
     
     
@@ -118,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Engine Comparison
+              Overview
             
           </span>
         </div>
@@ -687,6 +687,8 @@
       
         
       
+        
+      
     
     
     
@@ -815,6 +817,34 @@
     
   
     Kuzu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ladybug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LadybugDB
   
 
     
@@ -1151,6 +1181,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ladybugdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LadybugDB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#sqlite" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1245,6 +1286,13 @@
 <td>Native bindings</td>
 </tr>
 <tr>
+<td><strong>LadybugDB</strong></td>
+<td>Embedded</td>
+<td>C++</td>
+<td>MIT</td>
+<td>Native bindings</td>
+</tr>
+<tr>
 <td><strong>SQLite</strong></td>
 <td>Embedded (SQL)</td>
 <td>C</td>
@@ -1286,6 +1334,12 @@
 <li><strong>Use when</strong>: Working outside Node.js ecosystem</li>
 <li><strong>Avoid when</strong>: You need pure JavaScript solution</li>
 </ul>
+<h3 id="ladybugdb">LadybugDB<a class="headerlink" href="#ladybugdb" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Best for</strong>: Lightweight Node.js apps needing Cypher</li>
+<li><strong>Use when</strong>: You want an embedded C++ database with Neo4j compatibility</li>
+<li><strong>Avoid when</strong>: You need full production-ready Cypher standard</li>
+</ul>
 <h3 id="sqlite">SQLite<a class="headerlink" href="#sqlite" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Best for</strong>: Applications needing SQL + some graph queries</li>
@@ -1305,6 +1359,7 @@
 <li><a href="congraphdb/">CongraphDB</a> - The benchmark leader</li>
 <li><a href="neo4j/">Neo4j</a> - Industry standard</li>
 <li><a href="kuzu/">Kuzu</a> - C++ embedded option</li>
+<li><a href="ladybug/">LadybugDB</a> - Lightweight Cypher engine</li>
 <li><a href="sqlite/">SQLite</a> - Relational with graph features</li>
 <li><a href="graphology/">Graphology</a> - Pure JavaScript</li>
 </ul>

@@ -108,12 +108,13 @@ nav:
     - PageRank: results/pagerank.md
     - Memory: results/memory.md
   - Engines:
-    - engines/index.md
-    - CongraphDB: engines/congraphdb.md
-    - Neo4j: engines/neo4j.md
-    - Kuzu: engines/kuzu.md
-    - SQLite: engines/sqlite.md
-    - Graphology: engines/graphology.md
+    - Overview: 'engines/index.md'
+    - CongraphDB: 'engines/congraphdb.md'
+    - Neo4j: 'engines/neo4j.md'
+    - Kuzu: 'engines/kuzu.md'
+    - LadybugDB: 'engines/ladybug.md'
+    - SQLite: 'engines/sqlite.md'
+    - Graphology: 'engines/graphology.md'
   - Methodology:
     - methodology/index.md
     - Dataset: methodology/dataset.md
