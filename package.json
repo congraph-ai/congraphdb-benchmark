@@ -26,7 +26,8 @@
     "update:medium": "node scripts/run-and-update.js --medium",
     "update:large": "node scripts/run-and-update.js --large",
     "update": "node scripts/run-and-update.js --small",
-    "update:all": "node scripts/run-and-update.js --small && node scripts/run-and-update.js --medium && node scripts/run-and-update.js --large"
+    "update:all": "node scripts/run-and-update.js --small && node scripts/run-and-update.js --medium && node scripts/run-and-update.js --large",
+    "test": "echo 'No tests defined' && exit 0"
   },
   "keywords": [
     "benchmark",
@@ -40,7 +41,7 @@
     "@ladybugdb/core": "^0.15.3",
     "chalk": "^5.6.2",
     "commander": "^12.1.0",
-    "congraphdb": "file:../congraphdb",
+    "congraphdb": "^0.1.13",
     "dotenv": "^16.4.7",
     "graphology": "^0.25.4",
     "graphology-metrics": "^2.2.0",
